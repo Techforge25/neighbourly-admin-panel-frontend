@@ -7,7 +7,7 @@ import { MdLogout, MdOutlineMenu } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import Image from "next/image";
 import { AdminShellProps } from "@/types";
-import { navItems } from "@/helpers/constants";
+import { navItems } from "@/constants/constants";
 
 export function AdminShell({
   headerTitle,
@@ -22,6 +22,7 @@ export function AdminShell({
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
+    if (href === "/recommendation") return pathname.startsWith("/recommendation");
     if (href === "/recommendation") return pathname === "/recommendation";
     return pathname === href;
   };
@@ -89,6 +90,7 @@ export function AdminShell({
               alt="suburbSays"
               width={1000}
               height={1000}
+              priority
               className="lg:w-[12.688rem] w-[10.344rem] "
             />
           </Link>
@@ -158,7 +160,7 @@ export function AdminShell({
           </div>
         </header>
 
-        <main className="mx-auto bg-foreground max-w-[1400px] px-4 py-8 sm:px-6 lg:px-10">
+        <main className=" bg-foreground  px-4 py-8 sm:px-6 lg:px-10">
           {children}
         </main>
       </div>

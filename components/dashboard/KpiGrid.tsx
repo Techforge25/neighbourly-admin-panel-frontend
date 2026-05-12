@@ -1,4 +1,4 @@
-import { kpiStats } from "@/helpers/constants";
+import { kpiStats } from "@/constants/constants";
 import Image from "next/image";
 
 export function KpiGrid() {

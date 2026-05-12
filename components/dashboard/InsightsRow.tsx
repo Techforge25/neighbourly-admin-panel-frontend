@@ -1,10 +1,11 @@
 import {
-  getColorTheme,
+  getColorThemeBg,
+  getColorThemeBorder,
+  getColorThemeText,
   recentRecommendations,
   topRecommenders,
-} from "@/helpers/constants";
-import { get } from "http";
-import { HiEye } from "react-icons/hi";
+} from "@/constants/constants";
+import { IoEyeOutline } from "react-icons/io5";
 
 export function InsightsRow() {
   return (
@@ -18,27 +19,31 @@ export function InsightsRow() {
           {topRecommenders.map((r) => (
             <li
               key={`${r.name}-${r.trade}`}
-              className={`flex flex-col p-[1rem] gap-4 rounded-xl border ${getColorTheme(r.trade, "border")} sm:flex-row  sm:items-center sm:justify-between`}
+              className={`flex flex-col p-[1rem] gap-4 rounded-xl border ${getColorThemeBorder(r.trade)} sm:flex-row  sm:items-center sm:justify-between`}
             >
               <div>
                 <p className="flex flex-wrap items-center gap-2 font-medium text-brand-navy">
-                  <span className="font-manrope font-bold text-[1.5rem]">
+                  <span className="font-manrope text-text-secondary font-bold text-[1.5rem]">
                     {r.name}
                   </span>
                   <span
-                    className={`border ${getColorTheme(r.trade, "border")} rounded-[0.375rem] px-[7px] py-[5px] font-poppins font-normal text-[0.75rem] capitalize tracking-wide`}
+                    className={`border ${getColorThemeBorder(r.trade)} ${getColorThemeText(r.trade)} ${getColorThemeBg(r.trade)} rounded-[0.375rem] px-[7px] py-[5px] font-poppins font-normal text-[0.75rem] capitalize tracking-wide`}
                   >
                     {r.trade}
                   </span>
                 </p>
-                <p className="mt-2 font-poppins text-[1rem] text-text-para">{r.workplace}</p>
+                <p className="mt-2 font-poppins text-[1rem] text-text-para">
+                  {r.workplace}
+                </p>
               </div>
               <p className="shrink-0 bg-surface-muted px-[0.5rem] rounded-[0.375rem] ">
                 <span className="font-poppins font-semibold text-[1.125rem] text-text-para">
                   {r.count}
                 </span>
                 <span className="bg-text-para h-[10px] w-[10px] rounded-full inline-block mx-1 " />
-                <span>recommendation</span>
+                <span className="text-text-para font-poppins font-normal text-[0.875rem] ">
+                  Recommendation
+                </span>
               </p>
             </li>
           ))}
@@ -54,23 +59,30 @@ export function InsightsRow() {
           {recentRecommendations.map((item, i) => (
             <li
               key={`${item.business}-${i}`}
-              className="flex items-start justify-between gap-3 rounded-xl border border-brand-line/80 px-3 py-3 sm:px-4"
+              className="flex items-center justify-between gap-3 rounded-[0.75rem] px-[1rem] py-[0.75rem] bg-surface-muted"
             >
               <div className="min-w-0">
                 <p className="flex flex-wrap items-center gap-2 text-sm font-medium text-brand-navy">
-                  <span>{item.business}</span>
-                  <span className="rounded-md bg-zinc-100 px-2 py-0.5 text-xs font-medium text-zinc-600">
+                  <span className="font-manrope font-semibold text-[1.125rem] text-text-primary ">
+                    {item.business}
+                  </span>
+
+                  <span
+                    className={`${getColorThemeBorder(item.suburb)} border rounded-[0.375rem] px-[7px] py-[5px] font-poppins font-normal text-[0.75rem] capitalize tracking-wide`}
+                  >
                     {item.suburb}
                   </span>
                 </p>
-                <p className="mt-1 text-sm text-zinc-600">{item.blurb}</p>
+                <p className="mt-1 font-poppins text-[1rem] text-text-para font-normal">
+                  {item.blurb}
+                </p>
               </div>
               <button
                 type="button"
-                className="inline-flex shrink-0 rounded-lg p-2 text-brand-coral hover:bg-brand-coral-soft"
+                className="inline-flex cursor-pointer shrink-0 rounded-lg p-2 text-brand-coral hover:bg-brand-coral-soft"
                 aria-label={`Preview recommendation for ${item.business}`}
               >
-                <HiEye className="h-5 w-5" strokeWidth={1.75} />
+                <IoEyeOutline className="h-5 w-5 text-text-para" />
               </button>
             </li>
           ))}

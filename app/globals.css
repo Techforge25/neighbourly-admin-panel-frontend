@@ -4,6 +4,7 @@
 
   --font-manrope: var(--font-manrope);
   --font-poppins: var(--font-poppins);
+  --font-hankenGrotesk: var(--font-hankenGrotesk);
 
   /* background colors */
 
@@ -22,9 +23,12 @@
   --color-text-secondary: #12141D;
   --color-text-para: #697586;
   --color-text-success: #00A371;
+  --color-text-gardner: #7FB3B0;
+  --color-text-cleaner: #E8C088;
 
   /* border colors */
   --color-border-primary: #D5E8FC;
+  --color-border-secondary: #E4E4E4;
 
   /* accent Colors */
 
@@ -33,7 +37,9 @@
   --color-accent-danger: #FF3F3F;
 
   /* color Light bg */
-  --color-bg-light-primary :;
+  --color-bg-light-primary :#fff5f3;
+  --color-bg-light-secondary :#ebf5ff;
+  --color-bg-light-green :#f1f4f0;
 
 
 
