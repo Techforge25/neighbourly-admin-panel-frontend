@@ -22,7 +22,8 @@ export function AdminShell({
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
-    if (href === "/recommendation") return pathname.startsWith("/recommendation");
+    if (href === "/recommendation")
+      return pathname.startsWith("/recommendation");
     if (href === "/recommendation") return pathname === "/recommendation";
     return pathname === href;
   };
@@ -38,13 +39,17 @@ export function AdminShell({
             key={label}
             href={href}
             onClick={() => mobile && setOpen(false)}
-            className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium transition-colors ${
+            className={`flex items-center gap-2.5 rounded-xl px-[12px] py-[12px] font-poppins text-[1rem] transition-colors ${
               isActive(href)
                 ? "bg-bg-primary text-white shadow-md"
                 : "text-text-primary"
             }`}
           >
-            <Icon className="h-5 w-5 shrink-0 opacity-95" aria-hidden />
+            <Icon
+              size={24}
+              className="w-6 h-6 shrink-0 opacity-95"
+              aria-hidden
+            />
             {label}
           </Link>
         ))}
@@ -126,7 +131,9 @@ export function AdminShell({
               <p className="font-manrope sm:text-[1.25rem] text-[1rem] font-semibold text-text-primary ">
                 {headerTitle}
               </p>
-              <p className="font-poppins text-text-para text-[0.75rem]  ">{headerDate}</p>
+              <p className="font-poppins text-text-para text-[0.75rem]  ">
+                {headerDate}
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-2 sm:gap-4">

@@ -19,7 +19,7 @@ export function InsightsRow() {
           {topRecommenders.map((r) => (
             <li
               key={`${r.name}-${r.trade}`}
-              className={`flex flex-col p-[1rem] gap-4 rounded-xl border ${getColorThemeBorder(r.trade)} sm:flex-row  sm:items-center sm:justify-between`}
+              className={`flex flex-col p-[1rem] gap-4 rounded-xl border ${getColorThemeBorder(r.trade,"mainDiv")} sm:flex-row  sm:items-center sm:justify-between`}
             >
               <div>
                 <p className="flex flex-wrap items-center gap-2 font-medium text-brand-navy">
@@ -27,7 +27,7 @@ export function InsightsRow() {
                     {r.name}
                   </span>
                   <span
-                    className={`border ${getColorThemeBorder(r.trade)} ${getColorThemeText(r.trade)} ${getColorThemeBg(r.trade)} rounded-[0.375rem] px-[7px] py-[5px] font-poppins font-normal text-[0.75rem] capitalize tracking-wide`}
+                    className={`border ${getColorThemeBorder(r.trade,"span")} rounded-[0.375rem] px-[7px] py-[5px] font-poppins font-normal text-[0.75rem] capitalize tracking-wide`}
                   >
                     {r.trade}
                   </span>
@@ -68,7 +68,7 @@ export function InsightsRow() {
                   </span>
 
                   <span
-                    className={`${getColorThemeBorder(item.suburb)} border rounded-[0.375rem] px-[7px] py-[5px] font-poppins font-normal text-[0.75rem] capitalize tracking-wide`}
+                    className={`${getColorThemeBorder(item.suburb,"span")} border rounded-[0.375rem] px-[7px] py-[5px] font-poppins font-normal text-[0.75rem] capitalize tracking-wide`}
                   >
                     {item.suburb}
                   </span>

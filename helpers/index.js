@@ -1,8 +1,14 @@
 // tableColumns.js
 
 import { getColorThemeText } from "@/constants/constants";
-
-export const recommendationTableColumns = ({ onDetailsClick , onApproveClick,}) => [
+import { SlEye } from "react-icons/sl";
+import { FaCheck } from "react-icons/fa6";
+import { IoCloseOutline } from "react-icons/io5";
+export const recommendationTableColumns = ({
+  onDetailsClick,
+  onApproveClick,
+  onRejectClick
+}) => [
   {
     key: "tradieInfo",
     title: "Tradie/Business Name",
@@ -144,17 +150,24 @@ export const recommendationTableColumns = ({ onDetailsClick , onApproveClick,}) 
         <button
           type="button"
           onClick={() => onDetailsClick(row)}
-          className="border cursor-pointer border-border-primary text-text-primary text-[0.875rem] rounded-[6.125rem] px-[1rem] py-[0.5rem]"
+          className="bg-surface-light p-[0.375rem] rounded-[0.25rem] cursor-pointer"
         >
-          Details
+          <SlEye size={20} className="text-text-para" />
         </button>
 
         <button
           type="button"
           onClick={() => onApproveClick(row)}
-          className="bg-bg-primary cursor-pointer text-surface font-poppins text-[0.875rem] rounded-[6.125rem] px-[1rem] py-[0.5rem]"
+          className="p-[0.375rem] rounded-[0.25rem] bg-accent-success-light cursor-pointer"
         >
-          Approve
+          <FaCheck size={20} className="text-text-success" />
+        </button>
+        <button
+          type="button"
+          onClick={() => onRejectClick(row)}
+          className="p-[0.375rem] rounded-[0.25rem] bg-accent-danger/3 cursor-pointer"
+        >
+          <IoCloseOutline size={20} className="text-accent-danger " />
         </button>
       </div>
     ),
@@ -164,17 +177,24 @@ export const recommendationTableColumns = ({ onDetailsClick , onApproveClick,}) 
         <button
           type="button"
           onClick={() => onDetailsClick(row)}
-          className="border cursor-pointer border-border-primary text-text-primary text-[0.875rem] rounded-[6.125rem] px-[1rem] py-[0.5rem]"
+          className="bg-surface-light p-[0.375rem] rounded-[0.25rem] cursor-pointer"
         >
-          Details
+          <SlEye size={20} className="text-text-para" />
         </button>
 
         <button
           type="button"
           onClick={() => onApproveClick(row)}
-          className="bg-bg-primary cursor-pointer text-surface font-poppins text-[0.875rem] rounded-[6.125rem] px-[1rem] py-[0.5rem]"
+          className="p-[0.375rem] rounded-[0.25rem] bg-accent-success-light cursor-pointer"
         >
-          Approve
+          <FaCheck size={20} className="text-text-success" />
+        </button>
+        <button
+          type="button"
+          onClick={() => onRejectClick(row)}
+          className="p-[0.375rem] rounded-[0.25rem] bg-accent-danger/3 cursor-pointer"
+        >
+          <IoCloseOutline size={20} className="text-accent-danger " />
         </button>
       </div>
     ),

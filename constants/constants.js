@@ -1,14 +1,9 @@
-import { MdHome } from "react-icons/md";
-import { LuFileText, LuMapPin, LuSparkles } from "react-icons/lu";
+import { MdOutlineDashboard, MdThumbUpOffAlt } from "react-icons/md";
+import { LuSparkles } from "react-icons/lu";
 
 export const navItems = [
-  { href: "/", label: "Dashboard", icon: MdHome },
-  { href: "/recommendation", label: "Recommendation", icon: LuFileText },
-  {
-    href: "/subrub-management",
-    label: "Subrub Management",
-    icon: LuMapPin,
-  },
+  { href: "/", label: "Dashboard", icon: MdOutlineDashboard },
+  { href: "/recommendation", label: "Recommendation", icon: MdThumbUpOffAlt },
   { href: "/sponsorship", label: "Sponsorship", icon: LuSparkles },
 ];
 
@@ -77,19 +72,28 @@ export const topRecommenders = [
   },
 ];
 
-export const getColorThemeBorder = (key) => {
+export const getColorThemeBorder = (key, section) => {
   const themes = [
     {
       key: "plumber",
-      theme: "border-bg-primary",
+      theme:
+        section === "mainDiv"
+          ? "border-bg-primary"
+          : "bg-bg-primary/10 text-bg-primary",
     },
     {
       key: "handyman",
-      theme: "border-bg-secondary",
+      theme:
+        section === "mainDiv"
+          ? "border-bg-secondary"
+          : "bg-bg-secondary/10 text-bg-secondary",
     },
     {
       key: "electrician",
-      theme: "border-bg-green",
+      theme:
+        section === "mainDiv"
+          ? "border-bg-green"
+          : "bg-bg-green/10 text-bg-green",
     },
     {
       key: "Manly",
@@ -321,5 +325,187 @@ export const recommendationsData = [
     trustedIn: "Manly",
     trustPoints: ["Friendly", "Affordable"],
     recommendations: 14,
+  },
+];
+
+export const reviews = [
+  {
+    name: "Alex",
+    category: "Plumber",
+    location: "Curl Curl",
+    email: "olivia@gmail.com",
+    phone: "+138474957",
+    address: "Smith Street",
+    date: "2 Weeks Ago",
+    review:
+      "Shannon was absolutely brilliant! He showed up exactly when he said he would and fixed our leaking tap quickly. Super friendly and fair pricing.",
+    tags: [
+      "Fast Response",
+      "Reliable",
+      "Fair Price",
+      "Quality Work",
+      "Responsive",
+      "Trustworthy",
+    ],
+  },
+  {
+    name: "Emma",
+    category: "Electrician",
+    location: "Manly",
+    email: "emma@gmail.com",
+    phone: "+138474958",
+    address: "Ocean Avenue",
+    date: "1 Week Ago",
+    review:
+      "Fantastic electrician! Arrived on time and fixed our lighting issue within an hour. Very professional and clean work.",
+    tags: ["Professional", "Clean Work", "Affordable", "Punctual"],
+  },
+  {
+    name: "James",
+    category: "Painter",
+    location: "Freshwater",
+    email: "james@gmail.com",
+    phone: "+138474959",
+    address: "Palm Street",
+    date: "3 Days Ago",
+    review:
+      "Did an amazing paint job in our living room. Smooth finish and very detail-oriented.",
+    tags: ["Quality Work", "Neat", "Friendly", "Recommended"],
+  },
+  {
+    name: "Sophia",
+    category: "Gardener",
+    location: "Dee Why",
+    email: "sophia@gmail.com",
+    phone: "+138474960",
+    address: "Green Road",
+    date: "5 Days Ago",
+    review:
+      "Our backyard has never looked this good. Very hardworking and knowledgeable gardener.",
+    tags: ["Efficient", "Hardworking", "Friendly"],
+  },
+  {
+    name: "Liam",
+    category: "Carpenter",
+    location: "Brookvale",
+    email: "liam@gmail.com",
+    phone: "+138474961",
+    address: "Wood Lane",
+    date: "4 Days Ago",
+    review:
+      "Built custom shelves for us and they turned out perfect. Great craftsmanship.",
+    tags: ["Skilled", "Creative", "Reliable"],
+  },
+  {
+    name: "Olivia",
+    category: "Cleaner",
+    location: "Narrabeen",
+    email: "olivia2@gmail.com",
+    phone: "+138474962",
+    address: "Lake View St",
+    date: "6 Days Ago",
+    review:
+      "Very thorough cleaning service. Left the house spotless and smelling fresh.",
+    tags: ["Spotless", "Professional", "Quick Service"],
+  },
+  {
+    name: "Noah",
+    category: "Mechanic",
+    location: "Mona Vale",
+    email: "noah@gmail.com",
+    phone: "+138474963",
+    address: "Garage Street",
+    date: "1 Day Ago",
+    review:
+      "Diagnosed and fixed my car issue quickly. Honest pricing and great communication.",
+    tags: ["Honest", "Fast", "Experienced"],
+  },
+  {
+    name: "Ava",
+    category: "Dog Walker",
+    location: "Collaroy",
+    email: "ava@gmail.com",
+    phone: "+138474964",
+    address: "Beach Road",
+    date: "2 Days Ago",
+    review: "My dog absolutely loves her! Very caring and dependable service.",
+    tags: ["Caring", "Reliable", "Friendly"],
+  },
+  {
+    name: "William",
+    category: "Photographer",
+    location: "Fairlight",
+    email: "william@gmail.com",
+    phone: "+138474965",
+    address: "Sunset Blvd",
+    date: "1 Month Ago",
+    review: "Captured our family event beautifully. Photos turned out amazing.",
+    tags: ["Creative", "Professional", "Talented"],
+  },
+  {
+    name: "Mia",
+    category: "Tutor",
+    location: "Balgowlah",
+    email: "mia@gmail.com",
+    phone: "+138474966",
+    address: "Education Street",
+    date: "3 Weeks Ago",
+    review:
+      "Excellent tutor with lots of patience. Helped my son improve his math grades significantly.",
+    tags: ["Patient", "Knowledgeable", "Supportive"],
+  },
+];
+
+export const fieldsConfig = [
+  {
+    type: "text",
+    name: "sponsorName",
+    label: "Sponsor Name",
+    placeholder: "e.g. Sally",
+    required: true,
+  },
+  {
+    type: "text",
+    name: "businessName",
+    label: "Business Name",
+    placeholder: "e.g. Apex Finance",
+    required: true,
+  },
+  {
+    type: "text",
+    name: "businessName2",
+    label: "Business Name",
+    placeholder: "e.g. Apex Finance",
+    required: true,
+  },
+  {
+    type: "select",
+    name: "suburb",
+    label: "Suburb",
+    placeholder: "Select suburb",
+    required: true,
+    options: suburbs,
+  },
+  {
+    type: "radio-pill",
+    name: "businessCategory",
+    label: "Business Category",
+    required: true,
+    options: [
+      { label: "Mortgage Broker", value: "mortgage-broker" },
+      { label: "Real Estate Agent", value: "real-estate-agent" },
+      { label: "Conveyancer", value: "conveyancer" },
+    ],
+  },
+  {
+    type: "file-upload",
+    name: "sponsorPhoto",
+    label: "Sponsor Photo",
+  },
+  {
+    type: "phone",
+    name: "callButtonLink",
+    label: "Call Button Link (Phone Number)",
+    required: true,
   },
 ];

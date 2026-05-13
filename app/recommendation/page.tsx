@@ -39,12 +39,7 @@ export default function RecommendationPage() {
     currentPage * ITEMS_PER_PAGE,
   );
   return (
-    <AdminShell
-      headerTitle="Recommendation"
-      headerDate="Tuesday, May 5, 2026"
-      userName="John Alex"
-      userRole="Admin"
-    >
+    <>
       {/* HEADER */}
 
       <div className="px-10 py-5">
@@ -90,6 +85,6 @@ export default function RecommendationPage() {
           />
         </div>
       </div>
-    </AdminShell>
+    </>
   );
 }
