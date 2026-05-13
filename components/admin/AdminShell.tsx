@@ -25,6 +25,8 @@ export function AdminShell({
     if (href === "/recommendation")
       return pathname.startsWith("/recommendation");
     if (href === "/recommendation") return pathname === "/recommendation";
+    if (href === "/sponsorship") return pathname.startsWith("/sponsorship");
+    if (href === "/sponsorship") return pathname === "/sponsorship";
     return pathname === href;
   };
 
@@ -57,7 +59,7 @@ export function AdminShell({
         <div className="absolute bottom-0 left-0 right-0">
           <div className="my-6 h-px w-full bg-border-primary" />
           <Link
-            href="#"
+            href="/login"
             onClick={() => mobile && setOpen(false)}
             className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-text-primary"
           >

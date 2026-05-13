@@ -209,3 +209,34 @@ export type formFieldsConfigType = {
   placeholder: string;
   required: boolean;
 };
+
+export type SponsorCategory =
+  | "mortgage-broker"
+  | "real-estate-agent"
+  | "conveyancer";
+
+export interface Sponsorship {
+  id: string;
+  sponsorName: string;
+  businessName: string;
+  category: SponsorCategory;
+  suburb: string;
+}
+
+export const CATEGORY_META: Record<
+  SponsorCategory,
+  { label: string; color: string }
+> = {
+  "mortgage-broker": { label: "Mortgage Broker", color: "#F58D7E" },
+  "real-estate-agent": { label: "Real Estate Agent", color: "#3B82F6" },
+  conveyancer: { label: "Conveyancer", color: "#10B981" },
+};
+
+export type PasswordInputProps = {
+  label: string;
+  name: string;
+  value: string;
+  placeholder?: string;
+  required?: boolean;
+  onChange: (value: string) => void;
+};

@@ -42,16 +42,7 @@ export default function RootLayout({
       lang="en"
       className={`${manrope.variable} ${poppins.variable} ${hankenGrotesk.variable} ${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <AdminShell
-          headerTitle="Dashboard Overview"
-          headerDate="Tuesday, May 5, 2026"
-          userName="John Alex"
-          userRole="Admin"
-        >
-          {children}
-        </AdminShell>
-      </body>
+      <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }

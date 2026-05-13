@@ -1,10 +1,10 @@
 import { MdOutlineDashboard, MdThumbUpOffAlt } from "react-icons/md";
-import { LuSparkles } from "react-icons/lu";
+import { TbLayoutNavbarFilled } from "react-icons/tb";
 
 export const navItems = [
   { href: "/", label: "Dashboard", icon: MdOutlineDashboard },
   { href: "/recommendation", label: "Recommendation", icon: MdThumbUpOffAlt },
-  { href: "/sponsorship", label: "Sponsorship", icon: LuSparkles },
+  { href: "/sponsorship", label: "Sponsorship", icon: TbLayoutNavbarFilled },
 ];
 
 export const kpiStats = [
@@ -509,3 +509,5 @@ export const fieldsConfig = [
     required: true,
   },
 ];
+
+
