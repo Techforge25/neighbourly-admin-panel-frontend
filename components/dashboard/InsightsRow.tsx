@@ -40,7 +40,7 @@ export function InsightsRow() {
                 <span className="font-poppins font-semibold text-[1.125rem] text-text-para">
                   {r.count}
                 </span>
-                <span className="bg-text-para h-[10px] w-[10px] rounded-full inline-block mx-1 " />
+                <span className="bg-text-para h-[5px] w-[5px] rounded-full inline-block mb-0.5 mx-1 " />
                 <span className="text-text-para font-poppins font-normal text-[0.875rem] ">
                   Recommendation
                 </span>
@@ -52,7 +52,7 @@ export function InsightsRow() {
 
       <div className="rounded-2xl border border-border-primary bg-surface p-5 shadow-card sm:p-6">
         <h2 className="font-manrope font-bold text-text-primary text-[1.25rem]">
-          Recent Recommendations to review
+          Recent Recommendations To Review
         </h2>
         <hr className="my-5 border-border-primary" />
         <ul className="flex flex-col gap-3">
