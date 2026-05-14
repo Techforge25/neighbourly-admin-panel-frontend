@@ -247,7 +247,7 @@ export const suburbs = [
 
 export const recommendationsData = [
   {
-    id: 1,
+    id: "rec_001",
     name: "Shannon",
     company: "A to Z Plumbing",
     category: "plumber",
@@ -257,7 +257,7 @@ export const recommendationsData = [
     recommendations: 4,
   },
   {
-    id: 2,
+    id: "rec_002",
     name: "Ben",
     company: "Fresh Electrical",
     category: "electrician",
@@ -267,7 +267,7 @@ export const recommendationsData = [
     recommendations: 24,
   },
   {
-    id: 3,
+    id: "rec_003",
     name: "Cameron",
     company: "Manwaring Constructions",
     category: "handyman",
@@ -277,7 +277,7 @@ export const recommendationsData = [
     recommendations: 18,
   },
   {
-    id: 4,
+    id: "rec_004",
     name: "Alex",
     company: "Fresh Electrical",
     category: "gardner",
@@ -287,7 +287,7 @@ export const recommendationsData = [
     recommendations: 16,
   },
   {
-    id: 5,
+    id: "rec_005",
     name: "John",
     company: "Storm Plumbing",
     category: "plumber",
@@ -297,7 +297,7 @@ export const recommendationsData = [
     recommendations: 34,
   },
   {
-    id: 6,
+    id: "rec_006",
     name: "Mark",
     company: "Clean House",
     category: "cleaners",
@@ -307,7 +307,7 @@ export const recommendationsData = [
     recommendations: 10,
   },
   {
-    id: 7,
+    id: "rec_007",
     name: "Smith",
     company: "Electric Hub",
     category: "electrician",
@@ -317,7 +317,7 @@ export const recommendationsData = [
     recommendations: 20,
   },
   {
-    id: 8,
+    id: "rec_008",
     name: "Harry",
     company: "HandyFix",
     category: "handyman",
@@ -472,13 +472,6 @@ export const fieldsConfig = [
     required: true,
   },
   {
-    type: "text",
-    name: "businessName2",
-    label: "Business Name",
-    placeholder: "e.g. Apex Finance",
-    required: true,
-  },
-  {
     type: "select",
     name: "suburb",
     label: "Suburb",
@@ -509,5 +502,3 @@ export const fieldsConfig = [
     required: true,
   },
 ];
-
-

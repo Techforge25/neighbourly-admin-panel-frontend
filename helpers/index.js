@@ -203,18 +203,25 @@ export const recommendationTableColumns = ({
   },
 ];
 
-export const Sponsorshipcolumns = [
+
+// 🔑 Now a FUNCTION that takes handlers — not a constant
+export const getSponsorshipColumns = (
+  {onEdit,
+  onDelete}
+)=> [
   {
     key: "sponsorName",
     header: "Sponsor Name",
     render: (row) => (
-      <span className="font-semibold text-gray-900">{row.sponsorName}</span>
+      <span className="font-semibold text-text-primary">{row.sponsorName}</span>
     ),
   },
   {
     key: "businessName",
     header: "Business Name",
-    render: (row) => <span className="text-gray-600">{row.businessName}</span>,
+    render: (row) => (
+      <span className="text-text-para">{row.businessName}</span>
+    ),
   },
   {
     key: "category",
@@ -232,7 +239,7 @@ export const Sponsorshipcolumns = [
     key: "suburb",
     header: "Suburb",
     render: (row) => (
-      <span className="inline-block rounded-full border border-gray-200 px-4 py-1 text-xs text-gray-700">
+      <span className="inline-block rounded-full border border-border-secondary px-4 py-1 text-xs text-text-para">
         {row.suburb}
       </span>
     ),
@@ -246,7 +253,7 @@ export const Sponsorshipcolumns = [
         <button
           type="button"
           onClick={() => onEdit(row)}
-          className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-200 text-gray-600 hover:bg-gray-50"
+          className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border border-border-secondary text-text-para hover:bg-surface-muted"
           aria-label="Edit"
         >
           <LuPencil size={15} />
@@ -254,7 +261,7 @@ export const Sponsorshipcolumns = [
         <button
           type="button"
           onClick={() => onDelete(row)}
-          className="flex h-8 w-8 items-center justify-center rounded-md text-red-500 hover:bg-red-50"
+          className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-md text-accent-danger hover:bg-red-50"
           aria-label="Delete"
         >
           <LuTrash2 size={16} />

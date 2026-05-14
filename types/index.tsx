@@ -48,14 +48,16 @@ export interface Props<T> {
   onPrevious?: () => void;
 }
 
-export interface FilterBarProps {
+export type FilterBarProps = {
   search: string;
   setSearch: (value: string) => void;
+
   selectedCategory: string;
   setSelectedCategory: (value: string) => void;
+
   selectedSuburb: string;
-  setSelesectedSuburb: (value: string) => void;
-}
+  setSelectedSuburb: (value: string) => void; // ✅ FIX: was setSelesectedSuburb
+};
 
 export interface PaginationProps {
   currentPage: number;
@@ -64,7 +66,7 @@ export interface PaginationProps {
 }
 
 export interface Recommendation {
-  id: number;
+  id: string;
   name: string;
   company: string;
   category: string;
@@ -91,15 +93,6 @@ export interface BackPageProps {
   trade: string;
   business: string;
 }
-
-export type ConfirmDeleteModalRef = {
-  open: () => void;
-  close: () => void;
-};
-
-export type ConfirmDeleteModalProps = {
-  onConfirm?: () => void;
-};
 
 export type FieldType =
   | "text"
@@ -227,9 +220,9 @@ export const CATEGORY_META: Record<
   SponsorCategory,
   { label: string; color: string }
 > = {
-  "mortgage-broker": { label: "Mortgage Broker", color: "#F58D7E" },
-  "real-estate-agent": { label: "Real Estate Agent", color: "#3B82F6" },
-  conveyancer: { label: "Conveyancer", color: "#10B981" },
+  "mortgage-broker": { label: "Mortgage Broker", color: "#FE9A86" },
+  "real-estate-agent": { label: "Real Estate Agent", color: "#718496" },
+  conveyancer: { label: "Conveyancer", color: "#8FA58A" },
 };
 
 export type PasswordInputProps = {
@@ -240,3 +233,43 @@ export type PasswordInputProps = {
   required?: boolean;
   onChange: (value: string) => void;
 };
+
+export type FilterPillSelectProps = {
+  label: string;
+  value: string;
+  options: string[];
+  onChange: (value: string) => void;
+  menuWidth?: string;
+};
+
+export interface ConfirmDeleteModalProps<T = unknown> {
+  data: T | null;
+  title?: string;
+  description?: ReactNode;
+  confirmLabel?: string;
+  cancelLabel?: string;
+  warningText?: string;
+  onConfirm: (data: T) => void;
+}
+
+export interface ConfirmDeleteModalRef {
+  open: () => void;
+  close: () => void;
+}
+
+
+export interface SignOutModalProps {
+  // Content (all optional with sensible defaults)
+  title?: string;
+  description?: string;
+  confirmLabel?: string;
+  cancelLabel?: string;
+
+  // Action
+  onConfirm: () => void;
+}
+
+export interface SignOutModalRef {
+  open: () => void;
+  close: () => void;
+}

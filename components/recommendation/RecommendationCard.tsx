@@ -1,9 +1,10 @@
+"use client";
 import { getColorThemeText } from "@/constants/constants";
 import { ConfirmDeleteModalRef, Recommendation } from "@/types";
 import { useRef } from "react";
 import { IoEye } from "react-icons/io5";
-import { LuTrash2 } from "react-icons/lu";
 import ConfirmDeleteModal from "../ui/ConfirmDeleteModal";
+import { useRouter } from "next/navigation";
 
 interface Props {
   item: Recommendation;
@@ -11,7 +12,7 @@ interface Props {
 
 export default function RecommendationCard({ item }: Props) {
   const modalRef = useRef<ConfirmDeleteModalRef>(null);
-
+  const router = useRouter();
   const handleDelete = () => {
     console.log("Sponsorship deleted!");
     // your delete API call here
@@ -53,16 +54,15 @@ export default function RecommendationCard({ item }: Props) {
         </div>
 
         <div className="mt-4 flex justify-end gap-4 border-t pt-4">
-          <button className="text-gray-500 hover:text-blue-600">
+          <button
+            onClick={() => router.push(`/recommendationDetails/${item.id}`)}
+            className="text-text-para cursor-pointer "
+          >
             <IoEye size={18} />
-          </button>
-
-          <button onClick={() => modalRef.current?.open()} className="text-red-500 hover:text-red-700">
-            <LuTrash2 size={18} />
           </button>
         </div>
       </div>
-      <ConfirmDeleteModal ref={modalRef} onConfirm={handleDelete} />
+      <ConfirmDeleteModal data={item} ref={modalRef} onConfirm={handleDelete} />
     </>
   );
 }
