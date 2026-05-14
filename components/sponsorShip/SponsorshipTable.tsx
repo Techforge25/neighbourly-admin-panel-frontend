@@ -1,5 +1,6 @@
-import { Sponsorshipcolumns } from "@/helpers";
+import { getSponsorshipColumns } from "@/helpers";
 import { Sponsorship } from "@/types";
+
 type Props = {
   data: Sponsorship[];
   onEdit: (row: Sponsorship) => void;
@@ -7,50 +8,75 @@ type Props = {
 };
 
 export default function SponsorshipTable({ data, onEdit, onDelete }: Props) {
-  // 🔑 Columns config — add/remove/reorder here
+  const columns = getSponsorshipColumns({ onEdit, onDelete });
+
+  // Empty state
+  if (data.length === 0) {
+    return (
+      <div className="rounded-xl border border-border-secondary bg-white px-6 py-10 text-center text-sm text-text-para">
+        No sponsorships found
+      </div>
+    );
+  }
 
   return (
-    <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
-      <table className="w-full">
-        <thead>
-          <tr className="border-b border-gray-200 bg-gray-50/50">
-            {Sponsorshipcolumns.map((col) => (
-              <th
-                key={col.key}
-                style={{ width: col.width }}
-                className="px-6 py-3 text-left text-sm font-semibold text-gray-700"
-              >
-                {col.header}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {data.length === 0 ? (
-            <tr>
-              <td
-                colSpan={Sponsorshipcolumns.length}
-                className="px-6 py-10 text-center text-sm text-gray-400"
-              >
-                No sponsorships found
-              </td>
-            </tr>
-          ) : (
-            data.map((row) => (
-              <tr
-                key={row.id}
-                className="border-b border-gray-100 last:border-0 hover:bg-gray-50/40"
-              >
-                {Sponsorshipcolumns.map((col) => (
-                  <td key={col.key} className="px-6 py-4 text-sm">
-                    {col.render(row)}
-                  </td>
+    <>
+      {/* ========== DESKTOP / TABLET ========== */}
+      <div className="hidden overflow-hidden rounded-xl border border-border-secondary bg-white lg:block">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[700px]">
+            <thead>
+              <tr className="border-b border-border-secondary bg-surface-muted-primary">
+                {columns.map((col) => (
+                  <th
+                    key={col.key}
+                    style={{ width: col.width }}
+                    className="px-6 py-3 text-left text-sm font-semibold text-text-primary"
+                  >
+                    {col.header}
+                  </th>
                 ))}
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
-    </div>
+            </thead>
+            <tbody>
+              {data.map((row) => (
+                <tr
+                  key={row.id}
+                  className="border-b border-border-secondary/50 last:border-0 hover:bg-surface-muted/40"
+                >
+                  {columns.map((col) => (
+                    <td key={col.key} className="px-6 py-4 text-sm">
+                      {col.render(row)}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* ========== MOBILE: Card view ========== */}
+      <div className="flex flex-col gap-3 lg:hidden">
+        {data.map((row) => (
+          <div
+            key={row.id}
+            className="rounded-xl border border-border-secondary bg-white p-4"
+          >
+            {columns.map((col) => (
+              <div
+                key={col.key}
+                className="flex items-start justify-between gap-3 border-b border-border-secondary/50 py-2.5 first:pt-0 last:border-0 last:pb-0"
+              >
+                <span className="text-xs font-medium uppercase tracking-wide text-text-para">
+                  {col.header}
+                </span>
+                <div className="text-right text-sm">{col.render(row)}</div>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </>
   );
 }

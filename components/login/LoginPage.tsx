@@ -35,10 +35,10 @@ export default function LoginPage() {
       <div className="w-full max-w-[31.25rem] rounded-2xl bg-surface p-6 shadow-md sm:p-8">
         {/* Heading */}
         <div className="mb-6 text-center">
-          <h1 className="text-xl font-semibold text-text-primary sm:text-2xl">
+          <h1 className="font-manrope font-bold text-[1.25rem] text-text-primary ">
             Login
           </h1>
-          <p className="mt-2 text-sm text-text-para">
+          <p className="mt-2 font-poppins font-normal text-[1rem] text-text-para md:max-w-[22rem] mx-auto ">
             Enter your credentials to manage your suburb says
           </p>
         </div>

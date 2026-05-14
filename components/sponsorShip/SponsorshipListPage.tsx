@@ -1,11 +1,12 @@
 "use client";
-import { Sponsorship } from "@/types";
-import { useMemo, useState } from "react";
+import { CATEGORY_META, ConfirmDeleteModalRef, Sponsorship } from "@/types";
+import { useMemo, useRef, useState } from "react";
 import FilterDropdown from "./FilterDropdown";
 import { LuPlus } from "react-icons/lu";
 import SponsorshipTable from "./SponsorshipTable";
 import { suburbs } from "@/constants/constants";
 import { useRouter } from "next/navigation";
+import ConfirmDeleteModal from "../ui/ConfirmDeleteModal";
 
 // Mock data — replace with API call
 const mockData: Sponsorship[] = [
@@ -34,6 +35,8 @@ const mockData: Sponsorship[] = [
 
 export default function SponsorshipListPage() {
   const [selectedSuburb, setSelectedSuburb] = useState<string>("All");
+  const [pendingDelete, setPendingDelete] = useState<Sponsorship | null>(null);
+  const deleteModalRef = useRef<ConfirmDeleteModalRef>(null);
   const router = useRouter();
 
   // Filter logic
@@ -43,17 +46,26 @@ export default function SponsorshipListPage() {
   }, [selectedSuburb]);
 
   const handleAddSponsorship = () => {
-    console.log("Navigate to Add Sponsorship page");
     router.push("/sponsorship/new");
   };
 
   const handleEdit = (row: Sponsorship) => {
     console.log("Edit:", row);
+    router.push(`/sponsorship/edit/${row.id}`);
   };
 
+  // 🔑 Step 1: Store row + open modal
   const handleDelete = (row: Sponsorship) => {
-    console.log("Delete:", row);
-    // open ConfirmDeleteModal here (from earlier!)
+    setPendingDelete(row);
+    deleteModalRef.current?.open();
+  };
+
+  // 🔑 Step 2: Modal calls this with the data back
+  const confirmDelete = (row: Sponsorship) => {
+    console.log("✅ Deleted:", row);
+    // your API call here:
+    // await deleteSponsorshipApi(row.id);
+    setPendingDelete(null);
   };
 
   return (
@@ -94,6 +106,40 @@ export default function SponsorshipListPage() {
           onDelete={handleDelete}
         />
       </div>
+      <ConfirmDeleteModal<Sponsorship>
+        ref={deleteModalRef}
+        data={pendingDelete}
+        title="Delete Active Sponsor?"
+        description={
+          pendingDelete && (
+            <>
+              Are you sure you want to delete this sponsorship? This will
+              immediately remove{" "}
+              <span className="font-semibold text-text-primary">
+                {pendingDelete.sponsorName}
+              </span>{" "}
+              from the{" "}
+              <span
+                className="font-semibold"
+                style={{
+                  color: CATEGORY_META[pendingDelete.category].color,
+                }}
+              >
+                "{CATEGORY_META[pendingDelete.category].label}"
+              </span>{" "}
+              category in{" "}
+              <span className="font-semibold text-text-primary">
+                {pendingDelete.businessName}
+              </span>
+              .
+            </>
+          )
+        }
+        warningText="This action cannot be undone."
+        confirmLabel="Delete sponsorship"
+        cancelLabel="Cancel"
+        onConfirm={confirmDelete}
+      />
     </div>
   );
 }

@@ -1,18 +1,18 @@
 "use client";
 import { ConfirmDeleteModalRef, Recommendation } from "@/types";
 import { IoEye } from "react-icons/io5";
-import { LuTrash2 } from "react-icons/lu";
 import TableHeader from "./TableHeader";
 import { getColorThemeText } from "@/constants/constants";
 import { useRef } from "react";
 import ConfirmDeleteModal from "../ui/ConfirmDeleteModal";
+import { useRouter } from "next/navigation";
 
 interface Props {
   data: Recommendation[];
 }
 
 export default function RecommendationsTable({ data }: Props) {
-  const modalRef = useRef<ConfirmDeleteModalRef>(null);
+  const router = useRouter();
 
   const handleDelete = () => {
     console.log("Sponsorship deleted!");
@@ -62,12 +62,13 @@ export default function RecommendationsTable({ data }: Props) {
 
               <td className="px-6 py-5">
                 <div className="flex justify-center gap-4">
-                  <button className="text-gray-500 hover:text-blue-600">
+                  <button
+                    onClick={() =>
+                      router.push(`/recommendationDetails/${item.id}`)
+                    }
+                    className="text-text-para cursor-pointer"
+                  >
                     <IoEye size={18} />
-                  </button>
-
-                  <button onClick={() => modalRef.current?.open()} className="text-red-500 hover:text-red-700">
-                    <LuTrash2 size={18} />
                   </button>
                 </div>
               </td>
@@ -75,7 +76,6 @@ export default function RecommendationsTable({ data }: Props) {
           ))}
         </tbody>
       </table>
-       <ConfirmDeleteModal ref={modalRef} onConfirm={handleDelete} />
     </div>
   );
 }

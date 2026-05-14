@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { usePathname } from "next/navigation";
+import { useRef, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { MdLogout, MdOutlineMenu } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import Image from "next/image";
-import { AdminShellProps } from "@/types";
+import { AdminShellProps, SignOutModalRef } from "@/types";
 import { navItems } from "@/constants/constants";
+import SignOutModal from "../ui/SignOutModal";
 
 export function AdminShell({
   headerTitle,
@@ -18,24 +19,39 @@ export function AdminShell({
 }: AdminShellProps) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const userImage = "/Images/adminAvatar.svg";
+
+  // 🔑 Sign-out modal ref
+  const signOutModalRef = useRef<SignOutModalRef>(null);
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
     if (href === "/recommendation")
       return pathname.startsWith("/recommendation");
-    if (href === "/recommendation") return pathname === "/recommendation";
     if (href === "/sponsorship") return pathname.startsWith("/sponsorship");
-    if (href === "/sponsorship") return pathname === "/sponsorship";
     return pathname === href;
+  };
+
+  // 🔑 Step 1: Sign out click → open modal (don't navigate yet)
+  const handleSignOutClick = (e: React.MouseEvent) => {
+    e.preventDefault(); // prevent <Link> navigation
+    setOpen(false); // close mobile sidebar if open
+    signOutModalRef.current?.open();
+  };
+
+  // 🔑 Step 2: Modal confirmed → actual sign out logic
+  const handleSignOutConfirm = () => {
+    console.log("✅ User signed out");
+    // your cleanup logic:
+    // localStorage.removeItem("token");
+    // await signOutApi();
+    router.push("/login");
   };
 
   function NavList({ mobile = false }: { mobile?: boolean }) {
     return (
-      <nav
-        className={mobile ? "flex flex-col gap-1" : "flex flex-col gap-1"}
-        aria-label="Main navigation"
-      >
+      <nav className="flex flex-col gap-1" aria-label="Main navigation">
         {navItems.map(({ href, label, icon: Icon }) => (
           <Link
             key={label}
@@ -58,30 +74,31 @@ export function AdminShell({
 
         <div className="absolute bottom-0 left-0 right-0">
           <div className="my-6 h-px w-full bg-border-primary" />
-          <Link
-            href="/login"
-            onClick={() => mobile && setOpen(false)}
-            className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-text-primary"
+          {/* 🔑 Sign-out: button instead of Link */}
+          <button
+            type="button"
+            onClick={handleSignOutClick}
+            className="flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-text-primary hover:bg-surface-muted-secondary transition"
           >
             <MdLogout className="h-5 w-5 shrink-0" aria-hidden />
             Sign out
-          </Link>
+          </button>
         </div>
       </nav>
     );
   }
 
   return (
-    <div className="relative min-h-screen border20 border-accent-danger">
+    <div className="relative min-h-screen">
       {/* Mobile sidebar overlay */}
-      {open ? (
+      {open && (
         <button
           type="button"
           className="fixed inset-0 z-40 bg-black/40 lg:hidden"
           aria-label="Close menu"
           onClick={() => setOpen(false)}
         />
-      ) : null}
+      )}
 
       {/* Sidebar */}
       <aside
@@ -98,7 +115,7 @@ export function AdminShell({
               width={1000}
               height={1000}
               priority
-              className="lg:w-[12.688rem] w-[10.344rem] "
+              className="lg:w-[12.688rem] w-[10.344rem]"
             />
           </Link>
           <button
@@ -110,7 +127,7 @@ export function AdminShell({
             <RxCross2 className="h-5 w-5 text-text-primary cursor-pointer" />
           </button>
         </div>
-        <div className="flex flex-1 flex-col px-5 py-6 cursor-pointer">
+        <div className="flex flex-1 flex-col px-5 py-6 cursor-pointer relative">
           <NavList />
         </div>
       </aside>
@@ -130,10 +147,10 @@ export function AdminShell({
               <MdOutlineMenu className="h-6 w-6 cursor-pointer" />
             </button>
             <div>
-              <p className="font-manrope sm:text-[1.25rem] text-[1rem] font-semibold text-text-primary ">
+              <p className="font-manrope sm:text-[1.25rem] text-[1rem] font-semibold text-text-primary">
                 {headerTitle}
               </p>
-              <p className="font-poppins text-text-para text-[0.75rem]  ">
+              <p className="font-poppins text-text-para text-[0.75rem]">
                 {headerDate}
               </p>
             </div>
@@ -169,10 +186,16 @@ export function AdminShell({
           </div>
         </header>
 
-        <main className=" bg-foreground  px-4 py-8 sm:px-6 lg:px-10">
+        <main className="bg-foreground px-4 py-8 sm:px-6 lg:px-10">
           {children}
         </main>
       </div>
+
+      {/* 🔑 Sign-out Modal — mounted at shell level */}
+      <SignOutModal
+        ref={signOutModalRef}
+        onConfirm={handleSignOutConfirm}
+      />
     </div>
   );
 }

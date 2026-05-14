@@ -61,7 +61,7 @@ export default function RecommendationPage() {
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
             selectedSuburb={selectedSuburb}
-            setSelesectedSuburb={setSelectedSuburb}
+            setSelectedSuburb={setSelectedSuburb}
           />
 
           {/* DESKTOP TABLE */}

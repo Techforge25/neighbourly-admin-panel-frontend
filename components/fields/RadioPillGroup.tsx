@@ -1,4 +1,6 @@
+"use client";
 import { RadioPillGroupProps } from "@/types";
+import { useEffect } from "react";
 
 export default function RadioPillGroup({
   label,
@@ -8,10 +10,15 @@ export default function RadioPillGroup({
   options,
   onChange,
 }: RadioPillGroupProps) {
+  useEffect(() => {
+    if (!value && options.length > 0) {
+      onChange(options[0].value);
+    }
+  }, [value, options, onChange]);
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-sm font-medium text-text-primary">
-        {label} {required && <span className="text-red-500">*</span>}
+      <label className="font-manrope text-[0.875rem] font-medium text-text-primary">
+        {label} {required && <span className="text-accent-danger">*</span>}
       </label>
       <div className="flex flex-wrap gap-3">
         {options.map((opt) => {

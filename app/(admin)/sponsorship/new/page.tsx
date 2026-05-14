@@ -56,6 +56,9 @@ const page = () => {
               Save and Publish <LuPlus size={16} />
             </button>
             <button
+              onClick={() => {
+                router.back();
+              }}
               type="button"
               className="rounded-full border border-gray-200 px-6 py-3 font-medium text-text-primary hover:bg-gray-50 transition"
             >

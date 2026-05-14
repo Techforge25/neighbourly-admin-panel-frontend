@@ -9,7 +9,7 @@ import { IoEyeOutline } from "react-icons/io5";
 
 export function InsightsRow() {
   return (
-    <section className="mt-10 grid gap-6 lg:grid-cols-[1.45fr_1fr] lg:gap-8">
+    <section className="mt-10 grid gap-6 xl:grid-cols-[1.45fr_1fr] lg:gap-8">
       <div className="rounded-2xl border border-border-primary bg-surface p-5 shadow-card sm:p-6">
         <h2 className="font-manrope font-bold text-text-primary text-[1.25rem]">
           Top Recommender By Category
