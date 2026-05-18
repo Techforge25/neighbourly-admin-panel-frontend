@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "constants/constants.js"  ],
+, "constants/constants.js", "helpers/index.js"  ],
   "exclude": ["node_modules"]
 }

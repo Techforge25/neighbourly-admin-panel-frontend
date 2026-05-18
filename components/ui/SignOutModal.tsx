@@ -1,6 +1,10 @@
 "use client";
 
+import { queryKeys } from "@/keys";
+import { logout } from "@/services/auth";
 import { SignOutModalProps, SignOutModalRef } from "@/types";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { ApiError } from "next/dist/server/api-utils";
 import {
   forwardRef,
   useImperativeHandle,
@@ -24,6 +28,19 @@ const SignOutModal = forwardRef(
   ) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
+    const { mutate, isPending } = useMutation({
+      mutationFn: logout,
+
+      onSuccess: () => {
+        onConfirm?.();
+        setIsOpen(false);
+      },
+
+      onError: (error: ApiError) => {
+        console.error("Logout failed:", error);
+      },
+    });
+
     useImperativeHandle(ref, () => ({
       open: () => setIsOpen(true),
       close: () => setIsOpen(false),
@@ -34,7 +51,7 @@ const SignOutModal = forwardRef(
     const handleClose = () => setIsOpen(false);
 
     const handleConfirm = () => {
-      onConfirm();
+      mutate();
       setIsOpen(false);
     };
 

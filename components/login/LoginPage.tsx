@@ -1,27 +1,41 @@
 "use client";
-import { useState } from "react";
 import TextInput from "../fields/TextInput";
 import PasswordInput from "../fields/PasswordInput";
 import { useRouter } from "next/navigation";
-
-type LoginForm = {
-  email: string;
-  password: string;
-};
+import { useForm } from "react-hook-form";
+import { login } from "@/services/auth";
+import { useMutation } from "@tanstack/react-query";
+import { LoginForm } from "@/types";
 
 export default function LoginPage() {
-  const [form, setForm] = useState<LoginForm>({ email: "", password: "" });
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleChange = (key: keyof LoginForm, value: string) => {
-    setForm((prev) => ({ ...prev, [key]: value }));
-  };
+  const {
+    register,
+    handleSubmit,
+    watch,
+  } = useForm<LoginForm>({
+    mode: "onChange",
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    router.push("/");
-    
+  const username = watch("username");
+  const password = watch("password");
+  const isDisabled = !username || !password
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (event: LoginForm) => {
+      try {
+        await login(event);
+        console.log('route')
+        router.push("/dashboard");
+      } catch (error) {
+        console.error("Login failed:", error)
+      }
+    },
+  })
+
+  const onSubmit = async (data: LoginForm) => {
+    mutate(data)
   };
 
   return (
@@ -43,32 +57,25 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <TextInput
-            label="Email"
-            name="email"
-            value={form.email}
+            label="Username or Email"
+            register={register('username')}
             placeholder="you@example.com"
-            required
-            onChange={(v) => handleChange("email", v)}
           />
 
           <PasswordInput
             label="Password"
-            name="password"
-            value={form.password}
+            register={register('password')}
             placeholder="Enter your password"
-            required
-            onChange={(v) => handleChange("password", v)}
           />
 
           <button
             type="submit"
-            disabled={loading}
-            className="mt-2 w-full cursor-pointer rounded-full bg-bg-primary py-3 font-medium text-surface transition hover:bg-bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
+            disabled={isDisabled}
+            className="mt-2 w-full cursor-pointer rounded-full bg-bg-primary py-3 font-medium text-surface transition hover:bg-bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {loading ? "Logging in..." : "Login"}
+            {isPending ? "Logging in..." : "Login"}
           </button>
         </form>
       </div>

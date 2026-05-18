@@ -1,14 +1,17 @@
-import { FormFieldConfig, FormFieldsProps, FormValues } from "@/types";
+import { FormFieldsProps } from "@/types";
 import TextInput from "../fields/TextInput";
 import PhoneInput from "../fields/PhoneInput";
 import SelectInput from "../fields/SelectInput";
 import RadioPillGroup from "../fields/RadioPillGroup";
 import FileUpload from "../fields/FileUpload";
 
-
-
-export default function FormField({ field, values, onChange }: FormFieldsProps) {
-  const value = values[field.name];
+export default function FormField({
+  field,
+  values,
+  onChange,
+  error,
+}: FormFieldsProps & { error?: string }) {
+  const value = values?.[field.name];
 
   switch (field.type) {
     case "text":
@@ -19,6 +22,7 @@ export default function FormField({ field, values, onChange }: FormFieldsProps) 
           value={(value as string) ?? ""}
           placeholder={field.placeholder}
           required={field.required}
+          error={error}
           onChange={(v) => onChange(field.name, v)}
         />
       );
@@ -31,6 +35,7 @@ export default function FormField({ field, values, onChange }: FormFieldsProps) 
           value={(value as string) ?? ""}
           placeholder={field.placeholder}
           required={field.required}
+          error={error}
           onChange={(v) => onChange(field.name, v)}
         />
       );
@@ -44,6 +49,7 @@ export default function FormField({ field, values, onChange }: FormFieldsProps) 
           placeholder={field.placeholder}
           required={field.required}
           options={field.options}
+          error={error}
           onChange={(v) => onChange(field.name, v)}
         />
       );
@@ -56,6 +62,7 @@ export default function FormField({ field, values, onChange }: FormFieldsProps) 
           value={(value as string) ?? ""}
           required={field.required}
           options={field.options}
+          error={error}
           onChange={(v) => onChange(field.name, v)}
         />
       );
@@ -68,6 +75,7 @@ export default function FormField({ field, values, onChange }: FormFieldsProps) 
           value={(value as File) ?? null}
           accept={field.accept}
           hint={field.hint}
+          error={error}
           onChange={(file) => onChange(field.name, file)}
         />
       );

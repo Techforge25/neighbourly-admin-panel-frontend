@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { UseFormRegisterReturn } from "react-hook-form";
 
 export type AdminShellProps = {
   headerTitle: string;
@@ -27,6 +28,7 @@ export interface RecommendationTableColumnsProps {
 }
 
 export interface RecommendationRow {
+  _id: string;
   tradie: string;
   business: string;
   trade: string;
@@ -39,11 +41,16 @@ export interface RecommendationRow {
 export interface Props<T> {
   columns: TableColumn<T>[];
   data: T[];
-
   total?: number;
+  totalPages?: number | undefined;
   currentPage?: number;
-  pageSize?: number;
-
+  isLoading?: boolean;
+  search: string;
+  setSearch: any;
+  selectedSuburb: string;
+  setSelectedSuburb: any;
+  selectedCategory: string;
+  setSelectedCategory: any;
   onNext?: () => void;
   onPrevious?: () => void;
 }
@@ -66,14 +73,13 @@ export interface PaginationProps {
 }
 
 export interface Recommendation {
-  id: string;
-  name: string;
-  company: string;
-  category: string;
-  categoryColor: string;
-  trustedIn: string;
+  _id: string;
+  businessName: string;
+  personName: string;
+  totalRecommendations: number;
+  tradeCategory: string;
   trustPoints: string[];
-  recommendations: number;
+  trustedIn: string[]
 }
 
 export interface ReviewCardProps {
@@ -145,11 +151,8 @@ export type FormValues = Record<string, string | File | null>;
 
 export type TextInputProps = {
   label: string;
-  name: string;
-  value: string;
   placeholder?: string;
-  required?: boolean;
-  onChange: (value: string) => void;
+  register: UseFormRegisterReturn<string>;
 };
 
 export type SelectInputProps = {
@@ -170,6 +173,11 @@ export type RadioPillGroupProps = {
   options: { label: string; value: string }[];
   onChange: (value: string) => void;
 };
+
+export type LoginForm = {
+  username: string;
+  password: string;
+}
 
 export type FileUploadProps = {
   label: string;
@@ -203,35 +211,27 @@ export type formFieldsConfigType = {
   required: boolean;
 };
 
-export type SponsorCategory =
-  | "mortgage-broker"
-  | "real-estate-agent"
-  | "conveyancer";
-
 export interface Sponsorship {
-  id: string;
+  _id: string;
   sponsorName: string;
   businessName: string;
-  category: SponsorCategory;
+  serviceType: string;
   suburb: string;
 }
 
 export const CATEGORY_META: Record<
-  SponsorCategory,
+  string,
   { label: string; color: string }
 > = {
-  "mortgage-broker": { label: "Mortgage Broker", color: "#FE9A86" },
-  "real-estate-agent": { label: "Real Estate Agent", color: "#718496" },
-  conveyancer: { label: "Conveyancer", color: "#8FA58A" },
+  "Mortgage Broker": { label: "Mortgage Broker", color: "#FE9A86" },
+  "Real Estate Agent": { label: "Real Estate Agent", color: "#718496" },
+  'Advisor': { label: "Advisor", color: "#8FA58A" },
 };
 
 export type PasswordInputProps = {
   label: string;
-  name: string;
-  value: string;
   placeholder?: string;
-  required?: boolean;
-  onChange: (value: string) => void;
+  register: UseFormRegisterReturn<string>;
 };
 
 export type FilterPillSelectProps = {
@@ -280,3 +280,76 @@ export type AppState = {
   setUser: (user: AppState["user"]) => void;
   reset: () => void;
 };
+
+export type DashboardStats = {
+  totalPendingRecommendations: number;
+  totalSponsors: number;
+  totalRecommendations: number;
+}
+
+export type RecommendationRecords = {
+  userId: {
+    address: string
+  },
+  businessId: {
+    "_id": string,
+    businessName: string
+  },
+  reasonsOfRecommendation: string[]
+}
+
+export type TopRecommenders = {
+  businessName: string;
+  personName: string;
+  recommendationCount: number;
+  serviceType: string;
+}
+// helpers/getNextPage.ts
+
+type PaginationResponse = {
+  currentPage: number;
+  totalPages: number;
+};
+
+// helpers/getNextPage.ts
+
+// helpers/getNextPage.ts
+
+type PaginatedResponse = {
+  data: {
+    page: number;
+    totalPages: number;
+    hasNextPage: boolean;
+    nextPage: number | null;
+  };
+};
+
+export const getNextPage = (
+  lastPage: PaginatedResponse
+): number | undefined => {
+  if (lastPage?.data?.hasNextPage) {
+    return lastPage.data.nextPage ?? undefined;
+  }
+
+  return undefined;
+};
+
+export type RecommendationsBusiness = {
+  comment: string;
+  createdAt: string;
+  reasonsOfRecommendation: string[];
+  user: {
+    email: string;
+    address: string;
+    fullName: string;
+  }
+}
+
+export type CreateSponsor = {
+  logo: string,
+  personName: string,
+  businessName: string,
+  serviceType?: string,
+  contact: string,
+  suburb?: string;
+}

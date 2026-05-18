@@ -2,9 +2,9 @@ import { MdOutlineDashboard, MdThumbUpOffAlt } from "react-icons/md";
 import { TbLayoutNavbarFilled } from "react-icons/tb";
 
 export const navItems = [
-  { href: "/", label: "Dashboard", icon: MdOutlineDashboard },
-  { href: "/recommendation", label: "Recommendation", icon: MdThumbUpOffAlt },
-  { href: "/sponsorship", label: "Sponsorship", icon: TbLayoutNavbarFilled },
+  { href: "/dashboard", label: "Dashboard", icon: MdOutlineDashboard },
+  { href: "/dashboard/recommendation", label: "Recommendation", icon: MdThumbUpOffAlt },
+  { href: "/dashboard/sponsorship", label: "Sponsorship", icon: TbLayoutNavbarFilled },
 ];
 
 export const kpiStats = [
@@ -32,22 +32,22 @@ export const recentRecommendations = [
   {
     business: "A to Z plumbing",
     suburb: "Manly",
-    blurb: "Fast response - Reliable - Fair price",
+    responses: "Fast response - Reliable - Fair price",
   },
   {
     business: "A to Z plumbing",
     suburb: "Manly",
-    blurb: "Fast response - Reliable - Fair price",
+    responses: "Fast response - Reliable - Fair price",
   },
   {
     business: "Fresh Electrical",
     suburb: "Freshwater",
-    blurb: "Fast response - Reliable - Fair price",
+    responses: "Fast response - Reliable - Fair price",
   },
   {
     business: "Manwaring Constructions",
     suburb: "Manly",
-    blurb: "Fast response - Reliable - Fair price",
+    responses: "Fast response - Reliable - Fair price",
   },
 ];
 
@@ -75,25 +75,39 @@ export const topRecommenders = [
 export const getColorThemeBorder = (key, section) => {
   const themes = [
     {
-      key: "plumber",
+      key: "Plumber",
       theme:
         section === "mainDiv"
           ? "border-bg-primary"
           : "bg-bg-primary/10 text-bg-primary",
     },
     {
-      key: "handyman",
+      key: "Handyman",
       theme:
         section === "mainDiv"
           ? "border-bg-secondary"
           : "bg-bg-secondary/10 text-bg-secondary",
     },
     {
-      key: "electrician",
+      key: "Electrician",
       theme:
         section === "mainDiv"
           ? "border-bg-green"
           : "bg-bg-green/10 text-bg-green",
+    },
+    {
+      key: "Gardener",
+      theme:
+        section === "mainDiv"
+          ? "border-bg-[#7FB3B0]"
+          : "bg-bg-[#7FB3B0]/10 text-bg-[#7FB3B0]",
+    },
+    {
+      key: "Cleaner",
+      theme:
+        section === "mainDiv"
+          ? "border-bg-[#E8C088]"
+          : "bg-bg-[#E8C088]/10 text-bg-[#E8C088]",
     },
     {
       key: "Manly",
@@ -128,23 +142,23 @@ export const getColorThemeBg = (key) => {
 export const getColorThemeText = (key) => {
   const themes = [
     {
-      key: "plumber",
+      key: "Plumber",
       theme: "text-bg-primary",
     },
     {
-      key: "handyman",
+      key: "Handyman",
       theme: "text-bg-secondary",
     },
     {
-      key: "electrician",
+      key: "Electrician",
       theme: "text-bg-green",
     },
     {
-      key: "gardner",
+      key: "Gardener",
       theme: "text-text-gardner",
     },
     {
-      key: "cleaners",
+      key: "Cleaners",
       theme: "text-text-cleaner",
     },
   ];
@@ -210,11 +224,11 @@ export const recommendationRows = [
 
 export const categories = [
   "All",
-  "plumber",
-  "electrician",
-  "handyman",
-  "gardner",
-  "cleaners",
+  "Plumber",
+  "Electrician",
+  "Handyman",
+  "Gardener",
+  "Cleaners",
 ];
 
 export const suburbs = [
@@ -459,7 +473,7 @@ export const reviews = [
 export const fieldsConfig = [
   {
     type: "text",
-    name: "sponsorName",
+    name: "personName",
     label: "Sponsor Name",
     placeholder: "e.g. Sally",
     required: true,
@@ -481,24 +495,30 @@ export const fieldsConfig = [
   },
   {
     type: "radio-pill",
-    name: "businessCategory",
+    name: "serviceType",
     label: "Business Category",
     required: true,
     options: [
-      { label: "Mortgage Broker", value: "mortgage-broker" },
-      { label: "Real Estate Agent", value: "real-estate-agent" },
-      { label: "Conveyancer", value: "conveyancer" },
+      { label: "Mortgage Broker", value: "Mortgage Broker" },
+      { label: "Real Estate Agent", value: "Real Estate Agent" },
+      { label: "Advisor", value: "Advisor" },
     ],
   },
   {
     type: "file-upload",
-    name: "sponsorPhoto",
+    name: "logo",
     label: "Sponsor Photo",
   },
   {
     type: "phone",
-    name: "callButtonLink",
+    name: "contact",
     label: "Call Button Link (Phone Number)",
     required: true,
   },
 ];
+
+export const sponsor = [
+  { label: "Mortgage Broker", value: "Mortgage Broker" },
+  { label: "Real Estate Agent", value: "Real Estate Agent" },
+  { label: "Advisor", value: "Advisor" },
+]

@@ -4,27 +4,21 @@ import { LuEye, LuEyeOff } from "react-icons/lu";
 
 export default function PasswordInput({
   label,
-  name,
-  value,
   placeholder,
-  required,
-  onChange,
+  register,
 }: PasswordInputProps) {
   const [visible, setVisible] = useState(false);
 
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={name} className="font-manrope text-[0.875rem] font-medium text-text-primary ">
-        {label} {required && <span className="text-accent-danger">*</span>}
+      <label htmlFor={label} className="font-manrope text-[0.875rem] font-medium text-text-primary ">
+        {label}
       </label>
       <div className="relative">
         <input
-          id={name}
-          name={name}
           type={visible ? "text" : "password"}
-          value={value}
           placeholder={placeholder}
-          onChange={(e) => onChange(e.target.value)}
+          {...register}
           className="w-full rounded-lg border border-bg-secondary px-4 py-3 pr-12 text-sm text-text-primary placeholder:text-gray-400 focus:border-bg-primary focus:outline-none focus:ring-1 focus:ring-bg-primary"
         />
         <button

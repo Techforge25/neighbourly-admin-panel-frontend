@@ -6,12 +6,14 @@ import { getColorThemeText } from "@/constants/constants";
 import { useRef } from "react";
 import ConfirmDeleteModal from "../ui/ConfirmDeleteModal";
 import { useRouter } from "next/navigation";
+import RecommendationsSkeleton from "../ui/RecommendationsSkeleton";
 
 interface Props {
   data: Recommendation[];
+  isLoading: boolean
 }
 
-export default function RecommendationsTable({ data }: Props) {
+export default function RecommendationsTable({ data, isLoading }: Props) {
   const router = useRouter();
 
   const handleDelete = () => {
@@ -26,54 +28,65 @@ export default function RecommendationsTable({ data }: Props) {
       <table className="w-full min-w-[1100px]">
         <TableHeader />
         <tbody>
-          {data.map((item) => (
-            <tr
-              key={item.id}
-              className="border-t border-gray-100 hover:bg-gray-50"
-            >
-              <td className="px-6 py-5">
-                <h3 className="font-semibold font-hankenGrotesk text-[1rem] text-text-primary ">
-                  {item.name}
-                </h3>
-                <p className="font-poppins text-[0.875rem] text-text-para ">
-                  {item.company}
-                </p>
-              </td>
-
-              <td className="px-6 py-5 font-bold font-manrope text-[1rem] ">
-                <span
-                  className={`${getColorThemeText(item.category)} capitalize `}
+          {isLoading ? (
+            <RecommendationsSkeleton />
+          ) : (
+            <>
+              {data?.map((item, index) => (
+                <tr
+                  key={index}
+                  className="border-t border-gray-100 hover:bg-gray-50"
                 >
-                  {item.category}
-                </span>
-              </td>
+                  <td className="px-6 py-5">
+                    <h3 className="font-semibold font-hankenGrotesk text-[1rem] text-text-primary ">
+                      {item.personName}
+                    </h3>
+                    <p className="font-poppins text-[0.875rem] text-text-para ">
+                      {item.businessName}
+                    </p>
+                  </td>
 
-              <td className="px-6 py-5 font-poppins text-[1rem] font-normal text-text-para">
-                {item.trustedIn}
-              </td>
+                  <td className="px-6 py-5 font-bold font-manrope text-[1rem] ">
+                    <span
+                      className={`${getColorThemeText(item.tradeCategory)} capitalize `}
+                    >
+                      {item.tradeCategory}
+                    </span>
+                  </td>
 
-              <td className="px-6 py-5 text-sm font-poppins text-[0.875rem] font-normal text-text-para">
-                {item.trustPoints.join(" - ")}
-              </td>
+                  <td key={index} className="px-6 py-5 font-poppins text-[1rem] font-normal text-text-para">
+                    {item?.trustedIn?.map((trust: string, index: number) => {
+                      return (
+                        <p key={index}>{trust}</p>
+                      )
+                    })}
+                  </td>
 
-              <td className="px-6 py-5 text-start font-hankenGrotesk font-semibold text-[1rem] text-text-primary">
-                {item.recommendations}
-              </td>
+                  <td className="px-6 py-5 text-sm font-poppins text-[0.875rem] font-normal text-text-para">
+                    {item.trustPoints.slice(0, 3).join(" - ")}
+                  </td>
 
-              <td className="px-6 py-5">
-                <div className="flex justify-center gap-4">
-                  <button
-                    onClick={() =>
-                      router.push(`/recommendationDetails/${item.id}`)
-                    }
-                    className="text-text-para cursor-pointer"
-                  >
-                    <IoEye size={18} />
-                  </button>
-                </div>
-              </td>
-            </tr>
-          ))}
+                  <td className="px-6 py-5 text-start font-hankenGrotesk font-semibold text-[1rem] text-text-primary">
+                    {item.totalRecommendations}
+                  </td>
+
+                  <td className="px-6 py-5">
+                    <div className="flex justify-center gap-4">
+                      <button
+                        onClick={() =>
+                          router.push(`/dashboard/recommendationDetails/${item._id}`)
+                        }
+                        className="text-text-para cursor-pointer"
+                      >
+                        <IoEye size={18} />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </>
+          )}
+
         </tbody>
       </table>
     </div>

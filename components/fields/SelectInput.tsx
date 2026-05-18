@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { SelectInputProps } from "@/types";
 import { LuCheck, LuChevronDown } from "react-icons/lu";
 
-
-
 export default function SelectInput({
   label,
   name,

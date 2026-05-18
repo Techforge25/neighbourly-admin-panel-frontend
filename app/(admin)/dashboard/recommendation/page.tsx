@@ -1,58 +1,67 @@
 "use client";
-import { AdminShell } from "@/components/admin/AdminShell";
+
 import FiltersBar from "@/components/recommendation/FiltersBar";
 import Pagination from "@/components/recommendation/Pagination";
 import RecommendationCard from "@/components/recommendation/RecommendationCard";
 import RecommendationsTable from "@/components/recommendation/RecommendationsTable";
-import { recommendationsData } from "@/constants/constants";
-import { useMemo, useState } from "react";
+import { queryKeys } from "@/keys";
+import { fetchBusinesses } from "@/services/recommendations";
+import { Recommendation } from "@/types";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function RecommendationPage() {
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedSuburb, setSelectedSuburb] = useState("All");
-
   const [currentPage, setCurrentPage] = useState(1);
 
-  const ITEMS_PER_PAGE = 5;
+  const {
+    data: fetchBusinessesList,
+    isPending,
+    isLoading,
+  } = useQuery({
+    queryKey: [
+      queryKeys.fetchBusinesses,
+      currentPage,
+      selectedCategory,
+      selectedSuburb,
+      search,
+    ],
 
-  const filteredData = useMemo(() => {
-    return recommendationsData.filter((item) => {
-      const matchesSearch =
-        item.name.toLowerCase().includes(search.toLowerCase()) ||
-        item.company.toLowerCase().includes(search.toLowerCase());
+    queryFn: () =>
+      fetchBusinesses(
+        currentPage,
+        selectedCategory === "All" ? "" : selectedCategory,
+        selectedSuburb === "All" ? "" : selectedSuburb,
+        search
+      ),
 
-      const matchesCategory =
-        selectedCategory === "All" || item.category === selectedCategory;
+    placeholderData: (previousData) => previousData,
+  });
 
-      const matchesSuburb =
-        selectedSuburb === "All" || item.trustedIn.includes(selectedSuburb);
+  const businessList = fetchBusinessesList?.data?.docs || [];
 
-      return matchesSearch && matchesCategory && matchesSuburb;
-    });
-  }, [search, selectedCategory, selectedSuburb]);
+  const totalPages = fetchBusinessesList?.data?.totalPages || 1;
 
-  const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+  const page = fetchBusinessesList?.data?.page || 1;
 
-  const paginatedData = filteredData.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE,
-  );
   return (
     <>
       {/* HEADER */}
 
       <div className="px-10 py-5">
         <h1 className="text-2xl font-semibold text-gray-900">
-          Recommendations
+          Businesses
         </h1>
 
         <p className="mt-1 text-sm text-gray-500">
-          Manage and moderate user submitted trade recommendations.
+          Manage Businesses Records.
         </p>
       </div>
+
       <div className="min-h-screen bg-[#f5f7fb] p-4 md:p-8">
-        <div className=" overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+        <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
           {/* FILTERS */}
 
           <FiltersBar
@@ -66,20 +75,26 @@ export default function RecommendationPage() {
 
           {/* DESKTOP TABLE */}
 
-          <RecommendationsTable data={paginatedData} />
+          <RecommendationsTable
+            data={businessList}
+            isLoading={isLoading || isPending}
+          />
 
           {/* MOBILE CARDS */}
 
           <div className="grid gap-4 p-4 lg:hidden">
-            {paginatedData.map((item) => (
-              <RecommendationCard key={item.id} item={item} />
+            {businessList?.map((item: Recommendation) => (
+              <RecommendationCard
+                key={item?.businessName}
+                item={item}
+              />
             ))}
           </div>
 
           {/* PAGINATION */}
 
           <Pagination
-            currentPage={currentPage}
+            currentPage={page}
             totalPages={totalPages}
             setCurrentPage={setCurrentPage}
           />

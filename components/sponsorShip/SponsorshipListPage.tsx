@@ -1,72 +1,71 @@
 "use client";
-import { CATEGORY_META, ConfirmDeleteModalRef, Sponsorship } from "@/types";
-import { useMemo, useRef, useState } from "react";
+import { Sponsorship } from "@/types";
+import { useState } from "react";
 import FilterDropdown from "./FilterDropdown";
 import { LuPlus } from "react-icons/lu";
 import SponsorshipTable from "./SponsorshipTable";
 import { suburbs } from "@/constants/constants";
 import { useRouter } from "next/navigation";
-import ConfirmDeleteModal from "../ui/ConfirmDeleteModal";
-
-// Mock data — replace with API call
-const mockData: Sponsorship[] = [
-  {
-    id: "1",
-    sponsorName: "Sally",
-    businessName: "Sandcastle Finance",
-    category: "mortgage-broker",
-    suburb: "Curl Curl",
-  },
-  {
-    id: "2",
-    sponsorName: "Sally",
-    businessName: "Sandcastle Finance",
-    category: "real-estate-agent",
-    suburb: "Curl Curl",
-  },
-  {
-    id: "3",
-    sponsorName: "Sally",
-    businessName: "Sandcastle Finance",
-    category: "conveyancer",
-    suburb: "Curl Curl",
-  },
-];
+import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "@/keys";
+import { deleteSponsor, getSponsors } from "@/services/sponsor";
 
 export default function SponsorshipListPage() {
   const [selectedSuburb, setSelectedSuburb] = useState<string>("All");
-  const [pendingDelete, setPendingDelete] = useState<Sponsorship | null>(null);
-  const deleteModalRef = useRef<ConfirmDeleteModalRef>(null);
   const router = useRouter();
+  const queryClient = useQueryClient()
 
-  // Filter logic
-  const filteredData = useMemo(() => {
-    if (selectedSuburb === "All") return mockData;
-    return mockData.filter((row) => row.suburb === selectedSuburb);
-  }, [selectedSuburb]);
+  const {
+    data: sponsors,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isPending,
+    isLoading,
+  } = useInfiniteQuery({
+    queryKey: [queryKeys.sponsor, selectedSuburb],
+    queryFn: ({ pageParam = 1 }) =>
+      getSponsors(selectedSuburb, pageParam),
+
+    initialPageParam: 1,
+
+    getNextPageParam: (lastPage) => {
+      return lastPage?.data?.hasNextPage
+        ? lastPage.data.page + 1
+        : undefined;
+    },
+  });
+
+  const { mutate } =
+    useMutation({
+      mutationFn: (id: string) => deleteSponsor(id),
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: [queryKeys.sponsor],
+        });
+
+      },
+
+      onError: (error) => {
+        console.error("Update failed:", error);
+      },
+    });
 
   const handleAddSponsorship = () => {
-    router.push("/sponsorship/new");
+    router.push("/dashboard/sponsorship/new");
   };
 
   const handleEdit = (row: Sponsorship) => {
     console.log("Edit:", row);
-    router.push(`/sponsorship/edit/${row.id}`);
+    router.push(`/dashboard/sponsorship/${row._id}`);
   };
 
-  // 🔑 Step 1: Store row + open modal
   const handleDelete = (row: Sponsorship) => {
-    setPendingDelete(row);
-    deleteModalRef.current?.open();
-  };
+    mutate(row?._id)
+  }
 
-  // 🔑 Step 2: Modal calls this with the data back
-  const confirmDelete = (row: Sponsorship) => {
-    console.log("✅ Deleted:", row);
-    // your API call here:
-    // await deleteSponsorshipApi(row.id);
-    setPendingDelete(null);
-  };
+  const sponsorshipList =
+    sponsors?.pages?.flatMap((page) => page?.data?.docs || []) || [];
 
   return (
     <div className="min-h-screen  p-6">
@@ -101,45 +100,12 @@ export default function SponsorshipListPage() {
 
         {/* Table */}
         <SponsorshipTable
-          data={filteredData}
+          data={sponsorshipList}
           onEdit={handleEdit}
           onDelete={handleDelete}
+          isLoading={isLoading || isPending}
         />
       </div>
-      <ConfirmDeleteModal<Sponsorship>
-        ref={deleteModalRef}
-        data={pendingDelete}
-        title="Delete Active Sponsor?"
-        description={
-          pendingDelete && (
-            <>
-              Are you sure you want to delete this sponsorship? This will
-              immediately remove{" "}
-              <span className="font-semibold text-text-primary">
-                {pendingDelete.sponsorName}
-              </span>{" "}
-              from the{" "}
-              <span
-                className="font-semibold"
-                style={{
-                  color: CATEGORY_META[pendingDelete.category].color,
-                }}
-              >
-                "{CATEGORY_META[pendingDelete.category].label}"
-              </span>{" "}
-              category in{" "}
-              <span className="font-semibold text-text-primary">
-                {pendingDelete.businessName}
-              </span>
-              .
-            </>
-          )
-        }
-        warningText="This action cannot be undone."
-        confirmLabel="Delete sponsorship"
-        cancelLabel="Cancel"
-        onConfirm={confirmDelete}
-      />
     </div>
   );
 }

@@ -23,39 +23,46 @@ export default function RecommendationCard({ item }: Props) {
         <div className="flex items-start justify-between">
           <div>
             <h2 className="font-semibold font-hankenGrotesk text-[1rem] text-text-primary">
-              {item.name}
+              {item.personName}
             </h2>
             <p className="font-poppins text-[0.875rem] text-text-para">
-              {item.company}
+              {item.businessName}
             </p>
           </div>
 
           <span
-            className={`font-bold font-manrope text-[1rem] capitalize ${getColorThemeText(item.category)}`}
+            className={`font-bold font-manrope text-[1rem] capitalize ${getColorThemeText(item.tradeCategory)}`}
           >
-            {item.category}
+            {item.tradeCategory}
           </span>
         </div>
 
         <div className="mt-4 space-y-2 font-poppins text-[1rem] font-normal text-text-para">
-          <p>
-            <span className="font-medium">Trusted In:</span> {item.trustedIn}
-          </p>
+          <span className="font-medium">Trusted In:</span>
+          <div className="flex items-center gap-2">
+            {item?.trustedIn?.map((trust, index) => {
+              return (
+                <span key={index}>
+                  {trust}
+                </span>
+              )
+            })}
+          </div>
 
           <p>
             <span className="font-medium">Trust Points:</span>{" "}
-            {item.trustPoints.join(" • ")}
+            {item.trustPoints.slice(0, 3).join(" • ")}
           </p>
 
           <p>
             <span className="font-medium">Recommendations:</span>{" "}
-            {item.recommendations}
+            {item.totalRecommendations}
           </p>
         </div>
 
         <div className="mt-4 flex justify-end gap-4 border-t pt-4">
           <button
-            onClick={() => router.push(`/recommendationDetails/${item.id}`)}
+            onClick={() => router.push(`/dashboard/recommendationDetails/${item._id}`)}
             className="text-text-para cursor-pointer "
           >
             <IoEye size={18} />

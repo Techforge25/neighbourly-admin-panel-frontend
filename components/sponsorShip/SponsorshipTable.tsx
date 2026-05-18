@@ -1,16 +1,16 @@
 import { getSponsorshipColumns } from "@/helpers";
 import { Sponsorship } from "@/types";
+import RecommendationsSkeleton from "../ui/RecommendationsSkeleton";
 
 type Props = {
   data: Sponsorship[];
   onEdit: (row: Sponsorship) => void;
-  onDelete: (row: Sponsorship) => void;
+  onDelete: (row: Sponsorship) => void
+  isLoading: boolean;
 };
 
-export default function SponsorshipTable({ data, onEdit, onDelete }: Props) {
+export default function SponsorshipTable({ data, onEdit, onDelete, isLoading }: Props) {
   const columns = getSponsorshipColumns({ onEdit, onDelete });
-
-  // Empty state
   if (data.length === 0) {
     return (
       <div className="rounded-xl border border-border-secondary bg-white px-6 py-10 text-center text-sm text-text-para">
@@ -21,7 +21,6 @@ export default function SponsorshipTable({ data, onEdit, onDelete }: Props) {
 
   return (
     <>
-      {/* ========== DESKTOP / TABLET ========== */}
       <div className="hidden overflow-hidden rounded-xl border border-border-secondary bg-white lg:block">
         <div className="overflow-x-auto">
           <table className="w-full min-w-[700px]">
@@ -38,29 +37,33 @@ export default function SponsorshipTable({ data, onEdit, onDelete }: Props) {
                 ))}
               </tr>
             </thead>
-            <tbody>
-              {data.map((row) => (
-                <tr
-                  key={row.id}
-                  className="border-b border-border-secondary/50 last:border-0 hover:bg-surface-muted/40"
-                >
-                  {columns.map((col) => (
-                    <td key={col.key} className="px-6 py-4 text-sm">
-                      {col.render(row)}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
+            {isLoading ? (
+              <RecommendationsSkeleton />
+            ) : (
+              <tbody>
+                {data.map((row, index) => (
+                  <tr
+                    key={index}
+                    className="border-b border-border-secondary/50 last:border-0 hover:bg-surface-muted/40"
+                  >
+                    {columns.map((col) => (
+                      <td key={col.key} className="px-6 py-4 text-sm">
+                        {col.render(row)}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            )}
+
           </table>
         </div>
       </div>
 
-      {/* ========== MOBILE: Card view ========== */}
       <div className="flex flex-col gap-3 lg:hidden">
-        {data.map((row) => (
+        {data.map((row, index) => (
           <div
-            key={row.id}
+            key={row._id}
             className="rounded-xl border border-border-secondary bg-white p-4"
           >
             {columns.map((col) => (

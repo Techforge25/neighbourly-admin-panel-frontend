@@ -4,6 +4,7 @@ import { categories, suburbs } from "@/constants/constants";
 import { FilterBarProps } from "@/types";
 import { LuFilter } from "react-icons/lu";
 import FilterPillSelect from "../ui/FilterPillSelect";
+import { useEffect, useState } from "react";
 
 export default function FiltersBar({
   search,
@@ -13,6 +14,18 @@ export default function FiltersBar({
   selectedSuburb,
   setSelectedSuburb,
 }: FilterBarProps) {
+  const [searchValue, setSearchValue] = useState(search);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setSearch(searchValue);
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [searchValue, setSearch]);
+
+   console.log(searchValue, 'search valuess')
+
   return (
     <div className="flex flex-col gap-4 border-b border-border-secondary p-4 lg:flex-row lg:items-center lg:justify-between">
       {/* LEFT — filters */}
@@ -37,12 +50,11 @@ export default function FiltersBar({
         />
       </div>
 
-      {/* RIGHT — search */}
       <input
         type="text"
-        placeholder="Search Tradie Name..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        placeholder="Search Trade Name..."
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
         className="w-full rounded-full border border-border-secondary bg-white px-5 py-2 text-sm text-text-primary placeholder:text-text-para outline-none lg:w-[280px]"
       />
     </div>

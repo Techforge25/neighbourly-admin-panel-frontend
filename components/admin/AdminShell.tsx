@@ -27,9 +27,9 @@ export function AdminShell({
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
-    if (href === "/recommendation")
-      return pathname.startsWith("/recommendation");
-    if (href === "/sponsorship") return pathname.startsWith("/sponsorship");
+    if (href === "/dashboard/recommendation")
+      return pathname.startsWith("/dashboard/recommendation");
+    if (href === "/dashboard/sponsorship") return pathname.startsWith("/dashboard/sponsorship");
     return pathname === href;
   };
 
@@ -46,7 +46,7 @@ export function AdminShell({
     // your cleanup logic:
     // localStorage.removeItem("token");
     // await signOutApi();
-    router.push("/login");
+    router.push("/");
   };
 
   function NavList({ mobile = false }: { mobile?: boolean }) {
@@ -57,11 +57,10 @@ export function AdminShell({
             key={label}
             href={href}
             onClick={() => mobile && setOpen(false)}
-            className={`flex items-center gap-2.5 rounded-xl px-[12px] py-[12px] font-poppins text-[1rem] transition-colors ${
-              isActive(href)
+            className={`flex items-center gap-2.5 rounded-xl px-[12px] py-[12px] font-poppins text-[1rem] transition-colors ${isActive(href)
                 ? "bg-bg-primary text-white shadow-md"
                 : "text-text-primary"
-            }`}
+              }`}
           >
             <Icon
               size={24}
@@ -103,12 +102,11 @@ export function AdminShell({
       {/* Sidebar */}
       <aside
         id="admin-sidebar"
-        className={`fixed left-0 top-0 z-50 flex h-full w-[min(18rem,100vw)] flex-col border-r border-border-primary bg-surface text-white shadow-xl transition-transform duration-200 lg:z-30 lg:w-[278px] lg:translate-x-0 lg:shadow-none ${
-          open ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-        }`}
+        className={`fixed left-0 top-0 z-50 flex h-full w-[min(18rem,100vw)] flex-col border-r border-border-primary bg-surface text-white shadow-xl transition-transform duration-200 lg:z-30 lg:w-[278px] lg:translate-x-0 lg:shadow-none ${open ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+          }`}
       >
         <div className="flex h-20 shrink-0 items-center justify-between px-5 border-b border-border-primary">
-          <Link href="/" className="text-lg font-semibold tracking-tight">
+          <Link href="/dashboard" className="text-lg font-semibold tracking-tight">
             <Image
               src={"/images/logo.png"}
               alt="suburbSays"
