@@ -4,6 +4,7 @@ import { AdminShell } from "@/components/admin/AdminShell";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import api from "@/lib/axios";
+import moment from "moment";
 
 export default function AdminLayout({
   children,
@@ -31,9 +32,8 @@ export default function AdminLayout({
   return (
     <AdminShell
       headerTitle="Dashboard Overview"
-      headerDate="Tuesday, May 5, 2026"
-      userName="John Alex"
-      userRole="Admin"
+      headerDate={moment().format("dddd, MMMM D, YYYY")}
+      userName="Admin"
     >
       {children}
     </AdminShell>

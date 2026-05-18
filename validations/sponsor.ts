@@ -5,7 +5,8 @@ const contactPattern = /^\+?[1-9]\d{1,14}$/;
 export const createSponsorValidator = z.object({
      logo: z
           .string()
-          .trim(),
+          .trim()
+          .min(1, "Sponsor Photo is required"),
 
      personName: z
           .string()
@@ -46,7 +47,7 @@ export const updateSponsorValidator = z.object({
           .string()
           .trim()
           .url("Sponsor logo must be a valid URL")
-          .optional(),
+          .min(1, "Sponsor Photo is required"),
 
      personName: z
           .string()

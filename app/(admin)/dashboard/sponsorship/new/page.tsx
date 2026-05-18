@@ -20,7 +20,6 @@ import { createSponsor } from "@/services/sponsor";
 import { queryKeys } from "@/keys";
 import { createSponsorValidator } from "@/validations/sponsor";
 import { uploadToCloudinary } from "@/helpers/cloudinary/UploadToCloudinary";
-import { toast } from "react-toastify";
 import { CreateSponsor } from "@/types";
 
 const Page = () => {
@@ -306,7 +305,7 @@ const Page = () => {
           {/* Sponsor Photo */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium text-gray-800">
-              Sponsor Photo
+              Sponsor Photo <span className="text-accent-danger">*</span>
             </label>
 
             <div

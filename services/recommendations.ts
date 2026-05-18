@@ -2,7 +2,7 @@ import api from "@/lib/axios";
 
 export const fetchBusinesses = async (page: number, trade?: string, suburb?: string, search?: any) => {
      try {
-          const { data } = await api.get(`/business?trade=${trade}&suburb=${suburb}&search=${encodeURIComponent(search)}&page=${page}&limit=5`);
+          const { data } = await api.get(`/business?trade=${trade}&suburb=${suburb}&search=${search}&page=${page}&limit=5`);
           return data;
      } catch (err) {
           console.error(err)

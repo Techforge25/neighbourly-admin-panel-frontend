@@ -13,14 +13,13 @@ import SignOutModal from "../ui/SignOutModal";
 export function AdminShell({
   headerTitle,
   headerDate,
-  userName = "John Alex",
-  userRole = "Admin",
+  userName = "Admin",
   children,
 }: AdminShellProps) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const userImage = "/Images/adminAvatar.svg";
+  const userImage = "/images/avatar.png";
 
   // 🔑 Sign-out modal ref
   const signOutModalRef = useRef<SignOutModalRef>(null);
@@ -58,8 +57,8 @@ export function AdminShell({
             href={href}
             onClick={() => mobile && setOpen(false)}
             className={`flex items-center gap-2.5 rounded-xl px-[12px] py-[12px] font-poppins text-[1rem] transition-colors ${isActive(href)
-                ? "bg-bg-primary text-white shadow-md"
-                : "text-text-primary"
+              ? "bg-bg-primary text-white shadow-md"
+              : "text-text-primary"
               }`}
           >
             <Icon
@@ -158,19 +157,18 @@ export function AdminShell({
               <p className="text-sm font-medium leading-tight text-brand-navy">
                 {userName}
               </p>
-              <p className="text-xs leading-tight text-text-para">{userRole}</p>
             </div>
             <div
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-bg-primary/70 text-sm font-semibold text-surface ring-2 ring-brand-line sm:h-11 sm:w-11"
+              className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-bg-primary/70 text-sm font-semibold text-surface ring-2 ring-brand-line sm:h-11 sm:w-11"
               aria-hidden
             >
               {userImage ? (
                 <Image
                   src={userImage}
                   alt={userName}
-                  width={40}
-                  height={40}
-                  className="rounded-full"
+                  width={48}
+                  height={48}
+                  className="h-full w-full rounded-full object-cover"
                 />
               ) : (
                 userName

@@ -11,7 +11,7 @@ import { queryKeys } from "@/keys";
 import { deleteSponsor, getSponsors } from "@/services/sponsor";
 
 export default function SponsorshipListPage() {
-  const [selectedSuburb, setSelectedSuburb] = useState<string>("All");
+  const [selectedSuburb, setSelectedSuburb] = useState<string>("Select Suburb");
   const router = useRouter();
   const queryClient = useQueryClient()
 
@@ -25,7 +25,7 @@ export default function SponsorshipListPage() {
   } = useInfiniteQuery({
     queryKey: [queryKeys.sponsor, selectedSuburb],
     queryFn: ({ pageParam = 1 }) =>
-      getSponsors(selectedSuburb, pageParam),
+      getSponsors(selectedSuburb === 'Select Suburb' ? '' : selectedSuburb, pageParam),
 
     initialPageParam: 1,
 
@@ -43,7 +43,6 @@ export default function SponsorshipListPage() {
         queryClient.invalidateQueries({
           queryKey: [queryKeys.sponsor],
         });
-
       },
 
       onError: (error) => {
