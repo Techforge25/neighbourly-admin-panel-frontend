@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Hanken_Grotesk, Inter, Manrope, Poppins } from "next/font/google";
 import "./globals.css";
 import { AdminShell } from "@/components/admin/AdminShell";
+import { QueryProvider } from "@/providers/QueryProvider";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -42,7 +43,10 @@ export default function RootLayout({
       lang="en"
       className={`${manrope.variable} ${poppins.variable} ${hankenGrotesk.variable} ${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+
+        <QueryProvider>{children}</QueryProvider>
+      </body>
     </html>
   );
 }

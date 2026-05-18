@@ -259,7 +259,6 @@ export interface ConfirmDeleteModalRef {
 
 
 export interface SignOutModalProps {
-  // Content (all optional with sensible defaults)
   title?: string;
   description?: string;
   confirmLabel?: string;
@@ -273,3 +272,11 @@ export interface SignOutModalRef {
   open: () => void;
   close: () => void;
 }
+export type AppState = {
+  sidebarOpen: boolean;
+  user: { id: string; name: string } | null;
+  setSidebarOpen: (open: boolean) => void;
+  toggleSidebar: () => void;
+  setUser: (user: AppState["user"]) => void;
+  reset: () => void;
+};
