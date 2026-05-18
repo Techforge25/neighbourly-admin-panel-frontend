@@ -1,6 +1,6 @@
 import api from "@/lib/axios";
 
-export const fetchBusinesses = async (page: number, trade?: string, suburb?: string, search?: string) => {
+export const fetchBusinesses = async (page: number, trade?: string, suburb?: string, search?: any) => {
      try {
           const { data } = await api.get(`/business?trade=${trade}&suburb=${suburb}&search=${encodeURIComponent(search)}&page=${page}&limit=5`);
           return data;

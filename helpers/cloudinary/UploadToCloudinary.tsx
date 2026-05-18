@@ -6,6 +6,8 @@ type Props = {
      onProgress?: (percent: number) => void;
 };
 
+const API_URL: any = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+
 export const uploadToCloudinary = ({ file, folder, onProgress }: Props) => {
      return new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest();
@@ -14,7 +16,7 @@ export const uploadToCloudinary = ({ file, folder, onProgress }: Props) => {
           formData.append("file", file);
           formData.append(
                "upload_preset",
-               process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET,
+               API_URL,
           );
           formData.append("folder", folder);
 

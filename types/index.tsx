@@ -153,6 +153,7 @@ export type TextInputProps = {
   label: string;
   placeholder?: string;
   register: UseFormRegisterReturn<string>;
+  error: boolean;
 };
 
 export type SelectInputProps = {

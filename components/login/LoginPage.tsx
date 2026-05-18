@@ -62,6 +62,7 @@ export default function LoginPage() {
             label="Username or Email"
             register={register('username')}
             placeholder="you@example.com"
+            error={false}
           />
 
           <PasswordInput
