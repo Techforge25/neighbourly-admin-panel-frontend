@@ -82,7 +82,7 @@ export function AdminShell({
             className="flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-text-primary hover:bg-surface-muted-secondary transition"
           >
             <MdLogout className="h-5 w-5 shrink-0" aria-hidden />
-            Sign out
+            <p className="text-lg">Sign Out</p>
           </button>
         </div>
       </nav>

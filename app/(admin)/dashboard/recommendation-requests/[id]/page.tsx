@@ -1,5 +1,6 @@
 "use client";
 
+import BackPage from "@/components/recommendationDetail/BackPage";
 import RecommendationReviewCard from "@/components/recommendationDetail/RecommendationReviewCard";
 import { queryKeys } from "@/keys";
 import { viewPendingRecommendations } from "@/services/dashboard";
@@ -42,6 +43,11 @@ export default function Page() {
 
      return (
           <>
+               <BackPage
+                    tradie={recommendedData?.business?.personName || ""}
+                    trade={recommendedData?.business?.serviceType || ""}
+                    business={recommendedData?.business?.businessName || ""}
+               />
                <RecommendationReviewCard
                     item={recommendedData}
                     isLoading={isPending || isLoading}

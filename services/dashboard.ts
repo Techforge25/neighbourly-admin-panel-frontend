@@ -30,7 +30,7 @@ export const getRecentPendingRecommendations = async () => {
 
 export const getAllPendingRecommendations = async (page: number, search: string, suburb: string, category: string) => {
      try {
-          const { data } = await api.get(`/dashboard/all-pending?page=${page}&limit=2&suburb=${category}&search=${search}&trade=${suburb}`);
+          const { data } = await api.get(`/dashboard/all-pending?page=${page}&limit=10&suburb=${category}&search=${search}&trade=${suburb}`);
           return data;
      } catch (err) {
           console.error(err)
