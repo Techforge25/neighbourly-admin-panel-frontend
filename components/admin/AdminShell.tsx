@@ -9,6 +9,8 @@ import Image from "next/image";
 import { AdminShellProps, SignOutModalRef } from "@/types";
 import { navItems } from "@/constants/constants";
 import SignOutModal from "../ui/SignOutModal";
+import Footer from "./Footer";
+import { logout } from "@/services/auth";
 
 export function AdminShell({
   headerTitle,
@@ -33,9 +35,10 @@ export function AdminShell({
   };
 
   // 🔑 Step 1: Sign out click → open modal (don't navigate yet)
-  const handleSignOutClick = (e: React.MouseEvent) => {
+  const handleSignOutClick = async (e: React.MouseEvent) => {
     e.preventDefault(); // prevent <Link> navigation
     setOpen(false); // close mobile sidebar if open
+    await logout()
     signOutModalRef.current?.open();
   };
 
@@ -186,6 +189,7 @@ export function AdminShell({
           {children}
         </main>
       </div>
+      <Footer />
 
       {/* 🔑 Sign-out Modal — mounted at shell level */}
       <SignOutModal

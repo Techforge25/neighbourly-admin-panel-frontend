@@ -16,6 +16,7 @@ export function RecommendationsTable<T>({
   setSearch,
   selectedCategory,
   setSelectedCategory,
+  currentPage,
   selectedSuburb,
   setSelectedSuburb
 }: Props<T>) {
@@ -23,7 +24,7 @@ export function RecommendationsTable<T>({
     <section className="mt-10">
       <div className="">
         <h2 className="font-manrope font-bold text-[1.625rem] text-text-primary">
-          Recommendations request
+          Recommendations Request
         </h2>
         <p className="mt-1 font-poppins text-text-para text-[1rem]  ">
           Manage and moderate user submitted tradie recommendations.
@@ -155,14 +156,15 @@ export function RecommendationsTable<T>({
           {totalPages && totalPages > 1 && (
             <div className="flex flex-col gap-3 border-t border-brand-line px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
               <p className="text-sm text-zinc-600">
-                Showing 1 to {data?.length} of {total || data?.length} entries
+                Showing {currentPage} to {data?.length} of {total || data?.length} entries
               </p>
 
               <div className="flex gap-2">
                 <button
                   type="button"
+                  disabled={currentPage === 1 ? true : false}
                   onClick={onPrevious}
-                  className="rounded-lg border border-brand-line px-4 py-2 text-sm font-medium text-zinc-500"
+                  className="rounded-lg border border-brand-line px-4 py-2 text-sm font-medium bg-white disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                 >
                   Previous
                 </button>

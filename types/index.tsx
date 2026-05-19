@@ -354,3 +354,9 @@ export type CreateSponsor = {
   contact: string,
   suburb?: string;
 }
+
+export type Error = {
+  message: string;
+  statusCode: Number;
+  success: boolean;
+}

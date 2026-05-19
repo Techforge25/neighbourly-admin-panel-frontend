@@ -10,19 +10,19 @@ export const navItems = [
 export const kpiStats = [
   {
     value: "120",
-    label: "Pending recommendation approval",
+    label: "Pending Recommendation Approval",
     icon: "/icons/dotIcon.svg",
     bgColor: "bg-bg-primary",
   },
   {
     value: "12",
-    label: "Active sponsor",
+    label: "Active Sponsor",
     icon: "/icons/squareIcon.svg",
     bgColor: "bg-bg-secondary",
   },
   {
     value: "679",
-    label: "Total recommendation",
+    label: "Total Recommendation",
     icon: "/icons/thumbIcon.svg",
     bgColor: "bg-bg-green",
   },
@@ -158,7 +158,7 @@ export const getColorThemeText = (key) => {
       theme: "text-text-gardner",
     },
     {
-      key: "Cleaners",
+      key: "Cleaner",
       theme: "text-text-cleaner",
     },
   ];

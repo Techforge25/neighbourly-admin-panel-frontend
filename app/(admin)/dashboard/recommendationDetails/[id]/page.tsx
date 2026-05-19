@@ -16,23 +16,32 @@ export default function Page() {
     queryFn: () => viewBusiness(id)
   })
 
+  console.log(viewBusinessRecommendations, 'business recommendations')
+
   const recommendations = viewBusinessRecommendations?.data?.recommendations
+  const businessInfo = viewBusinessRecommendations?.data?.business
 
   return (
     <>
-      {/* <BackPage
-        tradie={recommendationByID?.tradie || ""}
-        trade={recommendationByID?.trade || ""}
-        business={recommendationByID?.business || ""}
-      /> */}
+      <BackPage
+        tradie={businessInfo?.personName || ""}
+        trade={businessInfo?.serviceType || ""}
+        business={businessInfo?.businessName || ""}
+      />
 
-      {recommendations?.map((item: RecommendationsBusiness, index: number) => (
-        <RecommendationReviewCard
-          key={index}
-          item={item}
-          isLoading={isPending || isLoading}
-        />
-      ))}
+
+      <div className="bg-surface">
+        <h2 className="pl-5 pt-5 pb-2 text-3xl font-semibold">What Neighbour Says</h2>
+        {recommendations?.map((item: RecommendationsBusiness, index: number) => (
+          <div className="px-5 py-3">
+            <RecommendationReviewCard
+              key={index}
+              item={item}
+              isLoading={isPending || isLoading}
+            />
+          </div>
+        ))}
+      </div>
     </>
   );
 }

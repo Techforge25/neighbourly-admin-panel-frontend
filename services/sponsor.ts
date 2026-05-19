@@ -1,5 +1,6 @@
 import api from "@/lib/axios";
 import { CreateSponsor } from "@/types";
+import { toast } from "react-toastify";
 
 export const getSponsors = async (suburb: string, page: number) => {
      try {
@@ -11,14 +12,39 @@ export const getSponsors = async (suburb: string, page: number) => {
 }
 
 export const createSponsor = async (payload: CreateSponsor) => {
-     const { businessName, contact, logo, personName, serviceType, suburb } = payload
+     const {
+          businessName,
+          contact,
+          logo,
+          personName,
+          serviceType,
+          suburb,
+     } = payload;
+
      try {
-          const { data } = await api.post(`/sponsor`, { businessName, contact, logo, personName, serviceType, suburb });
+          const { data } = await api.post(`/sponsor`, {
+               businessName,
+               contact,
+               logo,
+               personName,
+               serviceType,
+               suburb,
+          });
+
+          toast.success(
+               data?.message || "Sponsor created successfully"
+          );
+
           return data;
-     } catch (err) {
-          console.error(err)
+     } catch (err: any) {
+          console.error(err?.message, "errorrr");
+          toast.error(
+               err?.message || "Failed to create sponsor"
+          );
+
+          throw err;
      }
-}
+};
 
 export const editSponsor = async (sponsorId: string, payload: CreateSponsor) => {
      const { businessName, contact, logo, personName } = payload

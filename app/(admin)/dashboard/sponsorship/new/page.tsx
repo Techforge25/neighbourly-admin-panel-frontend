@@ -61,7 +61,12 @@ const Page = () => {
       queryClient.invalidateQueries({
         queryKey: [queryKeys.sponsor],
       });
+
       router.back();
+    },
+
+    onError: (error) => {
+      console.error(error);
     },
   });
 

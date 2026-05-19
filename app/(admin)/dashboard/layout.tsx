@@ -1,7 +1,7 @@
 "use client";
 
 import { AdminShell } from "@/components/admin/AdminShell";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import api from "@/lib/axios";
 import moment from "moment";
@@ -12,26 +12,28 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-
   const [loading, setLoading] = useState(true);
+  const pathname = usePathname();
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        await api.get("/auth/me");
+  // useEffect(() => {
+  //   const checkAuth = async () => {
+  //     try {
+  //       await api.get("/auth/me");
 
-        setLoading(false);
-      } catch (error) {
-        router.replace("/");
-      }
-    };
+  //       setLoading(false);
+  //     } catch (error) {
+  //       router.replace("/");
+  //     }
+  //   };
 
-    checkAuth();
-  }, [router]);
+  //   checkAuth();
+  // }, [router]);
+
+  const path = pathname.includes('sponsorship') ? 'Sponsorship' : pathname.includes('recommendation') ? 'Recommendations' : 'Dashboard Overview'
 
   return (
     <AdminShell
-      headerTitle="Dashboard Overview"
+      headerTitle={path}
       headerDate={moment().format("dddd, MMMM D, YYYY")}
       userName="Admin"
     >

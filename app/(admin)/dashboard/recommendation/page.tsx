@@ -50,12 +50,12 @@ export default function RecommendationPage() {
     <>
       {/* HEADER */}
 
-      <div className="px-10 py-5">
-        <h1 className="text-2xl font-semibold text-gray-900">
+      <div className="px-10 py-2">
+        <h1 className="text-4xl font-semibold text-gray-900">
           Businesses
         </h1>
 
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="mt-3 text-sm text-gray-500">
           Manage Businesses Records.
         </p>
       </div>

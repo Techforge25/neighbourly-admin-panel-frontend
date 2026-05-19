@@ -67,15 +67,15 @@ export default function SponsorshipListPage() {
     sponsors?.pages?.flatMap((page) => page?.data?.docs || []) || [];
 
   return (
-    <div className="min-h-screen  p-6">
+    <div className="min-h-screen  px-6 py-2">
       <div className="">
         {/* Header */}
         <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-semibold text-text-primary">
+            <h1 className="text-4xl font-semibold text-text-primary">
               Sponsorship
             </h1>
-            <p className="mt-1 text-sm text-text-para">
+            <p className="mt-3 text-sm text-text-para">
               Manage your active sponsors and partnerships
             </p>
           </div>

@@ -15,12 +15,6 @@ interface Props {
 
 export default function RecommendationsTable({ data, isLoading }: Props) {
   const router = useRouter();
-
-  const handleDelete = () => {
-    console.log("Sponsorship deleted!");
-    // your delete API call here
-  };
-
   console.log("RECOMMENDATION DATA =>", data);
 
   return (
@@ -55,7 +49,7 @@ export default function RecommendationsTable({ data, isLoading }: Props) {
                   </td>
 
                   <td key={index} className="px-6 py-5 font-poppins text-[1rem] font-normal text-text-para">
-                    {item?.trustedIn?.map((trust: string, index: number) => {
+                    {item?.trustedIn?.slice(0, 3)?.map((trust: string, index: number) => {
                       return (
                         <p key={index}>{trust}</p>
                       )
