@@ -4,6 +4,7 @@ import FiltersBar from "@/components/recommendation/FiltersBar";
 import Pagination from "@/components/recommendation/Pagination";
 import RecommendationCard from "@/components/recommendation/RecommendationCard";
 import RecommendationsTable from "@/components/recommendation/RecommendationsTable";
+import RecommendationsSkeleton from "@/components/ui/RecommendationsSkeleton";
 import { queryKeys } from "@/keys";
 import { fetchBusinesses } from "@/services/recommendations";
 import { Recommendation } from "@/types";
@@ -83,12 +84,20 @@ export default function RecommendationPage() {
           {/* MOBILE CARDS */}
 
           <div className="grid gap-4 p-4 lg:hidden">
-            {businessList?.map((item: Recommendation) => (
-              <RecommendationCard
-                key={item?.businessName}
-                item={item}
-              />
-            ))}
+            {isLoading ? (
+              <RecommendationsSkeleton />
+            ) : businessList?.length ? (
+              businessList.map((item: Recommendation) => (
+                <RecommendationCard
+                  key={item._id || item.businessName}
+                  item={item}
+                />
+              ))
+            ) : (
+              <div className="col-span-full text-center py-10 text-gray-400">
+                No recommendations found
+              </div>
+            )}
           </div>
 
           {/* PAGINATION */}

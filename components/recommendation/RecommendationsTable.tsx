@@ -24,36 +24,32 @@ export default function RecommendationsTable({ data, isLoading }: Props) {
         <tbody>
           {isLoading ? (
             <RecommendationsSkeleton />
-          ) : (
+          ) : data?.length ? (
             <>
-              {data?.map((item, index) => (
+              {data.map((item, index) => (
                 <tr
-                  key={index}
+                  key={item._id || index}
                   className="border-t border-gray-100 hover:bg-gray-50"
                 >
                   <td className="px-6 py-5">
-                    <h3 className="font-semibold font-hankenGrotesk text-[1rem] text-text-primary ">
+                    <h3 className="font-semibold font-hankenGrotesk text-[1rem] text-text-primary">
                       {item.personName}
                     </h3>
-                    <p className="font-poppins text-[0.875rem] text-text-para ">
+                    <p className="font-poppins text-[0.875rem] text-text-para">
                       {item.businessName}
                     </p>
                   </td>
 
-                  <td className="px-6 py-5 font-bold font-manrope text-[1rem] ">
-                    <span
-                      className={`${getColorThemeText(item.tradeCategory)} capitalize `}
-                    >
+                  <td className="px-6 py-5 font-bold font-manrope text-[1rem]">
+                    <span className={`${getColorThemeText(item.tradeCategory)} capitalize`}>
                       {item.tradeCategory}
                     </span>
                   </td>
 
-                  <td key={index} className="px-6 py-5 font-poppins text-[1rem] font-normal text-text-para">
-                    {item?.trustedIn?.slice(0, 3)?.map((trust: string, index: number) => {
-                      return (
-                        <p key={index}>{trust}</p>
-                      )
-                    })}
+                  <td className="px-6 py-5 font-poppins text-[1rem] font-normal text-text-para">
+                    {item?.trustedIn?.slice(0, 3)?.map((trust: string, i: number) => (
+                      <p key={i}>{trust}</p>
+                    ))}
                   </td>
 
                   <td className="px-6 py-5 text-sm font-poppins text-[0.875rem] font-normal text-text-para">
@@ -79,8 +75,13 @@ export default function RecommendationsTable({ data, isLoading }: Props) {
                 </tr>
               ))}
             </>
+          ) : (
+            <tr>
+              <td colSpan={6} className="text-center py-10 text-gray-400">
+                No Businesses found
+              </td>
+            </tr>
           )}
-
         </tbody>
       </table>
     </div>

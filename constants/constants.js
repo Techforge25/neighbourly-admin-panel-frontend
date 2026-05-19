@@ -228,7 +228,7 @@ export const categories = [
   "Electrician",
   "Handyman",
   "Gardener",
-  "Cleaners",
+  "Cleaner",
 ];
 
 export const suburbs = [
