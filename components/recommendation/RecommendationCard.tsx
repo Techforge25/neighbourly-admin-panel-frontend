@@ -65,7 +65,7 @@ export default function RecommendationCard({ item }: Props) {
           </button>
         </div>
       </div>
-      <ConfirmDeleteModal data={item} ref={modalRef} onConfirm={handleDelete} />
+      {/* <ConfirmDeleteModal data={item} ref={modalRef} onConfirm={handleDelete} /> */}
     </>
   );
 }
