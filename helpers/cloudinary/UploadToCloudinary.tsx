@@ -23,7 +23,6 @@ export const uploadToCloudinary = ({ file, folder, onProgress }: Props) => {
           // Dynamically determine resource type
           // Images use 'image', PDF/Docs use 'raw', others can use 'auto'
           let resourceType = "auto";
-          console.log(file, 'file')
           if (file.type.startsWith("image/")) {
                resourceType = "image";
           } else if (

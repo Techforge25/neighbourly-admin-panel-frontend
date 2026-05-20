@@ -44,7 +44,6 @@ export function AdminShell({
 
   // 🔑 Step 2: Modal confirmed → actual sign out logic
   const handleSignOutConfirm = () => {
-    console.log("✅ User signed out");
     // your cleanup logic:
     // localStorage.removeItem("token");
     // await signOutApi();

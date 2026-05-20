@@ -3,7 +3,7 @@ import { TbLayoutNavbarFilled } from "react-icons/tb";
 
 export const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: MdOutlineDashboard },
-  { href: "/dashboard/recommendation", label: "Recommendation", icon: MdThumbUpOffAlt },
+  { href: "/dashboard/recommendation", label: "Businesses", icon: MdThumbUpOffAlt },
   { href: "/dashboard/sponsorship", label: "Sponsorship", icon: TbLayoutNavbarFilled },
 ];
 

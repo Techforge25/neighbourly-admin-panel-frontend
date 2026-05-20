@@ -15,7 +15,6 @@ interface Props {
 
 export default function RecommendationsTable({ data, isLoading }: Props) {
   const router = useRouter();
-  console.log("RECOMMENDATION DATA =>", data);
 
   return (
     <div className="hidden overflow-x-auto lg:block">

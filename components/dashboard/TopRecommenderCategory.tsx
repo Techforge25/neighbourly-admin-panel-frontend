@@ -11,7 +11,6 @@ export default function TopRecommenderCategory() {
           queryFn: () => getTopRecommenders()
      })
 
-     console.log(topRecommendations, 'top recommendations')
      return (
           <div className="rounded-2xl border border-border-primary bg-surface p-5 shadow-card sm:p-6">
                <h2 className="font-manrope font-bold text-text-primary text-[1.25rem]">

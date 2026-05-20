@@ -13,10 +13,6 @@ interface Props {
 export default function RecommendationCard({ item }: Props) {
   const modalRef = useRef<ConfirmDeleteModalRef>(null);
   const router = useRouter();
-  const handleDelete = () => {
-    console.log("Sponsorship deleted!");
-    // your delete API call here
-  };
   return (
     <>
       <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">

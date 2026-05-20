@@ -47,7 +47,6 @@ export const viewPendingRecommendations = async (recommendationId: string) => {
 }
 
 export const updateRecommendationStatus = async (recommendationId: string, status: string) => {
-     console.log(status, 'statusss')
      try {
           const { data } = await api.patch(`/dashboard/recommendation/${recommendationId}`, { status });
           return data;

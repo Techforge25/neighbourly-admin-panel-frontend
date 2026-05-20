@@ -16,8 +16,6 @@ export default function RecommendationReviewCard({
     return <RecommendationReviewCardSkeleton />;
   }
 
-  console.log(item, 'itemsssssss abcccc')
-
   return (
     <section className="mb-4 rounded-xl border border-border-primary bg-surface p-5">
       <div className="rounded-lg bg-surface-muted-primary p-[1rem]">

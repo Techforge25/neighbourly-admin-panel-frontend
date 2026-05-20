@@ -25,7 +25,6 @@ import { CreateSponsor } from "@/types";
 const EditSponsorship = () => {
      const params = useParams();
      const id = params?.id as string;
-     console.log(id, 'iddddd')
      const router = useRouter();
      const queryClient = useQueryClient();
      const wrapperRef = useRef<HTMLDivElement>(null);
@@ -129,7 +128,6 @@ const EditSponsorship = () => {
                     file,
                     folder: "sponsor",
                });
-               console.log(url, "uploaded url");
                setValue("logo", url as string, {
                     shouldValidate: true,
                     shouldDirty: true,

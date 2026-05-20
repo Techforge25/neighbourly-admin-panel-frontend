@@ -26,7 +26,6 @@ export default function LoginPage() {
     mutationFn: async (event: LoginForm) => {
       try {
         await login(event);
-        console.log('route')
         router.push("/dashboard");
       } catch (error) {
         console.error("Login failed:", error)

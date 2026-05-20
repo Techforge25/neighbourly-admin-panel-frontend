@@ -55,7 +55,6 @@ export default function SponsorshipListPage() {
   };
 
   const handleEdit = (row: Sponsorship) => {
-    console.log("Edit:", row);
     router.push(`/dashboard/sponsorship/${row._id}`);
   };
 

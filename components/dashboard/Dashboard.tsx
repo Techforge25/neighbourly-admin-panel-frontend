@@ -46,7 +46,6 @@ const Dashboard = () => {
   };
 
   const handleApproveClick = (row: RecommendationRow, status: 'approved') => {
-    console.log("APPROVE ROW =>", row);
     mutate({
       id: row._id,
       status,

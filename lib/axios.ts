@@ -41,7 +41,7 @@ api.interceptors.response.use(
           const status = error.response.status;
 
           const isRefreshRequest =
-               originalRequest.url?.includes("/admin/auth/refreshToken");
+               originalRequest.url?.includes("/auth/refreshToken");
 
           if (
                status === 401 &&
@@ -62,7 +62,7 @@ api.interceptors.response.use(
                isRefreshing = true;
 
                try {
-                    await refreshClient.get("/admin/auth/refreshToken");
+                    await refreshClient.get("/auth/refreshToken");
                     processQueue();
                     return api(originalRequest);
                } catch (err) {

@@ -57,7 +57,6 @@ export const editSponsor = async (sponsorId: string, payload: CreateSponsor) => 
 }
 
 export const viewSponsor = async (sponsorId: string) => {
-     console.log(sponsorId, 'sponsor iddd')
      try {
           const { data } = await api.get(`/sponsor/${sponsorId}`);
           return data;
@@ -67,7 +66,6 @@ export const viewSponsor = async (sponsorId: string) => {
 }
 
 export const deleteSponsor = async (sponsorId: string) => {
-     console.log(sponsorId, 'sponsor iddd')
      try {
           const { data } = await api.delete(`/sponsor/${sponsorId}`);
           return data;

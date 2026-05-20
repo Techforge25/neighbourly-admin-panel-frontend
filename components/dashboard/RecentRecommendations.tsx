@@ -10,8 +10,6 @@ export default function RecentRecommendations() {
           queryFn: () => getRecentPendingRecommendations()
      })
 
-     console.log(recentRecommendation, 'recent recommendation')
-
      return (
           <div className="rounded-2xl border border-border-primary bg-surface p-5 shadow-card sm:p-6">
                <h2 className="font-manrope font-bold text-text-primary text-[1.25rem]">

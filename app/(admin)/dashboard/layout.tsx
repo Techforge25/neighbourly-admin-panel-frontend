@@ -29,7 +29,7 @@ export default function AdminLayout({
   //   checkAuth();
   // }, [router]);
 
-  const path = pathname.includes('sponsorship') ? 'Sponsorship' : pathname.includes('recommendation') ? 'Recommendations' : 'Dashboard Overview'
+  const path = pathname.includes('sponsorship') ? 'Sponsorship' : pathname.includes('recommendation') ? 'Businesses' : 'Dashboard Overview'
 
   return (
     <AdminShell
