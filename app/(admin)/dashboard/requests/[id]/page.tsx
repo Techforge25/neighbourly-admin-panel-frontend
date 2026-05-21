@@ -38,6 +38,7 @@ export default function Page() {
                fullName: recommendations?.user?.fullName,
                email: recommendations?.user?.email,
                address: recommendations?.user?.address,
+               contact: recommendations?.user?.contact
           },
      };
 

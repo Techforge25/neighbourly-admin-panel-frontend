@@ -40,7 +40,10 @@ export default function RecommendationReviewCard({
             </div>
 
             <p className="mt-2 font-poppins text-[0.875rem] font-normal text-text-para">
-              {item?.user?.email} 
+              {item?.user?.email}
+            </p>
+            <p className="mt-2 font-poppins text-[0.875rem] font-normal text-text-para">
+              {item?.user?.contact}
             </p>
           </div>
 

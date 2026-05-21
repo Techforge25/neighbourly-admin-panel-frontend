@@ -5,7 +5,7 @@ import { SlEye } from "react-icons/sl";
 import { FaCheck } from "react-icons/fa6";
 import { IoCloseOutline } from "react-icons/io5";
 import { CATEGORY_META } from "@/types";
-import { LuDelete, LuPencil, LuTrash2 } from "react-icons/lu";
+import { LuPencil } from "react-icons/lu";
 import moment from "moment";
 import { RiDeleteBin5Line } from "react-icons/ri";
 export const recommendationTableColumns = ({

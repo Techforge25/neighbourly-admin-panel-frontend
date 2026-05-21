@@ -343,6 +343,7 @@ export type RecommendationsBusiness = {
     email: string;
     address: string;
     fullName: string;
+    contact: string;
   }
 }
 

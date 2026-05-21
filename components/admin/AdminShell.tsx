@@ -28,9 +28,22 @@ export function AdminShell({
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
-    if (href === "/dashboard/recommendation")
+
+    if (href === "/dashboard") {
+      return (
+        pathname === "/dashboard" ||
+        pathname.startsWith("/dashboard/requests")
+      );
+    }
+
+    if (href === "/dashboard/recommendation") {
       return pathname.startsWith("/dashboard/recommendation");
-    if (href === "/dashboard/sponsorship") return pathname.startsWith("/dashboard/sponsorship");
+    }
+
+    if (href === "/dashboard/sponsorship") {
+      return pathname.startsWith("/dashboard/sponsorship");
+    }
+
     return pathname === href;
   };
 

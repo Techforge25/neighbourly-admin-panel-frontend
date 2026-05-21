@@ -42,7 +42,7 @@ const Dashboard = () => {
 
 
   const handleDetailsClick = (row: RecommendationRow) => {
-    router.push(`/dashboard/recommendation-requests/${row._id}`);
+    router.push(`/dashboard/requests/${row._id}`);
   };
 
   const handleApproveClick = (row: RecommendationRow, status: 'approved') => {
