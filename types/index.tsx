@@ -362,3 +362,10 @@ export type Error = {
   statusCode: Number;
   success: boolean;
 }
+
+export type TypeExportButtons = {
+  type: string,
+  btnText: string,
+  exportOptionsText: string,
+  downloadButton: string
+}

@@ -1,5 +1,6 @@
 "use client";
 
+import ExportButtons from "@/components/recommendation/ExportButtons";
 import FiltersBar from "@/components/recommendation/FiltersBar";
 import Pagination from "@/components/recommendation/Pagination";
 import RecommendationCard from "@/components/recommendation/RecommendationCard";
@@ -51,14 +52,19 @@ export default function RecommendationPage() {
     <>
       {/* HEADER */}
 
-      <div className="px-10 py-2">
-        <h1 className="text-4xl font-semibold text-gray-900">
-          Businesses
-        </h1>
+      <div className="flex justify-between px-10 py-2">
+        <div>
+          <h1 className="text-4xl font-semibold text-gray-900">
+            Businesses
+          </h1>
 
-        <p className="mt-3 text-sm text-gray-500">
-          Manage Businesses Records.
-        </p>
+          <p className="mt-3 text-sm text-gray-500">
+            Manage Businesses Records.
+          </p>
+        </div>
+        <div>
+          <ExportButtons list={businessList}/>
+        </div>
       </div>
 
       <div className="min-h-screen bg-[#f5f7fb] p-4 md:p-8">

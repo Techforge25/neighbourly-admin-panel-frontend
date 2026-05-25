@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/keys";
 import { deleteSponsor, getSponsors } from "@/services/sponsor";
+import ExportButtons from "../recommendation/ExportButtons";
 
 export default function SponsorshipListPage() {
   const [selectedSuburb, setSelectedSuburb] = useState<string>("Select Suburb");
@@ -17,9 +18,6 @@ export default function SponsorshipListPage() {
 
   const {
     data: sponsors,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
     isPending,
     isLoading,
   } = useInfiniteQuery({
@@ -94,6 +92,9 @@ export default function SponsorshipListPage() {
               Add Sponsorship <LuPlus size={16} />
             </button>
           </div>
+        </div>
+        <div className="flex justify-end mb-5">
+          <ExportButtons list={sponsorshipList} />
         </div>
 
         {/* Table */}

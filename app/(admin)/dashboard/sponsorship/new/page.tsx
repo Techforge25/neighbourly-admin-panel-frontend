@@ -49,7 +49,7 @@ const Page = () => {
       businessName: "",
       suburb: "",
       serviceType: "Mortgage Broker",
-      logo: "",
+      logo: "",  
       contact: "",
     },
   });

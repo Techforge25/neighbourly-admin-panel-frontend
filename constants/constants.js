@@ -521,3 +521,18 @@ export const sponsor = [
   { label: "Real Estate Agent", value: "Real Estate Agent" },
   { label: "Advisor", value: "Advisor" },
 ]
+
+export const exportButtons = [
+  {
+    type: 'CSV',
+    btnText: 'Export as CSV',
+    exportOptionsText: 'CSV Export Options',
+    downloadButton: 'Download CSV'
+  },
+  {
+  type: 'Excel',
+  btnText: 'Export as Excel',
+  exportOptionsText: 'Excel Export Options',
+  downloadButton: 'Download Excel'
+  }
+]

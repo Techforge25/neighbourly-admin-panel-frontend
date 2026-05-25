@@ -7,7 +7,6 @@ import { viewBusiness } from "@/services/recommendations";
 import { RecommendationsBusiness } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
-import { IoArrowBackSharp } from "react-icons/io5";
 
 export default function Page() {
   const params = useParams();
@@ -20,7 +19,6 @@ export default function Page() {
 
   const recommendations = viewBusinessRecommendations?.data?.recommendations
   const businessInfo = viewBusinessRecommendations?.data?.business
-  console.log(businessInfo, 'business info')
 
   return (
     <>
