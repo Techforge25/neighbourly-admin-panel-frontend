@@ -20,22 +20,11 @@ export default function Page() {
 
   const recommendations = viewBusinessRecommendations?.data?.recommendations
   const businessInfo = viewBusinessRecommendations?.data?.business
+  console.log(businessInfo, 'business info')
 
   return (
     <>
-      <button
-        onClick={() => {
-          router.back();
-        }}
-        className="flex items-center gap-[0.625rem] cursor-pointer pb-2"
-      >
-        <span>
-          <IoArrowBackSharp size={16} className="text-text-primary" />
-        </span>
-        <span className="text-text-primary font-inter text-[0.875rem]">
-          Back
-        </span>
-      </button>
+      <BackPage tradie={businessInfo?.personName} trade={businessInfo?.serviceType} business={businessInfo?.businessName} contact={businessInfo?.contact}/>
       {recommendations?.length === 0 ? (
         <div className="bg-surface rounded-3xl border border-border/50 overflow-hidden">
           <div className="px-5 pt-5 pb-3">

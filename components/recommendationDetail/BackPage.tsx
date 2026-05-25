@@ -4,7 +4,7 @@ import { BackPageProps } from "@/types";
 import { useRouter } from "next/navigation";
 import { IoArrowBackSharp } from "react-icons/io5";
 
-const BackPage = ({ tradie, trade, business }: BackPageProps) => {
+const BackPage = ({ tradie, trade, business, contact }: BackPageProps) => {
   const router = useRouter();
   return (
     <div className="">
@@ -34,7 +34,10 @@ const BackPage = ({ tradie, trade, business }: BackPageProps) => {
             {trade}
           </span>
         </div>
-        <p>{business}</p>
+        <div className="flex gap-2">
+          <span className="text-text-para">{business}</span> •
+          <span className="text-text-para">{contact}</span>
+        </div>
       </div>
     </div>
   );

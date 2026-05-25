@@ -98,6 +98,7 @@ export interface BackPageProps {
   tradie: string;
   trade: string;
   business: string;
+  contact: string;
 }
 
 export type FieldType =

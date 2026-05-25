@@ -31,6 +31,7 @@ export default function Page() {
           reasonsOfRecommendation: recommendations?.reasonsOfRecommendation,
           business: {
                personName: recommendations?.business?.personName,
+               contact: recommendations?.business?.contact,
                businessName: recommendations?.business?.businessName,
                serviceType: recommendations?.business?.serviceType,
           },
@@ -48,6 +49,7 @@ export default function Page() {
                     tradie={recommendedData?.business?.personName || ""}
                     trade={recommendedData?.business?.serviceType || ""}
                     business={recommendedData?.business?.businessName || ""}
+                    contact={recommendations?.business?.contact}
                />
                <RecommendationReviewCard
                     item={recommendedData}
