@@ -63,7 +63,7 @@ export default function RecommendationPage() {
           </p>
         </div>
         <div>
-          <ExportButtons list={businessList}/>
+          <ExportButtons list={businessList} route='Recommendation'/>
         </div>
       </div>
 

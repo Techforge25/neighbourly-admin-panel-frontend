@@ -94,7 +94,7 @@ export default function SponsorshipListPage() {
           </div>
         </div>
         <div className="flex justify-end mb-5">
-          <ExportButtons list={sponsorshipList} />
+          <ExportButtons list={sponsorshipList} route='Sponsor'/>
         </div>
 
         {/* Table */}

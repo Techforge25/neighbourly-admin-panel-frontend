@@ -1,19 +1,56 @@
 "use client";
 
 import { exportButtons } from "@/constants/constants";
-import { Recommendation, Sponsorship, TypeExportButtons } from "@/types";
+import { TypeExportButtons } from "@/types";
 import { useState } from "react";
 import Papa from "papaparse";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 
 type Props<T> = {
-     list: T[];
+     list: T[] | any;
+     route: string;
 };
 
-export default function ExportButtons<T>({ list }: Props<T>) {
+export default function ExportButtons<T>({ list, route }: Props<T>) {
      const [csvOpen, setCsvOpen] = useState(false);
      const [excelOpen, setExcelOpen] = useState(false);
+
+     const transformData = (list: any[]): Record<string, any>[] => {
+          if (route === 'Sponsor') {
+               return list?.map((item) => ({
+                    personName: item?.personName ?? '',
+                    suburb: item?.suburb ?? '',
+                    businessName: item?.businessName ?? '',
+                    serviceType: item?.serviceType ?? '',
+                    contact: item?.contact ?? '',
+               }));
+          } else {
+               return list?.map((item) => ({
+                    personName: item?.personName ?? "",
+                    businessName: item?.businessName ?? "",
+                    tradeCategory: item?.tradeCategory ?? "",
+                    totalRecommendations: item?.totalRecommendations ?? "",
+
+                    trustPoints: Array.isArray(item?.trustPoints)
+                         ? item.trustPoints
+                              .map((tp: any) =>
+                                   typeof tp === "string" ? tp : tp?.name || tp?.title || ""
+                              )
+                              .join(", ")
+                         : "",
+
+                    trustedIn: Array.isArray(item?.trustedIn)
+                         ? item.trustedIn
+                              .map((ti: any) =>
+                                   typeof ti === "string" ? ti : ti?.name || ti?.suburb || ""
+                              )
+                              .join(", ")
+                         : "",
+               }));
+          }
+
+     };
 
      const [loading, setLoading] = useState(false);
      const [activeType, setActiveType] = useState<string>('');
@@ -22,7 +59,7 @@ export default function ExportButtons<T>({ list }: Props<T>) {
           try {
                setLoading(true);
 
-               const csv = Papa.unparse(list);
+               const csv = Papa.unparse(transformData(list));
 
                const blob = new Blob([csv], {
                     type: "text/csv;charset=utf-8;",
@@ -30,7 +67,7 @@ export default function ExportButtons<T>({ list }: Props<T>) {
 
                const link = document.createElement("a");
                link.href = URL.createObjectURL(blob);
-               link.download = "export.csv";
+               link.download = `${route}.csv`;
                link.click();
           } finally {
                setLoading(false);
@@ -42,7 +79,7 @@ export default function ExportButtons<T>({ list }: Props<T>) {
           try {
                setLoading(true);
 
-               const worksheet = XLSX.utils.json_to_sheet(list);
+               const worksheet = XLSX.utils.json_to_sheet(transformData(list));
                const workbook = XLSX.utils.book_new();
 
                XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
@@ -56,7 +93,9 @@ export default function ExportButtons<T>({ list }: Props<T>) {
                     type: "application/octet-stream",
                });
 
-               saveAs(file, "export.xlsx");
+               saveAs(file, `${route}.xlsx`);
+          } catch (error) {
+               console.error(error);
           } finally {
                setLoading(false);
                setExcelOpen(false);
