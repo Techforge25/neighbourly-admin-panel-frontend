@@ -38,8 +38,6 @@ export default function RecommendationPage() {
         selectedSuburb === "All" ? "" : selectedSuburb,
         search
       ),
-
-    placeholderData: (previousData) => previousData,
   });
 
   const businessList = fetchBusinessesList?.data?.docs || [];
@@ -63,7 +61,7 @@ export default function RecommendationPage() {
           </p>
         </div>
         <div>
-          <ExportButtons list={businessList} route='Recommendation'/>
+          <ExportButtons list={businessList} route='Recommendation' />
         </div>
       </div>
 

@@ -1,6 +1,5 @@
 'use client'
 import { Props } from "@/types";
-import SearchFilterBar from "./SearchFilterBar";
 import RecommendationsTableSkeleton from "../ui/RecommendationsTableSkeleton";
 import FiltersBar from "../recommendation/FiltersBar";
 

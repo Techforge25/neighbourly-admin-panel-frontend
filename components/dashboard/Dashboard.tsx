@@ -33,6 +33,18 @@ const Dashboard = () => {
           queryKey: [queryKeys.allPendingRecommendations],
         });
 
+        queryClient.invalidateQueries({
+          queryKey: [queryKeys.dashboardStats],
+        });
+
+        queryClient.invalidateQueries({
+          queryKey: [queryKeys.topRecommenders],
+        });
+
+        queryClient.invalidateQueries({
+          queryKey: [queryKeys.recentRecommendations],
+        });
+
       },
 
       onError: (error) => {

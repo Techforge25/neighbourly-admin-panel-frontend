@@ -7,7 +7,7 @@ import Image from "next/image";
 import SkeletonStats from "../ui/StatsSkeleton";
 
 export function KpiGrid() {
-  const { data: stats, isLoading, isError } = useQuery({
+  const { data: stats, isLoading } = useQuery({
     queryKey: [queryKeys.dashboardStats],
     queryFn: getDashboardStats,
   });
