@@ -6,13 +6,15 @@ import { LuPlus } from "react-icons/lu";
 import SponsorshipTable from "./SponsorshipTable";
 import { suburbs } from "@/constants/constants";
 import { useRouter } from "next/navigation";
-import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/keys";
 import { deleteSponsor, getSponsors } from "@/services/sponsor";
 import ExportButtons from "../recommendation/ExportButtons";
+import Pagination from "../recommendation/Pagination";
 
 export default function SponsorshipListPage() {
   const [selectedSuburb, setSelectedSuburb] = useState<string>("Select Suburb");
+  const [currentPage, setCurrentPage] = useState(1);
   const router = useRouter();
   const queryClient = useQueryClient()
 
@@ -20,18 +22,14 @@ export default function SponsorshipListPage() {
     data: sponsors,
     isPending,
     isLoading,
-  } = useInfiniteQuery({
-    queryKey: [queryKeys.sponsor, selectedSuburb],
-    queryFn: ({ pageParam = 1 }) =>
-      getSponsors(selectedSuburb === 'Select Suburb' ? '' : selectedSuburb, pageParam),
+  } = useQuery({
+    queryKey: [queryKeys.sponsor, selectedSuburb, currentPage],
 
-    initialPageParam: 1,
-
-    getNextPageParam: (lastPage) => {
-      return lastPage?.data?.hasNextPage
-        ? lastPage.data.page + 1
-        : undefined;
-    },
+    queryFn: () =>
+      getSponsors(
+        selectedSuburb === "Select Suburb" ? "" : selectedSuburb,
+        currentPage
+      ),
   });
 
   const { mutate } =
@@ -60,8 +58,9 @@ export default function SponsorshipListPage() {
     mutate(row?._id)
   }
 
-  const sponsorshipList =
-    sponsors?.pages?.flatMap((page) => page?.data?.docs || []) || [];
+  const sponsorshipList = sponsors?.data?.docs || [];
+  const totalPages = sponsors?.data?.totalPages || 1;
+  const page = sponsors?.data?.page || 1;
 
   return (
     <div className="min-h-screen  px-6 py-2">
@@ -94,7 +93,7 @@ export default function SponsorshipListPage() {
           </div>
         </div>
         <div className="flex justify-end mb-5">
-          <ExportButtons list={sponsorshipList} route='Sponsor'/>
+          <ExportButtons list={sponsorshipList} route='Sponsor' />
         </div>
 
         {/* Table */}
@@ -103,6 +102,12 @@ export default function SponsorshipListPage() {
           onEdit={handleEdit}
           onDelete={handleDelete}
           isLoading={isLoading || isPending}
+        />
+
+        <Pagination
+          currentPage={page}
+          totalPages={totalPages}
+          setCurrentPage={setCurrentPage}
         />
       </div>
     </div>

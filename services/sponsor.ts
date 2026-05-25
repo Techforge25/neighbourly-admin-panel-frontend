@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 export const getSponsors = async (suburb: string, page: number) => {
      try {
-          const { data } = await api.get(`/sponsor?suburb=${suburb}&page=${page}`);
+          const { data } = await api.get(`/sponsor?suburb=${suburb}&page=${page}&limit=10`);
           return data;
      } catch (err) {
           console.error(err)
