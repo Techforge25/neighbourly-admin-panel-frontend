@@ -19,6 +19,7 @@ export default function Page() {
 
   const recommendations = viewBusinessRecommendations?.data?.recommendations
   const businessInfo = viewBusinessRecommendations?.data?.business
+  console.log(recommendations, 'recommendations')
 
   return (
     <>

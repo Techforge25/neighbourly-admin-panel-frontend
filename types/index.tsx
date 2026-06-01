@@ -337,6 +337,7 @@ export const getNextPage = (
 };
 
 export type RecommendationsBusiness = {
+  recommendationId?: string;
   comment: string;
   createdAt: string;
   reasonsOfRecommendation: string[];

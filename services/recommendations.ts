@@ -27,6 +27,15 @@ export const getRecentPendingRecommendations = async () => {
      }
 }
 
+export const deleteRecommendation = async (recommendationId: string) => {
+     try {
+          const { data } = await api.delete(`/recommendation/${recommendationId}`);
+          return data;
+     } catch (err) {
+          console.error(err)
+     }
+}
+
 export const getAllPendingRecommendations = async (page: number) => {
      try {
           const { data } = await api.get(`/dashboard/all-pending?page=${page}&limit=10`);
