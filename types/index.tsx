@@ -370,3 +370,34 @@ export type TypeExportButtons = {
   exportOptionsText: string,
   downloadButton: string
 }
+export type Cluster = {
+  name: string;
+  description?: string | "";
+};
+export type CreateCluster = {
+  name: string;
+  description?: string | "";
+};
+
+export type UpdateCluster = {
+  name: string;
+  description?: string | "";
+};
+
+export type Suburb = {
+  clusterId: string;
+  name: string;
+  description?: string;
+};
+
+export type CreateSuburb = {
+  clusterId: string;
+  name: string;
+  description?: string;
+};
+
+export type UpdateSuburb = {
+  clusterId: string;
+  name: string;
+  description?: string;
+};

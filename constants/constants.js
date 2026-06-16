@@ -1,10 +1,12 @@
-import { MdOutlineDashboard, MdThumbUpOffAlt } from "react-icons/md";
+import { MdOutlineDashboard, MdThumbUpOffAlt , MdOutlineAddLocationAlt } from "react-icons/md";
 import { TbLayoutNavbarFilled } from "react-icons/tb";
-
+import { PiNetwork } from "react-icons/pi";
 export const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: MdOutlineDashboard },
   { href: "/dashboard/recommendation", label: "Businesses", icon: MdThumbUpOffAlt },
   { href: "/dashboard/sponsorship", label: "Sponsorship", icon: TbLayoutNavbarFilled },
+  { href: "/dashboard/cluster-management", label: "Cluster Management", icon: PiNetwork },
+  { href: "/dashboard/suburb-management", label: "Suburb Management", icon: MdOutlineAddLocationAlt },
 ];
 
 export const kpiStats = [

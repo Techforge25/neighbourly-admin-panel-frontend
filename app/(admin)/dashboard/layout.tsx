@@ -29,8 +29,14 @@ export default function AdminLayout({
     checkAuth();
   }, [router]);
 
-  const path = pathname.includes('sponsorship') ? 'Sponsorship' : pathname.includes('recommendation') ? 'Businesses' : 'Dashboard Overview'
+ const path =
+  pathname.includes('sponsorship') ? 'Sponsorship' :
+  pathname.includes('recommendation') ? 'Businesses' :
+  pathname.includes('cluster-management') ? 'Cluster Management' :
+  pathname.includes('suburb-management') ? 'Suburb Management' :
+  'Dashboard Overview';
 
+    
   return (
     <AdminShell
       headerTitle={path}

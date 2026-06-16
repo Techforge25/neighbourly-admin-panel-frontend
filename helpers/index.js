@@ -3,7 +3,7 @@
 import { getColorThemeText } from "@/constants/constants";
 import { SlEye } from "react-icons/sl";
 import { FaCheck } from "react-icons/fa6";
-import { IoCloseOutline } from "react-icons/io5";
+import { IoCloseOutline, IoEye } from "react-icons/io5";
 import { CATEGORY_META } from "@/types";
 import { LuPencil } from "react-icons/lu";
 import moment from "moment";
@@ -280,3 +280,107 @@ export const getSponsorshipColumns = (
       ),
     },
   ];
+
+
+
+  export const getClusterManagementColumns = ({ onEdit, onDelete }) => [
+    {
+      key: "name",
+      header: "Cluster",
+      render: (row) => (
+        <span className="font-semibold text-text-primary">{row.name}</span>
+      ),
+    },
+    {
+      key: "suburbs",
+      header: "Suburbs",
+      render: (row) => (
+        <div className="flex flex-wrap gap-2">
+          {row.suburbs?.map((suburb, index) => (
+            <span
+              key={index}
+              className="inline-block rounded-full border border-border-secondary px-4 py-1 text-xs text-text-para"
+            >
+              {suburb}
+            </span>
+          ))}
+        </div>
+      ),
+    },
+
+    {
+      key: "action",
+      header: "Action",
+      width: "100px",
+      render: (row) => (
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => onEdit(row)}
+            className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border border-border-secondary text-text-para hover:bg-surface-muted"
+            aria-label="Edit"
+          >
+            <LuPencil size={15} />
+          </button>
+          <button
+            type="button"
+            onClick={() => onDelete(row)}
+            className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border border-border-secondary text-red-500 hover:bg-surface-muted"
+            aria-label="Delete"
+          >
+            <RiDeleteBin5Line size={15} />
+          </button>
+        </div>
+      ),
+    },
+  ];
+  export const getSuburbManagementColumns = ({ onEdit, onDelete }) => [
+    {
+      key: "name",
+      header: "Suburb",
+      render: (row) => (
+        <span className="font-semibold text-text-primary">
+          {row.name}
+         
+        </span>
+      ),
+    },
+    {
+      key: "assignedCluster",
+      header: "Cluster Assigned",
+      render: (row) => (
+       <span className="font-semibold text-text-primary">
+          {row.assignedCluster}
+        
+        </span>
+      ),
+    },
+
+    {
+      key: "action",
+      header: "Action",
+      width: "100px",
+      render: (row) => (
+        <div className="flex items-center gap-2">
+          
+          <button
+            type="button"
+            onClick={() => onEdit(row)}
+            className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border border-border-secondary text-text-para hover:bg-surface-muted"
+            aria-label="Edit"
+          >
+            <LuPencil size={15} />
+          </button>
+          <button
+            type="button"
+            onClick={() => onDelete(row)}
+            className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border border-border-secondary text-red-500 hover:bg-surface-muted"
+            aria-label="Delete"
+          >
+            <RiDeleteBin5Line size={15} />
+          </button>
+        </div>
+      ),
+    },
+  ];
+  
