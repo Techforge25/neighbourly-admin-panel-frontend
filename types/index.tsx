@@ -373,6 +373,7 @@ export type TypeExportButtons = {
 export type Cluster = {
   name: string;
   description?: string | "";
+  _id: string;
 };
 export type CreateCluster = {
   name: string;
@@ -388,6 +389,7 @@ export type Suburb = {
   clusterId: string;
   name: string;
   description?: string;
+  _id: string;
 };
 
 export type CreateSuburb = {

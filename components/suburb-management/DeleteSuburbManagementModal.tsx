@@ -7,6 +7,7 @@ interface DeleteSuburbManagementModalProps {
   onClose: () => void;
   onConfirm: () => void;
   clusterData: any; 
+  isLoading?: boolean;
 }
 
 const DeleteSuburbManagementModal: React.FC<DeleteSuburbManagementModalProps> = ({
