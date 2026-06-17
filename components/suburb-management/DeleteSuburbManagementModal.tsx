@@ -7,7 +7,7 @@ interface DeleteSuburbManagementModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
-  suburbData: SuburbRecord; 
+   name?: string | SuburbRecord | null;
   isLoading?: boolean;
 }
 
@@ -15,7 +15,7 @@ const DeleteSuburbManagementModal: React.FC<DeleteSuburbManagementModalProps> = 
   isOpen,
   onClose,
   onConfirm,
-  suburbData,
+  name,
 }) => {
   if (!isOpen) return null;
 
@@ -47,7 +47,7 @@ const DeleteSuburbManagementModal: React.FC<DeleteSuburbManagementModalProps> = 
 
         
           <p className="text-[14px] text-[#6B7280] text-center leading-relaxed mb-8 px-2">
-            Are you sure you want to delete <span className="font-medium text-[#374151]">{suburbData?.name}</span>? This action
+            Are you sure you want to delete <span className="font-medium text-[#374151]">  {typeof name === "string" ? name : name?.name}</span>? This action
             will unassign all suburbs associated with this group. This action cannot be undone.
           </p>
 

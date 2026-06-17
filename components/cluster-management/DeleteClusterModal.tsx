@@ -6,7 +6,7 @@ interface DeleteClusterModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
-  clusterData: ClusterRecord;
+  name?: string | ClusterRecord | null;
   isLoading?: boolean;
 }
 
@@ -14,7 +14,7 @@ const DeleteClusterModal: React.FC<DeleteClusterModalProps> = ({
   isOpen,
   onClose,
   onConfirm,
-  clusterData,
+  name,
   isLoading,
 }) => {
   if (!isOpen) return null;
@@ -27,7 +27,7 @@ const DeleteClusterModal: React.FC<DeleteClusterModalProps> = ({
           className="absolute top-6 right-6 text-[#9CA3AF] hover:text-[#111827] transition-colors"
           aria-label="Close modal"
         >
-          <RxCross1  className="text-black"/>
+          <RxCross1 className="text-black" />
         </button>
 
         <div className="flex flex-col items-center mt-2">
@@ -42,8 +42,7 @@ const DeleteClusterModal: React.FC<DeleteClusterModalProps> = ({
           <p className="text-[14px] text-[#6B7280] text-center leading-relaxed mb-8 px-2">
             Are you sure you want to delete{" "}
             <span className="font-medium text-[#374151]">
-              {clusterData?.name}
-
+              {typeof name === "string" ? name : name?.name}
             </span>
             ? This action will unassign all suburbs associated with this group.
             This action cannot be undone.

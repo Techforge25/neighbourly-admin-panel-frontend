@@ -414,4 +414,5 @@ export interface SuburbRecord {
   name: string;
   clusterId: string;
   _id: string
+  assignedCluster: string;
 }
