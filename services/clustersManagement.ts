@@ -4,7 +4,7 @@ import { CreateCluster, UpdateCluster } from "@/types";
 
 export const getClusters = async (page = 1) => {
      try {
-          const { data } = await api.get(`/cluster?page=${page}`);
+          const { data } = await api.get(`/cluster?page=${page}&limit=10`);
           return data;
      } catch (err) {
           console.error("Error fetching clusters:", err);

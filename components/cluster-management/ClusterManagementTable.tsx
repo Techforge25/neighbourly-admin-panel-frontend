@@ -1,11 +1,11 @@
 import { getClusterManagementColumns } from "@/helpers";
-import { Cluster } from "@/types";
-import RecommendationsSkeleton from "../ui/RecommendationsSkeleton";
+import { Cluster, ClusterRecord } from "@/types";
+import RecommendationsSkeleton from "@/components/ui/RecommendationsSkeleton";
 
-type Props = {
+interface Props {
   data: Cluster[];
-  onEdit: (row: Cluster) => void;
-  onDelete: (row: Cluster) => void
+  onEdit: (row: ClusterRecord) => void;
+  onDelete: (row: ClusterRecord) => void
   isLoading: boolean;
 };
 
@@ -14,7 +14,7 @@ export default function ClusterManagementTable({ data, onEdit, onDelete, isLoadi
   if (data.length === 0) {
     return (
       <div className="rounded-xl border border-border-secondary bg-white px-6 py-10 text-center text-sm text-text-para">
-        No sponsorships found
+        No Cluster found
       </div>
     );
   }
@@ -61,7 +61,7 @@ export default function ClusterManagementTable({ data, onEdit, onDelete, isLoadi
       </div>
 
       <div className="flex flex-col gap-3 lg:hidden">
-        {data.map((row, index) => (
+        {data.map((row) => (
           <div
             key={row._id}
             className="rounded-xl border border-border-secondary bg-white p-4"

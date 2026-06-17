@@ -403,3 +403,9 @@ export type UpdateSuburb = {
   name: string;
   description?: string;
 };
+
+export interface ClusterRecord {
+  name: string;
+  suburbs: string[],
+  _id: string
+}

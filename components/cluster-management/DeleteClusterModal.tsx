@@ -54,8 +54,8 @@ const DeleteClusterModal: React.FC<DeleteClusterModalProps> = ({
           <p className="text-[14px] text-[#6B7280] text-center leading-relaxed mb-8 px-2">
             Are you sure you want to delete{" "}
             <span className="font-medium text-[#374151]">
-              {clusterData?.name || "this cluster"}
-             
+              {clusterData?.name}
+
             </span>
             ? This action will unassign all suburbs associated with this group.
             This action cannot be undone.
@@ -75,7 +75,7 @@ const DeleteClusterModal: React.FC<DeleteClusterModalProps> = ({
               disabled={isLoading}
               className="flex items-center justify-center gap-2 w-full py-3.5 bg-[#FF9A8A] hover:bg-[#FF8F7D] text-white text-[15px] font-medium rounded-full transition-colors"
             >
-              {isLoading ? "Deleting..." : "Delete Cluster"} 
+              {isLoading ? "Deleting..." : "Delete Cluster"}
               <RiDeleteBin5Line size={18} />
             </button>
           </div>

@@ -8,38 +8,34 @@ import DeleteClusterModal from "./DeleteClusterModal";
 import { deleteCluster, getClusters } from "@/services/clustersManagement";
 import { queryKeys } from "@/keys";
 import ClusterManagementTable from "./ClusterManagementTable";
-
-
+import { ClusterRecord } from "@/types";
 
 export default function ClusterManagementListPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const queryClient = useQueryClient();
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editClusterData, setEditClusterData] = useState<any>(null);
-
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [clusterToDelete, setClusterToDelete] = useState<any>(null);
+  const [clusterToDelete, setClusterToDelete] = useState<string | null>(null);
 
 
   const { data: clusterResponse, isPending, isLoading } = useQuery({
-    queryKey: [queryKeys.cluster, currentPage], 
+    queryKey: [queryKeys.cluster, currentPage],
     queryFn: () => getClusters(currentPage),
   });
 
- 
+
   const clusters = clusterResponse?.data?.docs || [];
   const totalPages = clusterResponse?.data?.totalPages || 1;
 
   const { mutate: deleteMutate, isPending: isDeleting } = useMutation({
-  mutationFn: deleteCluster,
-  onSuccess: () => {
-    queryClient.invalidateQueries({ queryKey: [queryKeys.cluster] });
-    setIsDeleteModalOpen(false);
-    setClusterToDelete(null);
-  },
-});
-
+    mutationFn: deleteCluster,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [queryKeys.cluster] });
+      setIsDeleteModalOpen(false);
+      setClusterToDelete(null);
+    },
+  });
 
   const handleOpenModal = () => {
     setEditClusterData(null);
@@ -51,14 +47,13 @@ export default function ClusterManagementListPage() {
     setEditClusterData(null);
   };
 
-  const handleEdit = (row: any) => {
-
-    setEditClusterData(row.originalData || row);
+  const handleEdit = (row: ClusterRecord) => {
+    setEditClusterData(row);
     setIsModalOpen(true);
   };
 
-  const handleDeleteClick = (row: any) => {
-    setClusterToDelete(row.originalData || row);
+  const handleDeleteClick = (row: ClusterRecord) => {
+    setClusterToDelete(row);
     setIsDeleteModalOpen(true);
   };
 
@@ -67,10 +62,9 @@ export default function ClusterManagementListPage() {
     setClusterToDelete(null);
   };
 
-const handleConfirmDelete = () => {
-  if (!clusterToDelete?._id) return;
-  deleteMutate(clusterToDelete._id);
-};
+  const handleConfirmDelete = () => {
+    deleteMutate(clusterToDelete._id);
+  };
 
   return (
     <div className="min-h-screen px-6 py-2">
