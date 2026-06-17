@@ -10,5 +10,9 @@ export const queryKeys = {
      getRecommendationRequests: 'getRecommendationRequests',
      logout: 'logout',
      sponsor: 'sponsor',
-     editSponsor: 'editSponsor' 
+     editSponsor: 'editSponsor',
+     cluster: 'cluster',
+     editCluster: 'editCluster' ,
+     suburb: 'suburb',
+     editSuburb: 'editSuburb'  ,  
 }
