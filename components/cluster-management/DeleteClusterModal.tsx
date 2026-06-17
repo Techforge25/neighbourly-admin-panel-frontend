@@ -1,10 +1,12 @@
+import { ClusterRecord } from "@/types";
 import React from "react";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import { RxCross1 } from "react-icons/rx";
 interface DeleteClusterModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
-  clusterData: any;
+  clusterData: ClusterRecord;
   isLoading?: boolean;
 }
 
@@ -25,21 +27,7 @@ const DeleteClusterModal: React.FC<DeleteClusterModalProps> = ({
           className="absolute top-6 right-6 text-[#9CA3AF] hover:text-[#111827] transition-colors"
           aria-label="Close modal"
         >
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M13 1L1 13M1 1L13 13"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <RxCross1  className="text-black"/>
         </button>
 
         <div className="flex flex-col items-center mt-2">

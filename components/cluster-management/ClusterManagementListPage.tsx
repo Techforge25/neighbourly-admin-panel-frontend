@@ -11,12 +11,12 @@ import ClusterManagementTable from "./ClusterManagementTable";
 import { ClusterRecord } from "@/types";
 
 export default function ClusterManagementListPage() {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);  
   const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editClusterData, setEditClusterData] = useState<any>(null);
+  const [editClusterData, setEditClusterData] = useState<ClusterRecord | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [clusterToDelete, setClusterToDelete] = useState<string | null>(null);
+  const [clusterToDelete, setClusterToDelete] = useState<ClusterRecord | null>(null);
 
 
   const { data: clusterResponse, isPending, isLoading } = useQuery({

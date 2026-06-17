@@ -409,3 +409,9 @@ export interface ClusterRecord {
   suburbs: string[],
   _id: string
 }
+
+export interface SuburbRecord {
+  name: string;
+  clusterId: string;
+  _id: string
+}

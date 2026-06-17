@@ -1,11 +1,11 @@
 import {  getSuburbManagementColumns } from "@/helpers";
-import { Suburb } from "@/types";
-import RecommendationsSkeleton from "../ui/RecommendationsSkeleton";
+import { Suburb, SuburbRecord } from "@/types";
+import RecommendationsSkeleton from "@/components/ui/RecommendationsSkeleton";
 
 type Props = {
   data: Suburb[];
-  onEdit: (row: Suburb) => void;
-  onDelete: (row: Suburb) => void
+  onEdit: (row: SuburbRecord) => void;
+  onDelete: (row: SuburbRecord) => void
   isLoading: boolean;
 };
 
@@ -14,7 +14,7 @@ export default function SuburbManagementTable({ data, onEdit, onDelete, isLoadin
   if (data.length === 0) {
     return (
       <div className="rounded-xl border border-border-secondary bg-white px-6 py-10 text-center text-sm text-text-para">
-        No sponsorships found
+        No Suburbs found
       </div>
     );
   }
@@ -61,7 +61,7 @@ export default function SuburbManagementTable({ data, onEdit, onDelete, isLoadin
       </div>
 
       <div className="flex flex-col gap-3 lg:hidden">
-        {data.map((row, index) => (
+        {data.map((row) => (
           <div
             key={row._id}
             className="rounded-xl border border-border-secondary bg-white p-4"

@@ -9,6 +9,7 @@ import DeleteSuburbManagementModal from "./DeleteSuburbManagementModal";
 import { queryKeys } from "@/keys";
 import SuburbManagementTable from "./SuburbManagementTable";
 import { deleteSuburb, getSuburbs } from "@/services/suburbsManagement";
+import { SuburbRecord } from "@/types";
 
 
 
@@ -17,10 +18,10 @@ export default function SuburbManagementListPage() {
   const queryClient = useQueryClient();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editSuburbData, setEditSuburbData] = useState<any>(null);
+  const [editSuburbData, setEditSuburbData] = useState<SuburbRecord | null>(null);
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [clusterToDelete, setClusterToDelete] = useState<any>(null);
+  const [suburbToDelete, setSuburbToDelete] = useState<SuburbRecord | null>(null);
 
 
   const { data: clusterResponse, isPending, isLoading } = useQuery({
@@ -37,7 +38,7 @@ export default function SuburbManagementListPage() {
   onSuccess: () => {
     queryClient.invalidateQueries({ queryKey: [queryKeys.suburb] });
     setIsDeleteModalOpen(false);
-    setClusterToDelete(null);
+    setSuburbToDelete(null);
   },
 });
 
@@ -52,25 +53,24 @@ export default function SuburbManagementListPage() {
     setEditSuburbData(null);
   };
 
-  const handleEdit = (row: any) => {
+  const handleEdit = (row: SuburbRecord) => {
 
-    setEditSuburbData(row.originalData || row);
+    setEditSuburbData(row);
     setIsModalOpen(true);
   };
 
-  const handleDeleteClick = (row: any) => {
-    setClusterToDelete(row.originalData || row);
+  const handleDeleteClick = (row: SuburbRecord) => {
+    setSuburbToDelete(row);
     setIsDeleteModalOpen(true);
   };
 
   const handleCloseDeleteModal = () => {
     setIsDeleteModalOpen(false);
-    setClusterToDelete(null);
+    setSuburbToDelete(null);
   };
 
 const handleConfirmDelete = () => {
-  if (!clusterToDelete?._id) return;
-  deleteMutate(clusterToDelete._id);
+  deleteMutate(suburbToDelete._id);
 };
 
   return (
@@ -123,7 +123,7 @@ const handleConfirmDelete = () => {
           isOpen={isDeleteModalOpen}
           onClose={handleCloseDeleteModal}
           onConfirm={handleConfirmDelete}
-          clusterData={clusterToDelete}
+          suburbData={suburbToDelete}
           isLoading={isDeleting}
         />
       </div>

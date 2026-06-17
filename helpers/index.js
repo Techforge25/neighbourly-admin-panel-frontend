@@ -296,14 +296,20 @@ export const getSponsorshipColumns = (
       header: "Suburbs",
       render: (row) => (
         <div className="flex flex-wrap gap-2">
-          {row.suburbs?.map((suburb, index) => (
-            <span
-              key={index}
-              className="inline-block rounded-full border border-border-secondary px-4 py-1 text-xs text-text-para"
-            >
-              {suburb}
+          {row.suburbs?.length > 0 ? (
+            row.suburbs.map((suburb, index) => (
+              <span
+                key={index}
+                className="inline-block rounded-full border border-border-secondary px-4 py-1 text-xs text-text-para"
+              >
+                {suburb}
+              </span>
+            ))
+          ) : (
+            <span className="inline-block rounded-full border border-border-secondary px-4 py-1 text-xs text-text-para">
+              Not Assigned
             </span>
-          ))}
+          )}
         </div>
       ),
     },

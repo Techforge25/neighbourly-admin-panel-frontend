@@ -9,6 +9,7 @@ import { MdOutlineNavigateNext } from "react-icons/md";
 import { createSuburb, editSuburb } from "@/services/suburbsManagement";
 import { suburbSchema } from "@/validations/suburbManagement";
 import { getClusters } from "@/services/clustersManagement";
+import { ClusterRecord } from "@/types";
 
 interface AddSuburbManagementModalProps {
   isOpen: boolean;
@@ -66,7 +67,11 @@ const AddSuburbManagementModal: React.FC<AddSuburbManagementModalProps> = ({
     queryClient.invalidateQueries({
       queryKey: [queryKeys.suburb],
     });
+     queryClient.invalidateQueries({
+      queryKey: [queryKeys.cluster],
+    });
 
+    
     reset();
     onClose();
   },
@@ -74,9 +79,6 @@ const AddSuburbManagementModal: React.FC<AddSuburbManagementModalProps> = ({
 
 
  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-  console.log("EDIT DATA", editData);
-  console.log("FORM DATA", data);
-
   mutate(data);
 };
   const handleClose = () => {
@@ -92,7 +94,7 @@ useEffect(() => {
 
   if (editData && clusters.length) {
     const selectedCluster = clusters.find(
-      (cluster: any) => cluster.name === editData.assignedCluster
+      (cluster: ClusterRecord) => cluster.name === editData.assignedCluster
     );
 
     reset({
@@ -179,7 +181,7 @@ useEffect(() => {
                   Select Cluster
                 </option>
 
-                {clusters.map((cluster: any) => (
+                {clusters.map((cluster: ClusterRecord) => (
                   <option key={cluster._id} value={cluster._id}>
                     {cluster.name}
                   </option>
