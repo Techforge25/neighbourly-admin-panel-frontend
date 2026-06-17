@@ -7,11 +7,12 @@ import { createCluster, editCluster } from "@/services/clustersManagement";
 import { queryKeys } from "@/keys";
 import { clusterSchema } from "@/validations/clusterManagement";
 import { RxCross1 } from "react-icons/rx";
+import { ClusterRecord } from "@/types";
 
 interface AddClusterManagementModalProps {
   isOpen: boolean;
   onClose: () => void;
-  editData?: any;
+  editData?: ClusterRecord;
   clusterId?: string;
 }
 

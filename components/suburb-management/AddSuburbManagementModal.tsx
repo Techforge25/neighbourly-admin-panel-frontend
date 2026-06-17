@@ -9,12 +9,12 @@ import { MdOutlineNavigateNext } from "react-icons/md";
 import { createSuburb, editSuburb } from "@/services/suburbsManagement";
 import { suburbSchema } from "@/validations/suburbManagement";
 import { getClusters } from "@/services/clustersManagement";
-import { ClusterRecord } from "@/types";
+import { ClusterRecord, SuburbRecord } from "@/types";
 
 interface AddSuburbManagementModalProps {
   isOpen: boolean;
   onClose: () => void;
-  editData?: any;
+  editData?: SuburbRecord;
   suburbId?: string;
 }
 
