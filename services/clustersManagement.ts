@@ -12,6 +12,16 @@ export const getClusters = async (page = 1) => {
      }
 }
 
+export const getClustersDropdown = async () => {
+     try {
+          const { data } = await api.get(`/cluster/dropdown`);
+          return data;
+     } catch (err) {
+          console.error("Error fetching clusters:", err);
+          throw err;
+     }
+}
+
 export const createCluster = async (payload: CreateCluster) => {
   try {
     const { data } = await api.post("/cluster", {
@@ -23,14 +33,15 @@ export const createCluster = async (payload: CreateCluster) => {
 
     return data;
   } catch (err: any) {
-    console.error(err);
+  const message =
+    err?.response?.data?.message ||
+    err?.message ||
+    "Failed to create cluster";
 
-    toast.error(
-      err?.response?.data?.message || "Failed to create cluster"
-    );
+  toast.error(message);
 
-    throw err;
-  }
+  throw err;
+}
 };
 
 export const editCluster = async (

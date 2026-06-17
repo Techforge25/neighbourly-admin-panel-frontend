@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -8,16 +8,15 @@ import { RxCross1 } from "react-icons/rx";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { createSuburb, editSuburb } from "@/services/suburbsManagement";
 import { suburbSchema } from "@/validations/suburbManagement";
-import { getClusters } from "@/services/clustersManagement";
-import { ClusterRecord, SuburbRecord } from "@/types";
+import {  getClustersDropdown } from "@/services/clustersManagement";
+import { ClusterDropdownRecord, ClusterRecord, SuburbRecord } from "@/types";
 
 interface AddSuburbManagementModalProps {
   isOpen: boolean;
   onClose: () => void;
   editData?: SuburbRecord | null;
-
 }
-
+ 
 interface IFormInput {
   suburbName: string;
   assignedCluster: string;
@@ -32,6 +31,7 @@ const AddSuburbManagementModal: React.FC<AddSuburbManagementModalProps> = ({
   const queryClient = useQueryClient();
   const {
     register,
+    watch,
     handleSubmit,
     reset,
     setValue,
@@ -43,71 +43,82 @@ const AddSuburbManagementModal: React.FC<AddSuburbManagementModalProps> = ({
       assignedCluster: "",
     },
   });
-
-  const { data: clusterResponse, isPending: isClusterPending, isLoading } = useQuery({
-    queryKey: [queryKeys.cluster,], 
-    queryFn: () => getClusters(),
+  const [isClusterDropdownOpened, setIsClusterDropdownOpened] = useState(false);
+const [open, setOpen] = useState(false);
+const [selected, setSelected] = useState("");
+  const {
+    data: clusterResponse,
+    isPending: isClusterPending,
+    isLoading,
+  } = useQuery({
+    queryKey: [queryKeys.clusterDropdown],
+    enabled: isClusterDropdownOpened,
+    queryFn: () => getClustersDropdown(),
   });
 
- const { mutate, isPending } = useMutation({
-  mutationFn: async (data: IFormInput) => {
-    if (isEditing) {
-      return editSuburb(editData._id, {
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (data: IFormInput) => {
+      if (isEditing) {
+        return editSuburb(editData._id, {
+          name: data.suburbName,
+          clusterId: data.assignedCluster,
+        });
+      }
+
+      return createSuburb({
         name: data.suburbName,
         clusterId: data.assignedCluster,
       });
-    }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.suburb],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.cluster],
+      });
 
-    return createSuburb({
-      name: data.suburbName,
-      clusterId: data.assignedCluster, 
-    });
-  },
-  onSuccess: () => {
-    queryClient.invalidateQueries({
-      queryKey: [queryKeys.suburb],
-    });
-     queryClient.invalidateQueries({
-      queryKey: [queryKeys.cluster],
-    });
+      reset();
+      onClose();
+    },
+  });
 
-    
-    reset();
-    onClose();
-  },
-});
-
-
- const onSubmit: SubmitHandler<IFormInput> = (data) => {
-  mutate(data);
-};
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    mutate(data);
+  };
   const handleClose = () => {
     reset();
     onClose();
   };
 
-  const clusters = clusterResponse?.data?.docs || [];
+  const clusters = clusterResponse?.data|| [];
 
-  
 useEffect(() => {
   if (!isOpen) return;
 
-  if (editData && clusters.length) {
-    const selectedCluster = clusters.find(
-      (cluster: ClusterRecord) => cluster.name === editData.assignedCluster
-    );
-
-    reset({
-      suburbName: editData.name || "",
-      assignedCluster: selectedCluster?._id || "",
-    });
+  if (editData) {
+    setValue("suburbName", editData.name || "");
   } else {
     reset({
       suburbName: "",
       assignedCluster: "",
     });
   }
-}, [isOpen, editData, clusters, reset]);
+}, [isOpen, editData, reset, setValue]);
+
+
+useEffect(() => {
+  if (!editData || !clusters.length) return;
+
+  const selectedCluster = clusters.find(
+    (cluster: ClusterDropdownRecord) =>
+      cluster.name === editData.assignedCluster
+  );
+
+  if (selectedCluster) {
+    setValue("assignedCluster", selectedCluster._id);
+  }
+}, [clusters, editData, setValue]);
 
 
   if (!isOpen) return null;
@@ -169,9 +180,10 @@ useEffect(() => {
             <div className="relative">
               <select
                 id="assignedCluster"
-                defaultValue=""
                 {...register("assignedCluster")}
-                className={`appearance-none w-full px-4 py-3.5 text-[15px] bg-white border ${
+                onFocus={() => setIsClusterDropdownOpened(true)}
+                onClick={() => setIsClusterDropdownOpened(true)}
+                className={` appearance-none w-full  px-4 py-3.5 text-[15px] bg-white border ${
                   errors.assignedCluster
                     ? "border-red-500 focus:ring-red-500"
                     : "border-[#E5E7EB] focus:border-[#D1D5DB] focus:ring-[#D1D5DB]"
@@ -181,7 +193,7 @@ useEffect(() => {
                   Select Cluster
                 </option>
 
-                {clusters.map((cluster: ClusterRecord) => (
+                {clusters.map((cluster: ClusterDropdownRecord) => (
                   <option key={cluster._id} value={cluster._id}>
                     {cluster.name}
                   </option>

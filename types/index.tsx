@@ -416,3 +416,8 @@ export interface SuburbRecord {
   _id: string
   assignedCluster: string;
 }
+
+export interface ClusterDropdownRecord {
+  name: string;
+  _id: string
+}
