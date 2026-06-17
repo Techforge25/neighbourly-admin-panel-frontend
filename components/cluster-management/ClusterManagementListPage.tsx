@@ -11,19 +11,21 @@ import ClusterManagementTable from "./ClusterManagementTable";
 import { ClusterRecord } from "@/types";
 
 export default function ClusterManagementListPage() {
-  const [currentPage, setCurrentPage] = useState(1);  
+  const [currentPage, setCurrentPage] = useState(1);
   const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editClusterData, setEditClusterData] = useState<ClusterRecord | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [clusterToDelete, setClusterToDelete] = useState<ClusterRecord | null>(null);
+  const [clusterToDelete, setClusterToDelete] = useState<string | null>(null);
 
-
-  const { data: clusterResponse, isPending, isLoading } = useQuery({
+  const {
+    data: clusterResponse,
+    isPending,
+    isLoading,
+  } = useQuery({
     queryKey: [queryKeys.cluster, currentPage],
     queryFn: () => getClusters(currentPage),
   });
-
 
   const clusters = clusterResponse?.data?.docs || [];
   const totalPages = clusterResponse?.data?.totalPages || 1;
@@ -53,8 +55,9 @@ export default function ClusterManagementListPage() {
   };
 
   const handleDeleteClick = (row: ClusterRecord) => {
-    setClusterToDelete(row);
+    setClusterToDelete(row._id);
     setIsDeleteModalOpen(true);
+    setEditClusterData(row?.name ? row : null);
   };
 
   const handleCloseDeleteModal = () => {
@@ -63,7 +66,9 @@ export default function ClusterManagementListPage() {
   };
 
   const handleConfirmDelete = () => {
-    deleteMutate(clusterToDelete._id);
+    if (clusterToDelete) {
+      deleteMutate(clusterToDelete);
+    }
   };
 
   return (
@@ -108,15 +113,14 @@ export default function ClusterManagementListPage() {
         <AddClusterManagementModal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
-          editData={editClusterData}
-          clusterId={editClusterData?._id}
+          editData={editClusterData && editClusterData}
         />
 
         <DeleteClusterModal
           isOpen={isDeleteModalOpen}
           onClose={handleCloseDeleteModal}
           onConfirm={handleConfirmDelete}
-          clusterData={clusterToDelete}
+          name={editClusterData}
           isLoading={isDeleting}
         />
       </div>

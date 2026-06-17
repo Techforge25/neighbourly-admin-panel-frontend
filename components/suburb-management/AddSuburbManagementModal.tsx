@@ -14,8 +14,8 @@ import { ClusterRecord, SuburbRecord } from "@/types";
 interface AddSuburbManagementModalProps {
   isOpen: boolean;
   onClose: () => void;
-  editData?: SuburbRecord;
-  suburbId?: string;
+  editData?: SuburbRecord | null;
+
 }
 
 interface IFormInput {

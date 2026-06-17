@@ -21,7 +21,7 @@ export default function SuburbManagementListPage() {
   const [editSuburbData, setEditSuburbData] = useState<SuburbRecord | null>(null);
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [suburbToDelete, setSuburbToDelete] = useState<SuburbRecord | null>(null);
+  const [suburbToDelete, setSuburbToDelete] = useState<string | null>(null);  
 
 
   const { data: clusterResponse, isPending, isLoading } = useQuery({
@@ -60,8 +60,9 @@ export default function SuburbManagementListPage() {
   };
 
   const handleDeleteClick = (row: SuburbRecord) => {
-    setSuburbToDelete(row);
+    setSuburbToDelete(row._id);
     setIsDeleteModalOpen(true);
+     setEditSuburbData(row?.name ? row : null);
   };
 
   const handleCloseDeleteModal = () => {
@@ -70,7 +71,10 @@ export default function SuburbManagementListPage() {
   };
 
 const handleConfirmDelete = () => {
-  deleteMutate(suburbToDelete._id);
+    if (suburbToDelete) {
+       deleteMutate(suburbToDelete);
+    }
+ 
 };
 
   return (
@@ -115,15 +119,14 @@ const handleConfirmDelete = () => {
         <AddSuburbManagementModal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
-          editData={editSuburbData}
-          suburbId={editSuburbData?._id}
+           editData={editSuburbData && editSuburbData}
         />
 
         <DeleteSuburbManagementModal
           isOpen={isDeleteModalOpen}
           onClose={handleCloseDeleteModal}
           onConfirm={handleConfirmDelete}
-          suburbData={suburbToDelete}
+          name={editSuburbData}
           isLoading={isDeleting}
         />
       </div>

@@ -12,7 +12,7 @@ import { ClusterRecord } from "@/types";
 interface AddClusterManagementModalProps {
   isOpen: boolean;
   onClose: () => void;
-  editData?: ClusterRecord;
+  editData?: ClusterRecord | null;
   clusterId?: string;
 }
 
