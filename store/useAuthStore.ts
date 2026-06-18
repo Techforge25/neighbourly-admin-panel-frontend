@@ -4,6 +4,7 @@ import { create } from "zustand";
 const initialState = {
      sidebarOpen: true,
      user: null,
+     openSponsorShip: false
 };
 
 export const useAppStore = create<AppState>()((set) => ({
@@ -12,4 +13,6 @@ export const useAppStore = create<AppState>()((set) => ({
      toggleSidebar: () => set((s) => ({ sidebarOpen: !s.sidebarOpen })),
      setUser: (user) => set({ user }),
      reset: () => set(initialState),
+     setOpenEditPage: (open: boolean) =>
+          set({ openSponsorShip: open }),
 }));

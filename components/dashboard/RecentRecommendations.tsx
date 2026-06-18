@@ -57,7 +57,7 @@ export default function RecentRecommendations() {
                                                   {item?.reasonsOfRecommendation?.map((reason: string, index: number) => {
                                                        return (
                                                             <p key={index} className="mt-1 font-poppins text-[1rem] font-normal text-text-para">
-                                                                 {reason} -
+                                                                 {reason}, 
                                                             </p>
                                                        )
                                                   })}

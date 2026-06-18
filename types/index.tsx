@@ -278,9 +278,14 @@ export interface SignOutModalRef {
 export type AppState = {
   sidebarOpen: boolean;
   user: { id: string; name: string } | null;
+  openSponsorShip: boolean;
+
   setSidebarOpen: (open: boolean) => void;
   toggleSidebar: () => void;
   setUser: (user: AppState["user"]) => void;
+
+  setOpenEditPage: (open: boolean) => void;
+
   reset: () => void;
 };
 
