@@ -4,10 +4,10 @@ import { RecommendationsBusiness } from "@/types";
 import { LuMapPin } from "react-icons/lu";
 import moment from "moment";
 import RecommendationReviewCardSkeleton from "../ui/RecommendationReviewCardSkeleton";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
-import { deleteRecommendation } from "@/services/recommendations";
-import { queryKeys } from "@/keys";
+// import { useMutation, useQueryClient } from "@tanstack/react-query";
+// import axios from "axios";
+// import { deleteRecommendation } from "@/services/recommendations";
+// import { queryKeys } from "@/keys";
 
 type Props = {
   item: RecommendationsBusiness;
@@ -18,29 +18,29 @@ export default function RecommendationReviewCard({
   item,
   isLoading,
 }: Props) {
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
-  const { mutate, isPending } =
-    useMutation({
-      mutationFn: (id: string) => deleteRecommendation(id),
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: [queryKeys.fetchSingleBusiness],
-        });
-      },
+  // const { mutate, isPending } =
+  //   useMutation({
+  //     mutationFn: (id: string) => deleteRecommendation(id),
+  //     onSuccess: () => {
+  //       queryClient.invalidateQueries({
+  //         queryKey: [queryKeys.fetchSingleBusiness],
+  //       });
+  //     },
 
-      onError: (error) => {
-        console.error("Update failed:", error);
-      },
-    });
+  //     onError: (error) => {
+  //       console.error("Update failed:", error);
+  //     },
+  //   });
 
   if (isLoading) {
     return <RecommendationReviewCardSkeleton />;
   }
 
-  const handleDelete = (id: string) => {
-    mutate(id)
-  }
+  // const handleDelete = (id: string) => {
+  //   mutate(id)
+  // }
 
   return (
     <section className="mb-4 rounded-xl border border-border-primary bg-surface p-5">
@@ -69,14 +69,14 @@ export default function RecommendationReviewCard({
               {item?.user?.email}
             </p>
 
-            <p
+            {/* <p
               onClick={() =>
                 handleDelete(item?.recommendationId || '')
               }
               className="cursor-pointer font-poppins text-[0.875rem] font-normal text-black"
             >
               {isPending ? "Deleting..." : "Delete"}
-            </p>
+            </p> */}
 
             <p className="mt-2 font-poppins text-[0.875rem] font-normal text-text-para">
               {item?.user?.contact}
