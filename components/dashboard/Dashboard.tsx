@@ -9,7 +9,9 @@ import { KpiGrid } from "./KpiGrid";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/keys";
 import { getAllPendingRecommendations, updateRecommendationStatus } from "@/services/dashboard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import RejectRecomendationsModal from "./RejectRecomendationsModal";
 
 const Dashboard = () => {
   const router = useRouter();
@@ -18,7 +20,8 @@ const Dashboard = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedSuburb, setSelectedSuburb] = useState("All");
   const queryClient = useQueryClient()
-
+const [isRejectOpen, setIsRejectOpen] = useState(false);
+const [selectedRow, setSelectedRow] = useState<RecommendationRow | null>(null);
   const { mutate, isPending: pendingUpdateStatus } =
     useMutation({
       mutationFn: ({
@@ -28,7 +31,13 @@ const Dashboard = () => {
         id: string;
         status: "approved" | "rejected";
       }) => updateRecommendationStatus(id, status),
-      onSuccess: () => {
+      onSuccess: (_, variables) => {
+         if (variables.status === "approved") {
+           toast.success("Recommendation has been approved");
+         } else {
+           toast.warning("Recommendation has been rejected");
+         }
+
         queryClient.invalidateQueries({
           queryKey: [queryKeys.allPendingRecommendations],
         });
@@ -49,6 +58,7 @@ const Dashboard = () => {
 
       onError: (error) => {
         console.error("Update failed:", error);
+        toast.error("Failed to update recommendation");
       },
     });
 
@@ -65,12 +75,22 @@ const Dashboard = () => {
 
   };
 
-  const handleRejectClick = (row: RecommendationRow, status: 'rejected') => {
-    mutate({
-      id: row._id,
-      status,
-    });
-  };
+  const handleRejectClick = (row: RecommendationRow) => {
+  setSelectedRow(row);
+  setIsRejectOpen(true);
+};
+
+const handleRejectConfirm = () => {
+  if (!selectedRow) return;
+
+  mutate({
+    id: selectedRow._id,
+    status: "rejected",
+  });
+
+  setIsRejectOpen(false);
+};
+
 
   const {
     data: allPendingRecommendations,
@@ -90,6 +110,10 @@ const Dashboard = () => {
 
     placeholderData: (previousData) => previousData,
   });
+
+   useEffect(() => {
+      setCurrentPage(1);
+    }, [search, selectedCategory, selectedSuburb]);
 
   const columns = recommendationTableColumns({
     onDetailsClick: handleDetailsClick,
@@ -135,6 +159,13 @@ const Dashboard = () => {
             setCurrentPage((prev) => prev - 1);
           }
         }}
+      />
+      <RejectRecomendationsModal
+        isOpen={isRejectOpen}
+        onClose={() => setIsRejectOpen(false)}
+        onConfirm={handleRejectConfirm}
+        name={selectedRow?.businessName}
+        isLoading={pendingUpdateStatus}
       />
     </>
   );

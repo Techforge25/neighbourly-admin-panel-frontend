@@ -17,7 +17,7 @@ export default function FiltersBar({
 }: FilterBarProps) {
   const [searchValue, setSearchValue] = useState(search);
   const pathname = usePathname()
-  const path = pathname.includes('recommendation') ? 'Search Business Name...' : 'Search Trade Name...'
+  const path = pathname.includes('recommendation') ? 'Search Business Name...' : 'Search by Tradie Name...'
 
   useEffect(() => {
     const timeout = setTimeout(() => {

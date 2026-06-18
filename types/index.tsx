@@ -35,6 +35,7 @@ export interface RecommendationRow {
   suburb: string;
   submitted: string;
   trustPoints: string;
+  businessName: string;
   id: string;
 }
 

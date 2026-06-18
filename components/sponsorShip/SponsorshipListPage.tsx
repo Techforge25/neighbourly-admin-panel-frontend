@@ -1,6 +1,6 @@
 "use client";
 import { Sponsorship } from "@/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FilterDropdown from "./FilterDropdown";
 import { LuPlus } from "react-icons/lu";
 import SponsorshipTable from "./SponsorshipTable";
@@ -31,6 +31,10 @@ export default function SponsorshipListPage() {
         currentPage
       ),
   });
+     useEffect(() => {
+      setCurrentPage(1);
+    }, [ selectedSuburb]);
+  
 
   const { mutate } =
     useMutation({
