@@ -10,7 +10,7 @@ import { queryKeys } from "@/keys";
 import { fetchBusinesses } from "@/services/recommendations";
 import { Recommendation } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function RecommendationPage() {
   const [search, setSearch] = useState("");
@@ -45,6 +45,10 @@ export default function RecommendationPage() {
   const totalPages = fetchBusinessesList?.data?.totalPages || 1;
 
   const page = fetchBusinessesList?.data?.page || 1;
+
+   useEffect(() => {
+    setCurrentPage(1);
+  }, [search, selectedCategory, selectedSuburb]);
 
   return (
     <>

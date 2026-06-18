@@ -234,7 +234,6 @@ export const categories = [
 ];
 
 export const suburbs = [
-  'All',
   "Balgowlah",
   "Fairlight",
   "Manly",

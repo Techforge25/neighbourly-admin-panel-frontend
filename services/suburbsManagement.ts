@@ -24,14 +24,15 @@ export const createSuburb = async (payload: CreateSuburb) => {
 
     return data;
   } catch (err: any) {
-    console.error(err);
+  const message =
+    err?.response?.data?.message ||
+    err?.message ||
+    "Failed to create Suburb";
 
-    toast.error(
-      err?.response?.data?.message || "Failed to create Suburb"
-    );
+  toast.error(message);
 
-    throw err;
-  }
+  throw err;
+}
 };
 
 export const editSuburb = async (

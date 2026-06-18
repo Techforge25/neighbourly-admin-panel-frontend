@@ -35,6 +35,7 @@ export interface RecommendationRow {
   suburb: string;
   submitted: string;
   trustPoints: string;
+  businessName: string;
   id: string;
 }
 
@@ -420,4 +421,9 @@ export interface SuburbRecord {
   clusterId: string;
   _id: string
   assignedCluster: string;
+}
+
+export interface ClusterDropdownRecord {
+  name: string;
+  _id: string
 }

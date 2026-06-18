@@ -374,7 +374,7 @@ const EditSponsorship = () => {
                               >
                                    {isPending
                                         ? "Saving..."
-                                        : "Edit Details"}
+                                        : "Save Changes"}
 
                                    <LuPlus size={16} />
                               </button>

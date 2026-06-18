@@ -1,6 +1,6 @@
 "use client";
 import { Sponsorship } from "@/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FilterDropdown from "./FilterDropdown";
 import { LuPlus } from "react-icons/lu";
 import SponsorshipTable from "./SponsorshipTable";
@@ -12,10 +12,14 @@ import { deleteSponsor, getSponsors } from "@/services/sponsor";
 import ExportButtons from "../recommendation/ExportButtons";
 import Pagination from "../recommendation/Pagination";
 import { useAppStore } from "@/store/useAuthStore";
+import DeleteSponserModal from "./DeleteSponserModal";
+import { toast } from "react-toastify";
 
 export default function SponsorshipListPage() {
   const [selectedSuburb, setSelectedSuburb] = useState<string>("Select Suburb");
   const [currentPage, setCurrentPage] = useState(1);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [selectedRow, setSelectedRow] = useState<Sponsorship | null>(null);
   const { openSponsorShip, setOpenEditPage } =
     useAppStore();
   const router = useRouter();
@@ -34,17 +38,23 @@ export default function SponsorshipListPage() {
         currentPage
       ),
   });
+     useEffect(() => {
+      setCurrentPage(1);
+    }, [ selectedSuburb]);
+  
 
-  const { mutate } =
+  const { mutate , isPending: pendingDelete } =
     useMutation({
-      mutationFn: (id: string) => deleteSponsor(id),
+      mutationFn: (id: string) => deleteSponsor(id), 
       onSuccess: () => {
+        toast.success("Sponsor has been deleted");
         queryClient.invalidateQueries({
           queryKey: [queryKeys.sponsor],
         });
       },
 
       onError: (error) => {
+        toast.error("Failed to delete sponsor");
         console.error("Update failed:", error);
       },
     });
@@ -58,9 +68,22 @@ export default function SponsorshipListPage() {
     setOpenEditPage(true)
   };
 
-  const handleDelete = (row: Sponsorship) => {
-    mutate(row?._id)
-  }
+  // const handleDelete = (row: Sponsorship) => {
+  //   mutate(row?._id)
+  // }
+    const handleDelete = (row: Sponsorship) => {
+    setSelectedRow(row);
+    setIsDeleteOpen(true);
+  };
+  
+ const handleDeleteConfirm = () => {
+   if (!selectedRow) return;
+
+   mutate(selectedRow._id);
+
+   setIsDeleteOpen(false);
+ };
+  
 
   const sponsorshipList = sponsors?.data?.docs || [];
   const totalPages = sponsors?.data?.totalPages || 1;
@@ -97,7 +120,7 @@ export default function SponsorshipListPage() {
           </div>
         </div>
         <div className="flex justify-end mb-5">
-          <ExportButtons list={sponsorshipList} route='Sponsor' />
+          <ExportButtons list={sponsorshipList} route="Sponsor" />
         </div>
 
         {/* Table */}
@@ -112,6 +135,14 @@ export default function SponsorshipListPage() {
           currentPage={page}
           totalPages={totalPages}
           setCurrentPage={setCurrentPage}
+        />
+
+        <DeleteSponserModal
+          isOpen={isDeleteOpen}
+          onClose={() => setIsDeleteOpen(false)}
+          onConfirm={handleDeleteConfirm}
+          name={selectedRow?.businessName}
+          isLoading={pendingDelete}
         />
       </div>
     </div>

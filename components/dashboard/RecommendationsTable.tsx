@@ -19,6 +19,10 @@ export function RecommendationsTable<T>({
   selectedSuburb,
   setSelectedSuburb
 }: Props<T>) {
+
+  const pageSize = 10; 
+const startEntry = ((currentPage ?? 1) - 1) * pageSize + 1;
+const endEntry = Math.min(startEntry + data.length - 1, total ?? data.length);
   return (
     <section className="mt-10">
       <div className="">
@@ -66,8 +70,8 @@ export function RecommendationsTable<T>({
           </h3>
 
           <p className="mt-2 max-w-md font-poppins text-[0.95rem] text-text-para">
-            There are no recommendation records matching your current
-            filters or search query.
+            There are no recommendation records matching your current filters or
+            search query.
           </p>
         </div>
       ) : (
@@ -155,13 +159,14 @@ export function RecommendationsTable<T>({
           {totalPages && totalPages > 1 && (
             <div className="flex flex-col gap-3 border-t border-brand-line px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
               <p className="text-sm text-zinc-600">
-                Showing {currentPage} to {data?.length} of {total || data?.length} entries
+                Showing {startEntry} to {endEntry} of {total || data.length}{" "}
+                entries
               </p>
 
               <div className="flex gap-2">
                 <button
                   type="button"
-                  disabled={currentPage === 1 ? true : false}
+                  disabled={(currentPage ?? 1) <= 1}
                   onClick={onPrevious}
                   className="rounded-lg border border-brand-line px-4 py-2 text-sm font-medium bg-white disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                 >
@@ -170,8 +175,9 @@ export function RecommendationsTable<T>({
 
                 <button
                   type="button"
+                  disabled={(currentPage ?? 1) >= (totalPages ?? 1)}
                   onClick={onNext}
-                  className="rounded-lg border border-brand-line bg-white px-4 py-2 text-sm font-semibold text-brand-navy shadow-sm hover:bg-zinc-50"
+                  className="rounded-lg border border-brand-line bg-white px-4 py-2 text-sm font-semibold text-brand-navy shadow-sm hover:bg-zinc-50 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Next
                 </button>
@@ -180,7 +186,6 @@ export function RecommendationsTable<T>({
           )}
         </>
       )}
-
     </section>
   );
 }
