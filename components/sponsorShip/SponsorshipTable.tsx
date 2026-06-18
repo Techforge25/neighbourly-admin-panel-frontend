@@ -61,7 +61,7 @@ export default function SponsorshipTable({ data, onEdit, onDelete, isLoading }: 
       </div>
 
       <div className="flex flex-col gap-3 lg:hidden">
-        {data.map((row, index) => (
+        {data.map((row) => (
           <div
             key={row._id}
             className="rounded-xl border border-border-secondary bg-white p-4"

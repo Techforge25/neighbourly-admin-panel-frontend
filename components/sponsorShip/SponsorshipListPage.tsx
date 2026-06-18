@@ -11,10 +11,13 @@ import { queryKeys } from "@/keys";
 import { deleteSponsor, getSponsors } from "@/services/sponsor";
 import ExportButtons from "../recommendation/ExportButtons";
 import Pagination from "../recommendation/Pagination";
+import { useAppStore } from "@/store/useAuthStore";
 
 export default function SponsorshipListPage() {
   const [selectedSuburb, setSelectedSuburb] = useState<string>("Select Suburb");
   const [currentPage, setCurrentPage] = useState(1);
+  const { openSponsorShip, setOpenEditPage } =
+    useAppStore();
   const router = useRouter();
   const queryClient = useQueryClient()
 
@@ -52,6 +55,7 @@ export default function SponsorshipListPage() {
 
   const handleEdit = (row: Sponsorship) => {
     router.push(`/dashboard/sponsorship/${row._id}`);
+    setOpenEditPage(true)
   };
 
   const handleDelete = (row: Sponsorship) => {

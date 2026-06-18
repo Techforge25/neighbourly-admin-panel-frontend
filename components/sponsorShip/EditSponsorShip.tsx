@@ -16,11 +16,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { createSponsor, editSponsor, viewSponsor } from "@/services/sponsor";
+import { editSponsor, viewSponsor } from "@/services/sponsor";
 import { queryKeys } from "@/keys";
 import { createSponsorValidator } from "@/validations/sponsor";
 import { uploadToCloudinary } from "@/helpers/cloudinary/UploadToCloudinary";
 import { CreateSponsor } from "@/types";
+import { useAppStore } from "@/store/useAuthStore";
 
 const EditSponsorship = () => {
      const params = useParams();
@@ -34,10 +35,11 @@ const EditSponsorship = () => {
      const [preview, setPreview] = useState("");
      const inputRef = useRef<HTMLInputElement>(null);
      const [dragging, setDragging] = useState(false);
-
-     const { data: singleSponsor, isLoading } = useQuery({
-          queryKey: [queryKeys.editSponsor],
-          queryFn: () => viewSponsor(id)
+     const { data: singleSponsor } = useQuery({
+          queryKey: [queryKeys.editSponsor, id],
+          queryFn: () => viewSponsor(id),
+          staleTime: 0,
+          gcTime: 0,
      })
 
      const sponsorData = singleSponsor?.data
@@ -94,26 +96,6 @@ const EditSponsorship = () => {
           mutate(data);
      };
 
-     const onChange = (opt: string) => {
-          setSelected(opt);
-
-          setValue("suburb", opt, {
-               shouldValidate: true,
-               shouldDirty: true,
-               shouldTouch: true,
-          });
-     };
-
-     const onChangeData = (opt: string) => {
-          setSelectedCat(opt);
-
-          setValue("serviceType", opt, {
-               shouldValidate: true,
-               shouldDirty: true,
-               shouldTouch: true,
-          });
-     };
-
      const handleFile = async (file: File | null) => {
           if (!file) return;
           const reader = new FileReader();
@@ -141,7 +123,9 @@ const EditSponsorship = () => {
      return (
           <div>
                <button
-                    onClick={() => router.back()}
+                    onClick={() => {
+                         router.back()
+                    }}
                     className="mb-4 flex items-center gap-2 text-sm text-gray-700 hover:text-gray-900"
                >
                     <LuArrowLeft size={16} />
