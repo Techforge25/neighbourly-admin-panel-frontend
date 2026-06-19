@@ -37,14 +37,14 @@ export default function FiltersBar({
         </button>
 
         <FilterPillSelect
-          label="Filter By Trade"
+        type="trade"
           value={selectedCategory}
           options={categories}
           onChange={setSelectedCategory}
         />
 
         <FilterPillSelect
-          label="Filter By Suburb"
+         type="suburb"
           value={selectedSuburb}
           options={suburbs}
           onChange={setSelectedSuburb}

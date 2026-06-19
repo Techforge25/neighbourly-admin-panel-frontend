@@ -16,4 +16,5 @@ export const queryKeys = {
      suburb: 'suburb',
      editSuburb: 'editSuburb'  ,  
      clusterDropdown: 'clusterDropdown',
+     suburbsDropdown: 'suburbsDropdown',
 }

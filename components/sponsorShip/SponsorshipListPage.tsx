@@ -105,7 +105,7 @@ export default function SponsorshipListPage() {
 
           <div className="flex items-center gap-3">
             <FilterDropdown
-              label="Filter By Suburb"
+              type="suburb"
               value={selectedSuburb}
               options={suburbs}
               onChange={setSelectedSuburb}
