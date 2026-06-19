@@ -380,6 +380,7 @@ export type Cluster = {
   name: string;
   description?: string | "";
   _id: string;
+  label: string;
 };
 export type CreateCluster = {
   name: string;
@@ -411,7 +412,7 @@ export type UpdateSuburb = {
 };
 
 export interface ClusterRecord {
-  name: string;
+  name: string; 
   suburbs: string[],
   _id: string
 }

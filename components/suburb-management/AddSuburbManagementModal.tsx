@@ -5,11 +5,11 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/keys";
 
 import { RxCross1 } from "react-icons/rx";
-import { MdOutlineNavigateNext } from "react-icons/md";
 import { createSuburb, editSuburb } from "@/services/suburbsManagement";
 import { suburbSchema } from "@/validations/suburbManagement";
 import {  getClustersDropdown } from "@/services/clustersManagement";
-import { ClusterDropdownRecord, ClusterRecord, SuburbRecord } from "@/types";
+import { Cluster,  SuburbRecord } from "@/types";
+import ClusterAsyncSelect from "../cluster-management/ClusterAsyncSelect";
 
 interface AddSuburbManagementModalProps {
   isOpen: boolean;
@@ -28,6 +28,7 @@ const AddSuburbManagementModal: React.FC<AddSuburbManagementModalProps> = ({
   editData,
 }) => {
   const isEditing = !!editData;
+  
   const queryClient = useQueryClient();
   const {
     register,
@@ -43,18 +44,21 @@ const AddSuburbManagementModal: React.FC<AddSuburbManagementModalProps> = ({
       assignedCluster: "",
     },
   });
-  const [isClusterDropdownOpened, setIsClusterDropdownOpened] = useState(false);
-const [open, setOpen] = useState(false);
-const [selected, setSelected] = useState("");
-  const {
-    data: clusterResponse,
-    isPending: isClusterPending,
-    isLoading,
-  } = useQuery({
-    queryKey: [queryKeys.clusterDropdown],
-    enabled: isClusterDropdownOpened,
-    queryFn: () => getClustersDropdown(),
-  });
+const [isClusterOpen, setIsClusterOpen] = useState(false);
+  
+
+
+const { data: clusterResponse } = useQuery({
+  queryKey: [queryKeys.clusterDropdown],
+  queryFn: getClustersDropdown,
+enabled: isClusterOpen || !!editData,
+});
+
+   const clusters =
+    clusterResponse?.data?.map((c: any) => ({
+      value: c._id,
+      label: c.name,
+    })) || [];
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (data: IFormInput) => {
@@ -91,9 +95,19 @@ const [selected, setSelected] = useState("");
     onClose();
   };
 
-  const clusters = clusterResponse?.data|| [];
-
 useEffect(() => {
+  if (!isOpen || !editData || !clusters.length) return;
+
+  const selectedCluster = clusters.find(
+    (cluster:Cluster) => cluster.label === editData.assignedCluster
+  );
+
+  if (selectedCluster) {
+    setValue("assignedCluster", selectedCluster.value);
+  }
+}, [isOpen, editData?._id, clusters.length]);
+
+ useEffect(() => {
   if (!isOpen) return;
 
   if (editData) {
@@ -104,23 +118,7 @@ useEffect(() => {
       assignedCluster: "",
     });
   }
-}, [isOpen, editData, reset, setValue]);
-
-
-useEffect(() => {
-  if (!editData || !clusters.length) return;
-
-  const selectedCluster = clusters.find(
-    (cluster: ClusterDropdownRecord) =>
-      cluster.name === editData.assignedCluster
-  );
-
-  if (selectedCluster) {
-    setValue("assignedCluster", selectedCluster._id);
-  }
-}, [clusters, editData, setValue]);
-
-
+}, [isOpen, editData, setValue, reset]);
   if (!isOpen) return null;
 
   return (
@@ -177,39 +175,19 @@ useEffect(() => {
             >
               Assign Cluster
             </label>
-            <div className="relative">
-              <select
-                id="assignedCluster"
-                {...register("assignedCluster")}
-                onFocus={() => setIsClusterDropdownOpened(true)}
-                onClick={() => setIsClusterDropdownOpened(true)}
-                className={` appearance-none w-full  px-4 py-3.5 text-[15px] bg-white border ${
-                  errors.assignedCluster
-                    ? "border-red-500 focus:ring-red-500"
-                    : "border-[#E5E7EB] focus:border-[#D1D5DB] focus:ring-[#D1D5DB]"
-                } rounded-[10px] text-[#111827] focus:outline-none focus:ring-1 transition-all cursor-pointer`}
-              >
-                <option value="" disabled>
-                  Select Cluster
-                </option>
 
-                {clusters.map((cluster: ClusterDropdownRecord) => (
-                  <option key={cluster._id} value={cluster._id}>
-                    {cluster.name}
-                  </option>
-                ))}
-              </select>
-
-              <div className="pointer-events-none absolute inset-y-0 rotate-90 right-0 flex items-center px-4 text-[#6B7280]">
-                <MdOutlineNavigateNext />
-              </div>
-            </div>
-
-            {errors.assignedCluster && (
-              <p className="mt-1.5 text-[13px] text-red-500">
-                {errors.assignedCluster.message}
-              </p>
-            )}
+            <ClusterAsyncSelect
+              value={watch("assignedCluster")}
+              onChange={(val) =>
+                setValue("assignedCluster", val, {
+                  shouldValidate: true,
+                  shouldDirty: true,
+                })
+              }
+              options={clusters}
+              error={errors.assignedCluster?.message}
+              onOpen={() => setIsClusterOpen(true)}
+            />
           </div>
 
           <div className="mt-8 flex flex-col gap-3.5">

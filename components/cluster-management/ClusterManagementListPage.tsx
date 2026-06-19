@@ -34,6 +34,7 @@ export default function ClusterManagementListPage() {
     mutationFn: deleteCluster,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [queryKeys.cluster] });
+       queryClient.invalidateQueries({ queryKey: [queryKeys.suburb] });
       setIsDeleteModalOpen(false);
       setClusterToDelete(null);
     },

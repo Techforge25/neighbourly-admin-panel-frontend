@@ -6,10 +6,17 @@ export const getSuburbs = async (page = 1) => {
      try {
           const { data } = await api.get(`/suburb?page=${page}`);
           return data;
-     } catch (err) {
-          console.error("Error fetching Suburb:", err);
-          throw err;
+     } catch (err: any) {
+       const message =
+         err?.response?.data?.message ||
+         err?.message ||
+         "Error fetching Suburbs";
+
+       toast.error(message);
+
+       throw err;
      }
+    
 }
 
 export const createSuburb = async (payload: CreateSuburb) => {
@@ -55,29 +62,34 @@ export const editSuburb = async (
 
     return data;
   } catch (err: any) {
-    console.error(err);
+       const message =
+         err?.response?.data?.message ||
+         err?.message ||
+         "Failed to update Suburb";
 
-    toast.error(
-      err?.response?.data?.message || "Failed to update Suburb"
-    );
+       toast.error(message);
 
-    throw err;
-  }
-};
-
-
+       throw err;
+     }
+  
+  
+  };
 
 export const deleteSuburb = async (suburbId: string) => {
      try {
-          const { data } = await api.delete(`/suburb/${suburbId}`);
-           toast.success(data?.message || "Suburb deleted successfully");
-          return data;
+       const { data } = await api.delete(`/suburb/${suburbId}`);
+       toast.success(data?.message || "Suburb deleted successfully");
+       return data;
      } catch (err: any) {
-          console.error(err);
+       const message =
+         err?.response?.data?.message ||
+         err?.message ||
+         "Failed to delete Suburb";
 
-           toast.error(
-          err?.response?.data?.message || "Failed to delete Suburb"
-    );
-      throw err;
+       toast.error(message);
+
+       throw err;
      }
+    
+    
 }

@@ -129,9 +129,7 @@ const Page = () => {
       </button>
 
       <div className="rounded-2xl bg-surface p-8 shadow-sm">
-        <h1 className="mb-1 text-xl font-semibold">
-          Sponsor Details
-        </h1>
+        <h1 className="mb-1 text-xl font-semibold">Sponsor Details</h1>
 
         <hr className="mb-6 border-gray-200" />
 
@@ -141,10 +139,7 @@ const Page = () => {
         >
           {/* Hidden RHF fields */}
           <input type="hidden" {...register("suburb")} />
-          <input
-            type="hidden"
-            {...register("serviceType")}
-          />
+          <input type="hidden" {...register("serviceType")} />
           <input type="hidden" {...register("logo")} />
 
           {/* Sponsor Name */}
@@ -172,7 +167,6 @@ const Page = () => {
               Business Name <span className="text-red-500">*</span>
             </label>
 
-
             <input
               type="text"
               {...register("businessName")}
@@ -187,13 +181,9 @@ const Page = () => {
           </div>
 
           {/* Suburb */}
-          <div
-            className="flex flex-col gap-2"
-            ref={wrapperRef}
-          >
+          <div className="flex flex-col gap-2" ref={wrapperRef}>
             <label className="text-sm font-medium text-text-primary">
-              Suburb{" "}
-              <span className="text-red-500">*</span>
+              Suburb <span className="text-red-500">*</span>
             </label>
 
             <div className="relative">
@@ -203,51 +193,48 @@ const Page = () => {
                 className="flex w-full items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm text-text-primary focus:border-[#F58D7E] focus:outline-none"
               >
                 <span
-                  className={
-                    selected
-                      ? "text-text-primary"
-                      : "text-gray-400"
-                  }
+                  className={selected ? "text-text-primary" : "text-gray-400"}
                 >
                   {selected || "Select suburb"}
                 </span>
 
                 <LuChevronDown
                   size={18}
-                  className={`text-gray-400 transition-transform ${open ? "rotate-180" : ""
-                    }`}
+                  className={`text-gray-400 transition-transform ${
+                    open ? "rotate-180" : ""
+                  }`}
                 />
               </button>
 
               {open && (
                 <div className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-gray-200 bg-white shadow-lg">
-                  {suburbs.map((opt) => {
-                    const isSelected = opt === selected;
+                  {suburbs
+                    .filter((opt) => opt !== "All")
+                    .map((opt) => {
+                      const isSelected = opt === selected;
 
-                    return (
-                      <button
-                        type="button"
-                        key={opt}
-                        onClick={() => {
-                          onChange(opt);
-                          setOpen(false);
-                        }}
-                        className={`flex w-full items-center justify-between px-4 py-2.5 text-left text-sm transition hover:bg-[#FDF2EF] ${isSelected
-                          ? "bg-[#FDF2EF] font-medium text-[#F58D7E]"
-                          : "text-gray-700"
+                      return (
+                        <button
+                          type="button"
+                          key={opt}
+                          onClick={() => {
+                            onChange(opt);
+                            setOpen(false);
+                          }}
+                          className={`flex w-full items-center justify-between px-4 py-2.5 text-left text-sm transition hover:bg-[#FDF2EF] ${
+                            isSelected
+                              ? "bg-[#FDF2EF] font-medium text-[#F58D7E]"
+                              : "text-gray-700"
                           }`}
-                      >
-                        {opt}
+                        >
+                          {opt}
 
-                        {isSelected && (
-                          <LuCheck
-                            size={16}
-                            className="text-[#F58D7E]"
-                          />
-                        )}
-                      </button>
-                    );
-                  })}
+                          {isSelected && (
+                            <LuCheck size={16} className="text-[#F58D7E]" />
+                          )}
+                        </button>
+                      );
+                    })}
                 </div>
               )}
             </div>
@@ -262,32 +249,30 @@ const Page = () => {
           {/* Business Category */}
           <div className="flex flex-col gap-2">
             <label className="font-manrope text-[0.875rem] font-medium text-text-primary">
-              Business Category{" "}
-              <span className="text-accent-danger">*</span>
+              Business Category <span className="text-accent-danger">*</span>
             </label>
 
             <div className="flex flex-wrap gap-3">
               {sponsor.map((opt) => {
-                const isSelected =
-                  selectedCat === opt?.value;
+                const isSelected = selectedCat === opt?.value;
 
                 return (
                   <button
                     type="button"
                     key={opt?.value}
-                    onClick={() =>
-                      onChangeData(opt?.value)
-                    }
-                    className={`flex items-center gap-2 rounded-lg border px-4 py-2.5 text-sm transition ${isSelected
-                      ? "border-bg-primary bg-bg-primary/10 text-bg-primary"
-                      : "border-border-primary bg-surface text-text-primary hover:border-border-primary"
-                      }`}
+                    onClick={() => onChangeData(opt?.value)}
+                    className={`flex items-center gap-2 rounded-lg border px-4 py-2.5 text-sm transition ${
+                      isSelected
+                        ? "border-bg-primary bg-bg-primary/10 text-bg-primary"
+                        : "border-border-primary bg-surface text-text-primary hover:border-border-primary"
+                    }`}
                   >
                     <span
-                      className={`flex h-4 w-4 items-center justify-center rounded-full border-2 ${isSelected
-                        ? "border-bg-primary"
-                        : "border-border-primary"
-                        }`}
+                      className={`flex h-4 w-4 items-center justify-center rounded-full border-2 ${
+                        isSelected
+                          ? "border-bg-primary"
+                          : "border-border-primary"
+                      }`}
                     >
                       {isSelected && (
                         <span className="h-1.5 w-1.5 rounded-full bg-bg-primary" />
@@ -328,10 +313,9 @@ const Page = () => {
                   handleFile(e.dataTransfer.files[0]);
                 }
               }}
-              className={`flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed bg-gray-50 px-6 py-10 text-center transition ${dragging
-                ? "border-[#F58D7E] bg-[#FDF2EF]"
-                : "border-gray-300"
-                }`}
+              className={`flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed bg-gray-50 px-6 py-10 text-center transition ${
+                dragging ? "border-[#F58D7E] bg-[#FDF2EF]" : "border-gray-300"
+              }`}
             >
               {preview ? (
                 <img
@@ -340,10 +324,7 @@ const Page = () => {
                   className="mb-3 h-80 w-80 rounded-lg object-cover"
                 />
               ) : (
-                <LuCamera
-                  size={28}
-                  className="mb-2 text-gray-400"
-                />
+                <LuCamera size={28} className="mb-2 text-gray-400" />
               )}
 
               <p className="text-sm font-medium text-gray-700">
@@ -359,11 +340,7 @@ const Page = () => {
                 type="file"
                 className="hidden"
                 accept="image/png,image/jpeg,image/jpg"
-                onChange={(e) =>
-                  handleFile(
-                    e.target.files?.[0] ?? null
-                  )
-                }
+                onChange={(e) => handleFile(e.target.files?.[0] ?? null)}
               />
             </div>
 
@@ -409,9 +386,7 @@ const Page = () => {
               disabled={isPending || !isValid}
               className="flex items-center gap-2 cursor-pointer rounded-full bg-bg-primary px-6 py-3 font-medium text-surface transition hover:bg-bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isPending
-                ? "Saving..."
-                : "Save and Publish"}
+              {isPending ? "Saving..." : "Save and Publish"}
 
               <LuPlus size={16} />
             </button>
