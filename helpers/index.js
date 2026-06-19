@@ -356,9 +356,13 @@ export const getSponsorshipColumns = (
       header: "Cluster Assigned",
       render: (row) => (
         
-       <span className="font-semibold text-text-primary">
-          {row.assignedCluster ? row.assignedCluster : "Not Assigned"}
-        </span>
+      <span
+  className={`font-semibold ${
+    row.assignedCluster ? "text-text-primary" : "text-gray-400"
+  }`}
+>
+  {row.assignedCluster || "Not Assigned"}
+</span>
       ),
     },
 
