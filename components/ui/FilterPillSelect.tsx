@@ -1,18 +1,51 @@
 "use client";
 
+import { queryKeys } from "@/keys";
+
 import { FilterPillSelectProps } from "@/types";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { LuChevronDown, LuCheck } from "react-icons/lu";
 
 export default function FilterPillSelect({
-  label,
+  type,
   value,
   options,
   onChange,
   menuWidth,
 }: FilterPillSelectProps) {
   const [open, setOpen] = useState(false);
+  const [isClusterDropdownOpened, setIsClusterDropdownOpened] =
+    useState(false);
+
   const wrapperRef = useRef<HTMLDivElement>(null);
+  
+  const getSuburbsDropdown = async () => {
+  const res = await fetch(
+    "https://neighbourly-backend.beneighbourly.com.au/api/v1/suburb"
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch suburbs");
+  }
+
+  return res.json();
+};
+
+  const {
+  data: clusterResponse,
+  isPending: isClusterPending,
+} = useQuery({
+  queryKey: [queryKeys.suburbsDropdown],
+  enabled: isClusterDropdownOpened,
+  queryFn: getSuburbsDropdown,
+});
+  const clusters = clusterResponse?.data ?? [];
+
+  const labelMap: Record<"trade" | "suburb", string> = {
+    trade: "Filter By Trade",
+    suburb: "Filter By Suburb",
+  };
 
   // Close on outside click
   useEffect(() => {
@@ -24,6 +57,7 @@ export default function FilterPillSelect({
         setOpen(false);
       }
     };
+
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
@@ -33,6 +67,7 @@ export default function FilterPillSelect({
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
     };
+
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
   }, []);
@@ -42,20 +77,34 @@ export default function FilterPillSelect({
     setOpen(false);
   };
 
+    const apiOptions =
+  type === "suburb" && clusters.length > 0
+    ? clusters.map((item: { name: string }) => item.name)
+    : options;
+
+const filteredOptions = apiOptions.filter((opt: string) => opt !== "All");
+
+const dropdownOptions = ["All", ...filteredOptions];
   return (
     <div className="relative" ref={wrapperRef}>
       {/* Trigger pill */}
       <button
         type="button"
-        onClick={() => setOpen((p) => !p)}
+        onClick={() => {
+          setOpen((p) => !p);
+          setIsClusterDropdownOpened(true);
+        }}
+        onFocus={() => setIsClusterDropdownOpened(true)}
         className="flex w-full items-center justify-between gap-2 rounded-full border border-border-secondary bg-white px-4 py-2 text-sm transition hover:border-text-para sm:w-auto"
       >
         <span className="flex items-center gap-1 truncate">
-          <span className="text-text-para">{label}:</span>
+          <span className="text-text-para"> {labelMap[type]}:</span>
+
           <span className="font-medium capitalize text-text-primary">
-            {value}
+            {value || "Select"}
           </span>
         </span>
+
         <LuChevronDown
           size={16}
           className={`shrink-0 text-text-para transition-transform duration-200 ${
@@ -71,8 +120,9 @@ export default function FilterPillSelect({
           style={{ width: menuWidth ?? "100%", minWidth: "200px" }}
         >
           <ul className="py-1">
-            {options.map((option) => {
+            {dropdownOptions.map((option: string) => {
               const isSelected = option === value;
+
               return (
                 <li key={option}>
                   <button
@@ -85,6 +135,7 @@ export default function FilterPillSelect({
                     }`}
                   >
                     <span className="truncate">{option}</span>
+
                     {isSelected && (
                       <LuCheck size={16} className="shrink-0 text-bg-primary" />
                     )}

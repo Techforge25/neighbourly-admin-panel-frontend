@@ -238,7 +238,7 @@ export type PasswordInputProps = {
 };
 
 export type FilterPillSelectProps = {
-  label: string;
+  type: "trade" | "suburb";
   value: string;
   options: string[];
   onChange: (value: string) => void;
