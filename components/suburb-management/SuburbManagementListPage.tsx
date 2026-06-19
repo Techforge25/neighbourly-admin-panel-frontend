@@ -37,6 +37,9 @@ export default function SuburbManagementListPage() {
   mutationFn: deleteSuburb,
   onSuccess: () => {
     queryClient.invalidateQueries({ queryKey: [queryKeys.suburb] });
+     queryClient.invalidateQueries({
+            queryKey: [queryKeys.cluster],
+          });
     setIsDeleteModalOpen(false);
     setSuburbToDelete(null);
   },

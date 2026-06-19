@@ -62,15 +62,20 @@ export const editCluster = async (
     );
 
     return data;
+
   } catch (err: any) {
-    console.error(err);
+  const message =
+    err?.response?.data?.message ||
+    err?.message ||
+    "Failed to update cluster";
 
-    toast.error(
-      err?.response?.data?.message || "Failed to update cluster"
-    );
+  toast.error(message);
 
-    throw err;
-  }
+  throw err;
+}
+  
+  
+
 };
 
 
@@ -81,11 +86,15 @@ export const deleteCluster = async (clusterId: string) => {
            toast.success(data?.message || "Cluster deleted successfully");
           return data;
      } catch (err: any) {
-          console.error(err);
+  const message =
+    err?.response?.data?.message ||
+    err?.message ||
+    "Failed to delete cluster";
 
-           toast.error(
-          err?.response?.data?.message || "Failed to delete cluster"
-    );
-      throw err;
-     }
+  toast.error(message);
+
+  throw err;
+}
+     
+     
 }

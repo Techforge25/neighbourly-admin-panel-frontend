@@ -11,7 +11,7 @@ type Props = {
 
 export default function SuburbManagementTable({ data, onEdit, onDelete, isLoading }: Props) {
   const columns = getSuburbManagementColumns({ onEdit, onDelete });
-  if (data.length === 0) {
+  if (!isLoading && data.length === 0) {
     return (
       <div className="rounded-xl border border-border-secondary bg-white px-6 py-10 text-center text-sm text-text-para">
         No Suburbs found
@@ -37,24 +37,24 @@ export default function SuburbManagementTable({ data, onEdit, onDelete, isLoadin
                 ))}
               </tr>
             </thead>
+           <tbody>
             {isLoading ? (
               <RecommendationsSkeleton />
             ) : (
-              <tbody>
-                {data.map((row, index) => (
-                  <tr
-                    key={index}
-                    className="border-b border-border-secondary/50 last:border-0 hover:bg-surface-muted/40"
-                  >
-                    {columns.map((col) => (
-                      <td key={col.key} className="px-6 py-4 text-sm">
-                        {col.render(row)}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
+              data.map((row, index) => (
+                <tr
+                  key={index}
+                  className="border-b border-border-secondary/50 last:border-0 hover:bg-surface-muted/40"
+                >
+                  {columns.map((col) => (
+                    <td key={col.key} className="px-6 py-4 text-sm">
+                      {col.render(row)}
+                    </td>
+                  ))}
+                </tr>
+              ))
             )}
+          </tbody>
 
           </table>
         </div>

@@ -11,7 +11,7 @@ type Props = {
 
 export default function SponsorshipTable({ data, onEdit, onDelete, isLoading }: Props) {
   const columns = getSponsorshipColumns({ onEdit, onDelete });
-  if (data.length === 0) {
+   if (!isLoading && data.length === 0) {
     return (
       <div className="rounded-xl border border-border-secondary bg-white px-6 py-10 text-center text-sm text-text-para">
         No sponsorships found
@@ -37,11 +37,11 @@ export default function SponsorshipTable({ data, onEdit, onDelete, isLoading }: 
                 ))}
               </tr>
             </thead>
-            {isLoading ? (
-              <RecommendationsSkeleton />
-            ) : (
-              <tbody>
-                {data.map((row, index) => (
+            <tbody>
+              {isLoading ? (
+                <RecommendationsSkeleton />
+              ) : (
+                data.map((row, index) => (
                   <tr
                     key={index}
                     className="border-b border-border-secondary/50 last:border-0 hover:bg-surface-muted/40"
@@ -52,10 +52,9 @@ export default function SponsorshipTable({ data, onEdit, onDelete, isLoading }: 
                       </td>
                     ))}
                   </tr>
-                ))}
-              </tbody>
-            )}
-
+                ))
+              )}
+            </tbody>
           </table>
         </div>
       </div>
