@@ -359,8 +359,6 @@ const EditSponsorship = () => {
                >
                  {isPending
                    ? "Saving..."
-                   : isUploading
-                     ? "Uploading Image..."
                      : "Save Changes"}
 
                  <LuPlus size={16} />
