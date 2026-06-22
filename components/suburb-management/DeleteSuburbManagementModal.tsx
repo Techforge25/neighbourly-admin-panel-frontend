@@ -42,7 +42,7 @@ const DeleteSuburbManagementModal: React.FC<DeleteSuburbManagementModalProps> = 
 
           
           <h2 className="text-[22px] font-semibold text-[#111827] text-center mb-3">
-            Delete Suburbs?
+            Delete Suburb?
           </h2>
 
         
@@ -66,7 +66,7 @@ const DeleteSuburbManagementModal: React.FC<DeleteSuburbManagementModalProps> = 
               onClick={onConfirm}
               className="flex items-center justify-center gap-2 w-full py-3.5 bg-[#FF9A8A] hover:bg-[#FF8F7D] text-white text-[15px] font-medium rounded-full transition-colors"
             >
-              Delete Suburbs <RiDeleteBin5Line size={18} />
+              Delete Suburb <RiDeleteBin5Line size={18} />
             </button>
           </div>
         </div>
