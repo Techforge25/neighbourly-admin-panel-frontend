@@ -21,6 +21,8 @@ import { queryKeys } from "@/keys";
 import { createSponsorValidator } from "@/validations/sponsor";
 import { uploadToCloudinary } from "@/helpers/cloudinary/UploadToCloudinary";
 import { CreateSponsor } from "@/types";
+import AsyncSuburbFormikSelect from "@/components/sponsorShip/AsyncSuburbFormSelect";
+import AsyncSuburbFormSelect from "@/components/sponsorShip/AsyncSuburbFormSelect";
 
 const Page = () => {
   const router = useRouter();
@@ -181,7 +183,29 @@ const Page = () => {
           </div>
 
           {/* Suburb */}
-          <div className="flex flex-col gap-2" ref={wrapperRef}>
+          <div className="flex flex-col gap-2">
+  <label className="text-sm font-medium text-text-primary">
+    Suburb <span className="text-red-500">*</span>
+  </label>
+
+ <AsyncSuburbFormSelect
+  value={selected}
+  onChange={(val) => {
+    setSelected(val);
+    setValue("suburb", val, {
+      shouldValidate: true,
+      shouldTouch: true,
+    });
+  }}
+/>
+
+  {errors?.suburb && (
+    <span className="text-sm text-red-500">
+      {errors.suburb.message}
+    </span>
+  )}
+</div>
+          {/* <div className="flex flex-col gap-2" ref={wrapperRef}>
             <label className="text-sm font-medium text-text-primary">
               Suburb <span className="text-red-500">*</span>
             </label>
@@ -244,7 +268,7 @@ const Page = () => {
                 {errors.suburb.message}
               </span>
             )}
-          </div>
+          </div> */}
 
           {/* Business Category */}
           <div className="flex flex-col gap-2">

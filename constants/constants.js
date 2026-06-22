@@ -75,52 +75,38 @@ export const topRecommenders = [
 ];
 
 export const getColorThemeBorder = (key, section) => {
-  const themes = [
-    {
-      key: "Plumber",
-      theme:
-        section === "mainDiv"
-          ? "border-bg-primary"
-          : "bg-bg-primary/10 text-bg-primary",
+  const themes = {
+    Plumber: {
+      mainDiv: "border-red-200",
+      span: "bg-red-50 text-red-400",
     },
-    {
-      key: "Handyman",
-      theme:
-        section === "mainDiv"
-          ? "border-bg-secondary"
-          : "bg-bg-secondary/10 text-bg-secondary",
+    Handyman: {
+      mainDiv: "border-blue-200",
+      span: "bg-blue-50 text-blue-400",
     },
-    {
-      key: "Electrician",
-      theme:
-        section === "mainDiv"
-          ? "border-bg-green"
-          : "bg-bg-green/10 text-bg-green",
+    Electrician: {
+      mainDiv: "border-yellow-200",
+      span: "bg-yellow-50 text-yellow-400",
     },
-    {
-      key: "Gardener",
-      theme:
-        section === "mainDiv"
-          ? "border-bg-[#7FB3B0]"
-          : "bg-bg-[#7FB3B0]/10 text-bg-[#7FB3B0]",
+    Gardener: {
+      mainDiv: "border-teal-200",
+      span: "bg-teal-50 text-teal-400",
     },
-    {
-      key: "Cleaner",
-      theme:
-        section === "mainDiv"
-          ? "border-bg-[#E8C088]"
-          : "bg-bg-[#E8C088]/10 text-bg-[#E8C088]",
+    Cleaner: {
+      mainDiv: "border-pink-200",
+      span: "bg-pink-50 text-pink-400",
     },
-    {
-      key: "Manly",
-      theme: "border-bg-primary bg-bg-primary/8 text-bg-primary",
+    Manly: {
+      mainDiv: "border-green-200",
+      span: "bg-green-50 text-green-400",
     },
-    {
-      key: "Freshwater",
-      theme: "border-bg-green bg-bg-green/8 text-bg-green",
+    Freshwater: {
+      mainDiv: "border-emerald-200",
+      span: "bg-emerald-50 text-emerald-400",
     },
-  ];
-  return themes.find((t) => t.key === key)?.theme;
+  };
+
+  return themes[key]?.[section] || "border-gray-200";
 };
 
 export const getColorThemeBg = (key) => {
