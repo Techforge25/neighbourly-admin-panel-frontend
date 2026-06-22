@@ -66,7 +66,7 @@ const DeleteSponserModal: React.FC<DeleteSponserModalProps> = ({
               onClick={onConfirm}
               className="flex items-center justify-center gap-2 w-full py-3.5 bg-[#FF9A8A] hover:bg-[#FF8F7D] text-white text-[15px] font-medium rounded-full transition-colors"
             >
-              Delete Cluster <RiDeleteBin5Line size={18} />
+              Delete Sponsor <RiDeleteBin5Line size={18} />
             </button>
           </div>
         </div>
