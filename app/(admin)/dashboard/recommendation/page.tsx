@@ -2,7 +2,7 @@
 
 import ExportButtons from "@/components/recommendation/ExportButtons";
 import FiltersBar from "@/components/recommendation/FiltersBar";
-import Pagination from "@/components/recommendation/Pagination";
+import Pagination from "@/components/recommendation/Pagination";    
 import RecommendationCard from "@/components/recommendation/RecommendationCard";
 import RecommendationsTable from "@/components/recommendation/RecommendationsTable";
 import RecommendationsSkeleton from "@/components/ui/RecommendationsSkeleton";
@@ -10,14 +10,22 @@ import { queryKeys } from "@/keys";
 import { fetchBusinesses } from "@/services/recommendations";
 import { Recommendation } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 export default function RecommendationPage() {
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedSuburb, setSelectedSuburb] = useState("All");
-  const [currentPage, setCurrentPage] = useState(1);
 
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const initialPage = Number(searchParams.get("page")) || 1;
+
+  const [currentPage, setCurrentPage] = useState(initialPage);
+
+  const isFirstRender = useRef(true);
   const {
     data: fetchBusinessesList,
     isPending,
@@ -46,9 +54,35 @@ export default function RecommendationPage() {
 
   const page = fetchBusinessesList?.data?.page || 1;
 
-   useEffect(() => {
+ 
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
     setCurrentPage(1);
   }, [search, selectedCategory, selectedSuburb]);
+
+ 
+  // useEffect(() => {
+  //   router.replace(`?page=${currentPage}`, {
+  //     scroll: false,
+  //   });
+  // }, [currentPage, router]);
+
+useEffect(() => {
+  const pageFromUrl = Number(searchParams.get("page")) || 1;
+
+  setCurrentPage(pageFromUrl);
+}, [searchParams]);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [currentPage]);
 
   return (
     <>
@@ -87,6 +121,7 @@ export default function RecommendationPage() {
           <RecommendationsTable
             data={businessList}
             isLoading={isLoading || isPending}
+            currentPage={currentPage}
           />
 
           {/* MOBILE CARDS */}
@@ -117,6 +152,6 @@ export default function RecommendationPage() {
           />
         </div>
       </div>
-    </>
+    </> 
   );
 }

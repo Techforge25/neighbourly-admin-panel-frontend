@@ -85,6 +85,14 @@ export default function SponsorshipListPage() {
  };
   
 
+useEffect(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}, [currentPage]);
+
+
   const sponsorshipList = sponsors?.data?.docs || [];
   const totalPages = sponsors?.data?.totalPages || 1;
   const page = sponsors?.data?.page || 1;

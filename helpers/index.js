@@ -328,14 +328,14 @@ export const getSponsorshipColumns = (
           >
             <LuPencil size={15} />
           </button>
-          <button
+          {/* <button
             type="button"
             onClick={() => onDelete(row)}
             className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border border-border-secondary text-red-500 hover:bg-surface-muted"
             aria-label="Delete"
           >
             <RiDeleteBin5Line size={15} />
-          </button>
+          </button> */}
         </div>
       ),
     },
@@ -381,14 +381,14 @@ export const getSponsorshipColumns = (
           >
             <LuPencil size={15} />
           </button>
-          <button
+          {/* <button
             type="button"
             onClick={() => onDelete(row)}
             className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border border-border-secondary text-red-500 hover:bg-surface-muted"
             aria-label="Delete"
           >
             <RiDeleteBin5Line size={15} />
-          </button>
+          </button> */}
         </div>
       ),
     },

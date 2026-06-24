@@ -164,7 +164,7 @@ const handleRejectConfirm = () => {
         isOpen={isRejectOpen}
         onClose={() => setIsRejectOpen(false)}
         onConfirm={handleRejectConfirm}
-        name={selectedRow?.businessName}
+        name={selectedRow?.personName}
         isLoading={pendingUpdateStatus}
       />
     </>

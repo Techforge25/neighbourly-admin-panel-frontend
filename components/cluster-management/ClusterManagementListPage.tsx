@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { LuPlus } from "react-icons/lu";
 import Pagination from "../recommendation/Pagination";
@@ -71,6 +71,13 @@ export default function ClusterManagementListPage() {
       deleteMutate(clusterToDelete);
     }
   };
+
+useEffect(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}, [currentPage]);
 
   return (
     <div className="min-h-screen px-6 py-2">

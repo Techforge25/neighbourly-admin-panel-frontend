@@ -1,7 +1,7 @@
 import { SuburbRecord } from "@/types";
 import React from "react";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { RxCross1 } from "react-icons/rx";
+import { RxCross1 } from "react-icons/rx";  
 
 interface DeleteSuburbManagementModalProps {
   isOpen: boolean;
