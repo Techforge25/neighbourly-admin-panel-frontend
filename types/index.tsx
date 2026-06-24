@@ -36,6 +36,7 @@ export interface RecommendationRow {
   submitted: string;
   trustPoints: string;
   businessName: string;
+  personName: string;
   id: string;
 }
 
