@@ -6,12 +6,15 @@ import { queryKeys } from "@/keys";
 import { viewBusiness } from "@/services/recommendations";
 import { RecommendationsBusiness } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Page() {
   const params = useParams();
   const id = params?.id as string;
   const router = useRouter()
+const searchParams = useSearchParams();
+const page = searchParams.get("page") || "1";
   const { data: viewBusinessRecommendations, isPending, isLoading } = useQuery({
     queryKey: [queryKeys.fetchSingleBusiness, id],
     queryFn: () => viewBusiness(id)
@@ -19,11 +22,23 @@ export default function Page() {
 
   const recommendations = viewBusinessRecommendations?.data?.recommendations
   const businessInfo = viewBusinessRecommendations?.data?.business
-  console.log(recommendations, 'recommendations')
+
+  useEffect(() => {
+     window.scrollTo({
+       top: 0,
+       behavior: "smooth",
+     });
+   }, []);
 
   return (
     <>
-      <BackPage tradie={businessInfo?.personName} trade={businessInfo?.serviceType} business={businessInfo?.businessName} contact={businessInfo?.contact}/>
+      <BackPage 
+      tradie={businessInfo?.personName} 
+      trade={businessInfo?.serviceType} 
+      business={businessInfo?.businessName} 
+      contact={businessInfo?.contact}  
+      page={page}
+      />
       {recommendations?.length === 0 ? (
         <div className="bg-surface rounded-3xl border border-border/50 overflow-hidden">
           <div className="px-5 pt-5 pb-3">

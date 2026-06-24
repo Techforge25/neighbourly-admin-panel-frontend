@@ -4,15 +4,15 @@ import { BackPageProps } from "@/types";
 import { useRouter } from "next/navigation";
 import { IoArrowBackSharp } from "react-icons/io5";
 
-const BackPage = ({ tradie, trade, business, contact }: BackPageProps) => {
+const BackPage = ({ tradie, trade, business, contact, page }: BackPageProps) => {
   const router = useRouter();
   return (
     <div className="">
       {/* back Button */}
       <button
-        onClick={() => {
-          router.back();
-        }}
+         onClick={() =>
+        router.push(`/dashboard/recommendation?page=${page}`)
+      }
         className="flex items-center gap-[0.625rem] cursor-pointer"
       >
         <span>
@@ -28,11 +28,11 @@ const BackPage = ({ tradie, trade, business, contact }: BackPageProps) => {
           <span className="font-manrope font-bold text-[1.625rem] text-text-primary ">
             {tradie}
           </span>
-          <span
-            className={`border ${getColorThemeBorder(trade)}  py-[0.3125rem] px-[0.4375rem] rounded-[0.375rem] font-poppins text-[0.75rem] font-normal capitalize`}
-          >
-            {trade}
-          </span>
+         <span
+                                             className={`border ${getColorThemeBorder(trade, "span")} rounded-[0.375rem] px-[7px] py-[5px] font-poppins font-normal text-[0.75rem] capitalize tracking-wide`}
+                                        >
+                                             {trade}
+                                        </span>
         </div>
         <div className="flex gap-2">
           <span className="text-text-para">{business}</span> •

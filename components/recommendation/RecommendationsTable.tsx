@@ -11,9 +11,10 @@ import RecommendationsSkeleton from "../ui/RecommendationsSkeleton";
 interface Props {
   data: Recommendation[];
   isLoading: boolean
+  currentPage: number;
 }
 
-export default function RecommendationsTable({ data, isLoading }: Props) {
+export default function RecommendationsTable({ data, isLoading, currentPage }: Props) {
   const router = useRouter();
 
   return (
@@ -45,11 +46,10 @@ export default function RecommendationsTable({ data, isLoading }: Props) {
                     </span>
                   </td>
 
-                  <td className="px-6 py-5 font-poppins text-[1rem] font-normal text-text-para">
-                    {item?.trustedIn?.slice(0, 3)?.map((trust: string, i: number) => (
-                      <p key={i}>{trust}</p>
-                    ))}
-                  </td>
+                 <td className="px-6 py-5 font-poppins text-[1rem] font-normal text-text-para">
+  {item?.trustedIn?.slice(0, 3).join(", ")}
+  {item?.trustedIn?.length > 3 && "..."}
+</td>
 
                   <td className="px-6 py-5 text-sm font-poppins text-[0.875rem] font-normal text-text-para">
                     {item.trustPoints.slice(0, 3).join(" - ")}
@@ -61,14 +61,16 @@ export default function RecommendationsTable({ data, isLoading }: Props) {
 
                   <td className="px-6 py-5">
                     <div className="flex justify-center gap-4">
-                      <button
-                        onClick={() =>
-                          router.push(`/dashboard/recommendationDetails/${item._id}`)
-                        }
-                        className="text-text-para cursor-pointer"
-                      >
-                        <IoEye size={18} />
-                      </button>
+              <button
+  onClick={() =>
+    router.push(
+      `/dashboard/recommendationDetails/${item._id}?page=${currentPage}`
+    )
+  }
+  className="text-text-para cursor-pointer"
+>
+  <IoEye size={18} />
+</button>
                     </div>
                   </td>
                 </tr>

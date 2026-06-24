@@ -36,13 +36,10 @@ export default function RecommendationCard({ item }: Props) {
         <div className="mt-4 space-y-2 font-poppins text-[1rem] font-normal text-text-para">
           <span className="font-medium">Trusted In:</span>
           <div className="flex items-center gap-2">
-            {item?.trustedIn?.map((trust, index) => {
-              return (
-                <span key={index}>
-                  {trust}
-                </span>
-              )
-            })}
+            
+               
+           {item?.trustedIn?.slice(0, 3).join(", ")}
+  {item?.trustedIn?.length > 3 && "..."}
           </div>
 
           <p>

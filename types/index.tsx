@@ -100,6 +100,7 @@ export interface BackPageProps {
   trade: string;
   business: string;
   contact: string;
+   page?: string;
 }
 
 export type FieldType =

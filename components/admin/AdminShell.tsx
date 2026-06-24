@@ -86,7 +86,7 @@ export function AdminShell({
         ))}
 
         <div className="absolute bottom-0 left-0 right-0">
-          <div className="my-6 h-px w-full bg-border-primary" />
+          <div className="my-0 h-px w-full bg-border-primary" />
           {/* 🔑 Sign-out: button instead of Link */}
           <button
             type="button"
@@ -146,7 +146,7 @@ export function AdminShell({
 
       {/* Main */}
       <div className="min-h-screen lg:pl-[278px]">
-        <header className="sticky top-0 z-20 bg-surface flex h-[72px] items-center justify-between gap-4 bg-surface/95 px-4 border border-border-primary sm:h-20 sm:px-6 lg:px-8">
+        <header className="sticky top-0 z-50 bg-surface flex h-[72px] items-center justify-between gap-4 bg-surface/95 px-4 border border-border-primary sm:h-20 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3">
             <button
               type="button"

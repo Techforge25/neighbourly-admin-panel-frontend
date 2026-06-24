@@ -70,7 +70,7 @@ export default function SponsorshipTable({ data, onEdit, onDelete, isLoading }: 
                 key={col.key}
                 className="flex items-start justify-between gap-3 border-b border-border-secondary/50 py-2.5 first:pt-0 last:border-0 last:pb-0"
               >
-                <span className="text-xs font-medium uppercase tracking-wide text-text-para">
+                <span className="text-xs font-medium uppercase tracking-wide text-black font-bold">
                   {col.header}
                 </span>
                 <div className="text-right text-sm">{col.render(row)}</div>
